@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/nav1"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_company_details"
+        android:icon="@drawable/nav2"
+        android:title="Company Details" />
+    <item
+        android:id="@+id/nav_bank_details"
+        android:icon="@drawable/nav3"
+        android:title="Bank Details" />
+    <item
+        android:id="@+id/nav_events"
+        android:icon="@drawable/nav4"
+        android:title="Events" />
+    <item
+        android:id="@+id/nav_upcoming_holidays"
+        android:icon="@drawable/nav5"
+        android:title="Upcoming Holidays" />
+
+</menu>

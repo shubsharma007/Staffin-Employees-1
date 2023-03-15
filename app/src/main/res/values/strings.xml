@@ -11,7 +11,17 @@
     <string name="main_tv4">Payroll</string>
     <string name="main_tv5">Calendar Settings</string>
 
+    <string name="screen1">Welcome to Fox Staffin</string>
+    <string name="screen2">Welcome to Fox Staffin</string>
+    <string name="screen3">Welcome to Fox Staffin</string>
+    <string name="screen1desc">Record a new video orselect a video you already have on your phone</string>
+    <string name="screen2desc">Create, edit, and upload your own short videos</string>
+    <string name="screen3desc">Youtube live streaming allows you to reach your community in real time. Go live on youtube from webcam, mobile and encoder streaming</string>
+
+
     <string name="onBoardingTxt1">Welcome To Fox</string>
     <string name="OnBoardingTxt2">Staffin</string>
     <string name="OnBoardingTxt3">Lorem Ipsum is simply dummy text of /\nhe printing and .</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

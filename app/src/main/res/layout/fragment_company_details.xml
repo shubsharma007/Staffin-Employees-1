@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_top_round_white"
+    tools:context=".Fragment.CompanyDetailsFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/employeeIdTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:text="Employee Id"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/employeeIdEt"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/edittext_layout"
+                android:drawableLeft="@drawable/ic_card"
+                android:drawablePadding="20dp"
+                android:hint="Enter Employee Id"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/employeeIdTv" />
+
+
+            <TextView
+                android:id="@+id/departmentTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Department"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/employeeIdEt" />
+
+            <EditText
+                android:id="@+id/departmentEt"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/edittext_layout"
+                android:drawableLeft="@drawable/ic_department"
+                android:drawablePadding="20dp"
+                android:hint="Enter Your Department"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/departmentTv" />
+
+
+            <TextView
+                android:id="@+id/designationTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Designation"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/departmentEt" />
+
+            <EditText
+                android:id="@+id/designationEt"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/edittext_layout"
+                android:drawableStart="@drawable/ic_card"
+                android:drawablePadding="20dp"
+                android:gravity="center_vertical"
+                android:hint="Pick Your Designation"
+                android:inputType="text"
+                android:paddingStart="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/designationTv" />
+
+            <TextView
+                android:id="@+id/annualLeaveTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Annual Leave"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/annualLeaveEt"
+                app:layout_constraintTop_toBottomOf="@+id/designationEt" />
+
+            <TextView
+                android:id="@+id/medicalLeaveTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Medical Leave"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/medicalLeaveEt"
+                app:layout_constraintTop_toBottomOf="@+id/designationEt" />
+
+            <EditText
+                android:id="@+id/annualLeaveEt"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/edittext_layout"
+                android:gravity="center_vertical"
+                android:hint="annual leaves"
+                android:inputType="number"
+                android:paddingHorizontal="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/medicalLeaveEt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/annualLeaveTv" />
+
+            <EditText
+                android:id="@+id/medicalLeaveEt"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/edittext_layout"
+                android:gravity="center_vertical"
+                android:hint="medical leaves"
+                android:inputType="number"
+                android:paddingHorizontal="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/annualLeaveEt"
+                app:layout_constraintTop_toBottomOf="@id/medicalLeaveTv" />
+
+            <TextView
+                android:id="@+id/jDateTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Date Of Joining"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/annualLeaveEt"
+                app:layout_constraintTop_toBottomOf="@+id/annualLeaveEt" />
+
+            <TextView
+                android:id="@+id/rDateTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Date Of Relieving"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/rDateEt"
+                app:layout_constraintTop_toBottomOf="@+id/annualLeaveEt" />
+
+            <TextView
+                android:id="@+id/jDateEt"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/edittext_layout"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_calendar"
+                android:gravity="center_vertical"
+                android:hint="DD/MM/YYYY"
+                android:inputType="date"
+                android:paddingHorizontal="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/rDateEt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jDateTv" />
+
+            <TextView
+                android:id="@+id/rDateEt"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/edittext_layout"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_calendar"
+                android:gravity="center_vertical"
+                android:hint="DD/MM/YYYY"
+                android:inputType="date"
+                android:paddingHorizontal="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/jDateEt"
+                app:layout_constraintTop_toBottomOf="@id/rDateTv" />
+
+            <TextView
+                android:id="@+id/statusTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Status"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/jDateEt" />
+
+            <LinearLayout
+                android:id="@+id/statusll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/statusTv">
+
+                <RadioGroup
+                    android:id="@+id/radioGroupGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_active"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/mainColor"
+                        android:text="Active"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+
+                    <RadioButton
+                        android:id="@+id/rb_inactive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/mainColor"
+                        android:text="Inactive"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="5dp"
+                android:text="(Note: Setting status to Active will remove the Exit Date)"
+                android:textColor="@color/mainColor"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/statusll" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/note">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Salary"
+                        android:gravity="center"
+                        android:background="@color/yellow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/basicTv"
+                        android:textColor="@color/white"
+                        android:paddingVertical="16dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/basicTv"
+                        android:text="Basic"
+                        app:layout_constraintTop_toBottomOf="@id/tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="15dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/basicEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@drawable/edittext_layout"
+                        android:hint="Enter Basic Salary"
+                        android:inputType="number"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="#80282729"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/basicTv" />
+
+                    <TextView
+                        android:id="@+id/hourlyTv"
+                        android:text="Hourly Rate"
+                        app:layout_constraintTop_toBottomOf="@id/basicEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="15dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/hourlyEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@drawable/edittext_layout"
+                        android:hint="Enter Hourly Rate"
+                        android:inputType="number"
+                        android:paddingStart="20dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="#80282729"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="15dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/hourlyTv" />
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/nextBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/login_btn_bg"
+                android:paddingVertical="18dp"
+                android:text="Next"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
