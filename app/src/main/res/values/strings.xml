@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Staffin Employees</string>
+
+
+    <string name="login_tv1">Login with Mobile Number</string>
+    <string name="login_tv2">Lorem Ipsum is simply dummy text of the printing and .</string>
+    <string name="login_tv3">Forget Password ?</string>
+    <string name="main_tv1">Total Employees</string>
+    <string name="main_tv2">Employee Attendance</string>
+    <string name="main_tv3">Events</string>
+    <string name="main_tv4">Payroll</string>
+    <string name="main_tv5">Calendar Settings</string>
+
+    <string name="onBoardingTxt1">Welcome To Fox</string>
+    <string name="OnBoardingTxt2">Staffin</string>
+    <string name="OnBoardingTxt3">Lorem Ipsum is simply dummy text of /\nhe printing and .</string>
 </resources>
