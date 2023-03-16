@@ -162,7 +162,7 @@
                         app:layout_constraintTop_toBottomOf="@id/cardShift">
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/punchinBtn"
+                            android:id="@+id/punchinOutBtn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
@@ -173,13 +173,13 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/punchoutBtn"
+                            android:id="@+id/BreakTimeBtn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/yellow_btn_bg"
-                            android:text="Punch Out"
+                            android:text="Break Start"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
