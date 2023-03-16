@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -33,13 +34,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="10dp"
                 android:id="@+id/llTime"
-                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
+                android:paddingVertical="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/damru">
@@ -47,46 +48,43 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="5dp"
+                    app:cardCornerRadius="12dp"
 
                     app:cardElevation="8dp">
 
 
-
-                        <TextView
-                            android:id="@+id/hourTv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="00"
-                            android:background="@drawable/digital_clock_bg"
-
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:textAlignment="center"
-                            android:textSize="25sp"
-                            android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/hourTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/digital_clock_bg"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textAlignment="center"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="5dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="8dp">
 
                     <TextView
                         android:id="@+id/minTv"
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/digital_clock_bg"
                         android:gravity="center"
                         android:text="00"
-                        android:background="@drawable/digital_clock_bg"
                         android:textAlignment="center"
                         android:textSize="25sp"
                         android:textStyle="bold" />
@@ -95,23 +93,25 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:cardCornerRadius="12dp"
                     android:layout_margin="5dp"
+                    app:cardCornerRadius="12dp"
                     app:cardElevation="8dp">
 
                     <TextView
                         android:id="@+id/secTv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/digital_clock_bg"
                         android:gravity="center"
                         android:text="00"
-                        android:background="@drawable/digital_clock_bg"
                         android:textAlignment="center"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
