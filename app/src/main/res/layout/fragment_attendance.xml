@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingStart="20dp"
-                android:text="<"
+                android:text="Left"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -203,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingEnd="20dp"
-                android:text=">"
+                android:text="Right"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="20sp"
