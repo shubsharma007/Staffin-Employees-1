@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.staffinemployees.Fragment.AttendanceFragment;
 import com.example.staffinemployees.Fragment.BankDetailsFragment;
 import com.example.staffinemployees.Fragment.CompanyDetailsFragment;
 import com.example.staffinemployees.Fragment.EventsFragment;
@@ -69,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new EventsFragment()).commit();
                         binding.textView.setText("Events");
                         break;
+                    case R.id.nav_Attendance:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment()).commit();
+                        binding.textView.setText("Attendance");
+                        break;
+
                 }
                 binding.drawerLayout.close();
                 return false;
