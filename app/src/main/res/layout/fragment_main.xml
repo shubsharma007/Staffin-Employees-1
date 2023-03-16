@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/damru"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="15dp"
                 android:src="@drawable/img_damru"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,15 +49,46 @@
                     android:layout_height="50dp"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="5dp"
+
+                    app:cardElevation="8dp">
+
+
+
+                        <TextView
+                            android:id="@+id/hourTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="00"
+                            android:background="@drawable/digital_clock_bg"
+
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textAlignment="center"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_margin="5dp"
                     app:cardElevation="8dp">
 
                     <TextView
+                        android:id="@+id/minTv"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="40"
+                        android:text="00"
+                        android:background="@drawable/digital_clock_bg"
                         android:textAlignment="center"
-                        android:textSize="30sp"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
 
@@ -69,29 +100,14 @@
                     app:cardElevation="8dp">
 
                     <TextView
+                        android:id="@+id/secTv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="40"
+                        android:text="00"
+                        android:background="@drawable/digital_clock_bg"
                         android:textAlignment="center"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="5dp"
-                    app:cardElevation="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="40"
-                        android:textAlignment="center"
-                        android:textSize="30sp"
+                        android:textSize="25sp"
                         android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
 
