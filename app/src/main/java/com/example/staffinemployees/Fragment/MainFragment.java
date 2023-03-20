@@ -51,6 +51,7 @@ public class MainFragment extends Fragment {
         layoutManagerH = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
         binding.recyclerViewMonthEvents.setLayoutManager(layoutManagerH);
 
+
         sharedPreferences = this.requireContext().getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -64,35 +65,72 @@ public class MainFragment extends Fragment {
             }
         }
 
+        if (!sharedPreferences.getAll().containsKey("break")) {
+            binding.BreakTimeBtn.setText("Break Start");
+        } else {
+            if (sharedPreferences.getAll().get("break").toString().equalsIgnoreCase("breakStart")) {
+                binding.BreakTimeBtn.setText("Break End");
+            } else {
+                binding.BreakTimeBtn.setText("Break Start");
+            }
+        }
+        binding.BreakTimeBtn.setOnClickListener(v -> {
+
+            if (!sharedPreferences.getAll().containsKey("break")) {
+               //when user open first time app
+                Toast.makeText(getActivity(), "Break Start : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                editor.putString("break", "breakStart");
+                editor.apply();
+                binding.BreakTimeBtn.setText("Break End");
+                // call punch in api
+            } else {
+                if (sharedPreferences.getAll().get("break").toString().equalsIgnoreCase("breakStart")) {
+                    Toast.makeText(getActivity(), "Break End : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                    editor.putString("break", "breakEnd");
+                    editor.apply();
+                    binding.BreakTimeBtn.setText("Break Start");
+                    //punch out api call
+                    //shared pref me daalo punch out
+                } else {
+                    Toast.makeText(getActivity(), "Break Start : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                    editor.putString("break", "breakStart");
+                    editor.apply();
+                    binding.BreakTimeBtn.setText("Break End");
+                    // punch in api call
+                    // shared pref me punch in
+
+                }
+            }
+
+
+        });
+
 
         binding.punchinOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!sharedPreferences.getAll().containsKey("punch")) {
-                    Toast.makeText(getActivity(), "Punch In : "+ String.format("%02d", hour)+":"+ String.format("%02d", minute)+":"+String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
                     editor.putString("punch", "punchIn");
                     editor.apply();
                     binding.punchinOutBtn.setText("Punch Out");
                     // call punch in api
-                }
-                else
-                {
+                } else {
                     if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
-                        Toast.makeText(getActivity(), "Punch Out : "+ String.format("%02d", hour)+":"+ String.format("%02d", minute)+":"+String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Punch Out : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
                         editor.putString("punch", "punchOut");
                         editor.apply();
                         binding.punchinOutBtn.setText("Punch In");
                         //punch out api call
                         //shared pref me daalo punch out
-                        binding.punchinOutBtn.setText("Punch In");
                     } else {
-                        Toast.makeText(getActivity(), "Punch In : "+ String.format("%02d", hour)+":"+ String.format("%02d", minute)+":"+String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
                         editor.putString("punch", "punchIn");
                         editor.apply();
                         binding.punchinOutBtn.setText("Punch Out");
                         // punch in api call
                         // shared pref me punch in
-                        binding.punchinOutBtn.setText("Punch Out");
+
                     }
                 }
             }
