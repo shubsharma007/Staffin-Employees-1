@@ -16,7 +16,7 @@ public class RetrofitServices {
             .create();
 
     public static Retrofit retrofit=null;
-    public static final String BASE_URL="http://meetjob.techpanda.art/";
+    public static final String BASE_URL="https://hrm.hirectjob.in/public/api/";
 
     public static Retrofit getRetrofit() {
 
