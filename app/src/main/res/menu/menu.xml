@@ -21,8 +21,12 @@
         android:icon="@drawable/nav5"
         android:title="Upcoming Holidays" />
     <item
-        android:id="@+id/nav_Attendance"
-        android:icon="@drawable/nav5"
+        android:id="@+id/nav_attendance"
+        android:icon="@drawable/nav6"
         android:title="Attendance" />
+    <item
+        android:id="@+id/nav_payroll"
+        android:icon="@drawable/nav7"
+        android:title="Payroll"/>
 
 </menu>

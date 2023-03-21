@@ -17,6 +17,7 @@ import com.example.staffinemployees.Fragment.BankDetailsFragment;
 import com.example.staffinemployees.Fragment.CompanyDetailsFragment;
 import com.example.staffinemployees.Fragment.EventsFragment;
 import com.example.staffinemployees.Fragment.MainFragment;
+import com.example.staffinemployees.Fragment.PayrollFragment;
 import com.example.staffinemployees.Fragment.UpcomingHolidaysFragment;
 import com.example.staffinemployees.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -70,11 +71,14 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new EventsFragment()).commit();
                         binding.textView.setText("Events");
                         break;
-                    case R.id.nav_Attendance:
+                    case R.id.nav_attendance:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment()).commit();
                         binding.textView.setText("Attendance");
                         break;
-
+                    case R.id.nav_payroll:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PayrollFragment()).commit();
+                        binding.textView.setText("Payroll");
+                        break;
                 }
                 binding.drawerLayout.close();
                 return false;

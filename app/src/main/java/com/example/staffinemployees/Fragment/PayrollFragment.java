@@ -7,24 +7,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.example.staffinemployees.R;
-import com.example.staffinemployees.databinding.FragmentAttendanceBinding;
-
-public class AttendanceFragment extends Fragment {
-    FragmentAttendanceBinding binding;
-    String issueSelected;
+import com.example.staffinemployees.databinding.FragmentPayrollBinding;
 
 
-
+public class PayrollFragment extends Fragment {
+FragmentPayrollBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAttendanceBinding.inflate(inflater, container, false);
+      binding=FragmentPayrollBinding.inflate(inflater,container,false);
 
 
-        return binding.getRoot();
+
+      return binding.getRoot();
     }
 }
