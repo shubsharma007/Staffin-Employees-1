@@ -11,6 +11,6 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("emp-login")
-    Call<LoginResponse> postEmpLogin(@Field("email") String email,
+    Call<LoginResponse> postEmpLogin(@Field("mobile") String mobile,
                                      @Field("password") String password);
 }
