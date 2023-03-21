@@ -3,7 +3,9 @@ package com.example.staffinemployees;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,13 +23,21 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     ApiInterface apiInterface;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        if (sharedPreferences.getAll().containsKey("mobile")) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
         binding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 progressDialog.dismiss();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                editor.putString("mobile", number);
+                                editor.apply();
                                 finish();
                                 Toast.makeText(LoginActivity.this, "Successful Login...", Toast.LENGTH_SHORT).show();
                             } else {

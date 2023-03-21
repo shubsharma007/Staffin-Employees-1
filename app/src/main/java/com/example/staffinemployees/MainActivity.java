@@ -5,7 +5,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -25,11 +27,17 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
         binding.textView.setText("Home");
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar
@@ -78,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_payroll:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new PayrollFragment()).commit();
                         binding.textView.setText("Payroll");
+                        break;
+                    case R.id.nav_logout:
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        editor.remove("mobile");
+                        editor.apply();
+                        finish();
                         break;
                 }
                 binding.drawerLayout.close();

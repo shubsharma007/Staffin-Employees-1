@@ -15,7 +15,6 @@ import com.example.staffinemployees.databinding.FragmentAttendanceBinding;
 
 public class AttendanceFragment extends Fragment {
     FragmentAttendanceBinding binding;
-    String issueSelected;
 
 
 
@@ -23,7 +22,6 @@ public class AttendanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAttendanceBinding.inflate(inflater, container, false);
-
 
         return binding.getRoot();
     }
