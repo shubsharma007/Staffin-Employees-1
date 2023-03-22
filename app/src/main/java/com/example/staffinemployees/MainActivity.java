@@ -16,10 +16,13 @@ import android.widget.Toast;
 
 import com.example.staffinemployees.Fragment.AttendanceFragment;
 import com.example.staffinemployees.Fragment.BankDetailsFragment;
+import com.example.staffinemployees.Fragment.ClaimExpences;
 import com.example.staffinemployees.Fragment.CompanyDetailsFragment;
 import com.example.staffinemployees.Fragment.EventsFragment;
 import com.example.staffinemployees.Fragment.MainFragment;
 import com.example.staffinemployees.Fragment.PayrollFragment;
+import com.example.staffinemployees.Fragment.Payslip;
+import com.example.staffinemployees.Fragment.RequestLeaveFragment;
 import com.example.staffinemployees.Fragment.UpcomingHolidaysFragment;
 import com.example.staffinemployees.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -79,16 +82,29 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new EventsFragment()).commit();
                         binding.textView.setText("Events");
                         break;
-                    case R.id.nav_attendance:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment()).commit();
-                        binding.textView.setText("Attendance");
-                        break;
-                    case R.id.nav_payroll:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PayrollFragment()).commit();
-                        binding.textView.setText("Payroll");
-                        break;
+//                    case R.id.nav_attendance:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment()).commit();
+//                        binding.textView.setText("Attendance");
+//                        break;
+//                    case R.id.nav_payroll:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PayrollFragment()).commit();
+//                        binding.textView.setText("Payroll");
+//                        break;
+//                    case R.id.nav_payslip:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new Payslip()).commit();
+//                        binding.textView.setText("PaySlip");
+//                        break;
+//                    case R.id.nav_claim_expences:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ClaimExpences()).commit();
+//                        binding.textView.setText("Expenses");
+//                        break;
+//                    case R.id.nav_leave_request:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new RequestLeaveFragment()).commit();
+//                        binding.textView.setText("Leave");
+//                        break;
+
                     case R.id.nav_logout:
-                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         editor.remove("mobile");
                         editor.apply();
                         finish();

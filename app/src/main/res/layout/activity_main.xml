@@ -80,9 +80,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:headerLayout="@layout/header"
+
             app:itemTextColor="@color/mainColor"
             app:menu="@menu/menu" />
-
+<!--        app:headerLayout="@layout/header"-->
     </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

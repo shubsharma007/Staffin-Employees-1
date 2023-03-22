@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_top_round_white"
+    tools:context=".Fragment.RequestLeaveFragment">
+
+    <TextView
+        android:id="@+id/leaveTypeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:text="Leave Type"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/leaveTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/leaveTypeTv" />
+
+    <TextView
+        android:id="@+id/fromDateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="From Date"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/leaveTypeSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/leaveTypeSpinner" />
+
+    <TextView
+        android:id="@+id/toDateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="To Date"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/toDateEt"
+        app:layout_constraintTop_toBottomOf="@+id/leaveTypeSpinner" />
+
+    <TextView
+        android:id="@+id/fromDateEt"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/edittext_layout"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_calendar"
+        android:gravity="center_vertical"
+        android:hint="DD/MM/YYYY"
+        android:inputType="date"
+        android:paddingHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textColorHint="#80282729"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/toDateEt"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fromDateTv" />
+
+    <TextView
+        android:id="@+id/toDateEt"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/edittext_layout"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_calendar"
+        android:gravity="center_vertical"
+        android:hint="DD/MM/YYYY"
+        android:inputType="date"
+        android:paddingHorizontal="8dp"
+        android:textColor="@color/black"
+        android:textColorHint="#80282729"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/fromDateEt"
+        app:layout_constraintTop_toBottomOf="@id/toDateTv" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        android:layout_marginHorizontal="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fromDateEt">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fullDayBtn"
+                android:textStyle="bold"
+                android:paddingVertical="20dp"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="17sp"
+                android:background="@drawable/bg_left_blue"
+                android:text="Full Day"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/halfDayBtn"
+                android:textStyle="bold"
+                android:background="@drawable/bg_right_white"
+                android:paddingVertical="20dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textSize="17sp"
+                android:text="Half Day"
+                />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/descriptionTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="Description"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card" />
+
+    <EditText
+        android:id="@+id/descriptionEt"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_back_btn"
+        android:gravity="start"
+        android:hint="Enter Description"
+        android:inputType="textMultiLine"
+        android:maxLength="150"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp"
+        android:paddingBottom="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="#80282729"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTv" />
+
+    <TextView
+        android:id="@+id/descriptionCounterTv"
+        android:layout_width="wrap_content"
+        android:layout_height="9dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:paddingHorizontal="4dp"
+        android:text="0/150"
+        android:textColor="@color/black"
+        android:textSize="7sp"
+        app:layout_constraintBottom_toBottomOf="@id/descriptionEt"
+        app:layout_constraintEnd_toEndOf="@id/descriptionEt" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/createBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/login_btn_bg"
+        android:text="Create An Event"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEt" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

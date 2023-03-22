@@ -24,10 +24,24 @@
         android:id="@+id/nav_attendance"
         android:icon="@drawable/nav6"
         android:title="Attendance" />
+<!--    <item-->
+<!--        android:id="@+id/nav_payroll"-->
+<!--        android:icon="@drawable/nav7"-->
+<!--        android:title="Payroll" />-->
+
     <item
-        android:id="@+id/nav_payroll"
-        android:icon="@drawable/nav7"
-        android:title="Payroll" />
+        android:id="@+id/nav_payslip"
+        android:icon="@drawable/nav9"
+        android:title="Payslip" />
+    <item
+        android:id="@+id/nav_claim_expences"
+        android:icon="@drawable/nav10"
+        android:title="Claim Expences" />
+    <item
+        android:id="@+id/nav_leave_request"
+        android:icon="@drawable/nav11"
+        android:title="Leave Request" />
+
     <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/nav8"
