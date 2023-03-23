@@ -18,4 +18,6 @@
     <color name="txtGreen">#34CB5F</color>
     <color name="txtRed">#FC5454</color>
     <color name="txtPurple">#AC6CFE</color>
+    <color name="txtOrange">#FD7D06</color>
+
 </resources>
