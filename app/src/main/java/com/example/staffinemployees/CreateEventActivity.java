@@ -33,7 +33,6 @@ public class CreateEventActivity extends AppCompatActivity {
         };
         binding.descriptionEt.addTextChangedListener(mTextEditorWatcher);
 
-
         binding.createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,8 +102,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 binding.fourth.setImageDrawable(null);
             }
         });
-
-
 
     }   // onCreate end
 
