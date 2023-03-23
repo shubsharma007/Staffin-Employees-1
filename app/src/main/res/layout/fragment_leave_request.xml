@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_top_round_white"
-    tools:context=".Fragment.RequestLeaveFragment">
+    tools:context=".Fragment.LeaveRequest">
 
     <TextView
         android:id="@+id/leaveTypeTv"
@@ -19,15 +19,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/leaveTypeSpinner"
+    <LinearLayout
+        android:id="@+id/spinnerLl"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="7dp"
+        android:background="@drawable/bg_back_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/leaveTypeTv" />
+        android:weightSum="1"
+        android:padding="1dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/leaveTypeTv">
+
+        <Spinner
+            android:id="@+id/leaveTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="42dp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/fromDateTv"
@@ -37,8 +47,8 @@
         android:text="From Date"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/leaveTypeSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/leaveTypeSpinner" />
+        app:layout_constraintStart_toStartOf="@+id/spinnerLl"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLl" />
 
     <TextView
         android:id="@+id/toDateTv"
@@ -49,7 +59,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/toDateEt"
-        app:layout_constraintTop_toBottomOf="@+id/leaveTypeSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLl" />
 
     <TextView
         android:id="@+id/fromDateEt"
@@ -97,10 +107,10 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
-        android:layout_marginHorizontal="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fromDateEt">
@@ -112,31 +122,30 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:id="@+id/fullDayBtn"
-                android:textStyle="bold"
-                android:paddingVertical="20dp"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:background="@drawable/bg_left_blue"
-                android:text="Full Day"
-                />
-            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_left_blue"
+                android:paddingVertical="20dp"
+                android:text="Full Day"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/halfDayBtn"
-                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/bg_right_white"
                 android:paddingVertical="20dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:textAlignment="center"
-                android:textSize="17sp"
                 android:text="Half Day"
-                />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -199,10 +208,10 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEt" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
