@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class MainFragment extends Fragment {
     SharedPreferences sharedPreferences;
 
     LocalDateTime now = null;
+    int userid;
 
 
     @Override
@@ -46,6 +48,14 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         setDigitalClock();
+//
+//        Bundle bundle = this.getArguments();
+//        assert bundle != null;
+//        userid = bundle.getInt("userId");
+//        Log.i("Id Aarahi hai", String.valueOf(userid));
+
+//        binding.txtEventMonth.setText(String.valueOf(userid));
+
 
         binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getContext()));
         layoutManagerH = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
@@ -77,7 +87,7 @@ public class MainFragment extends Fragment {
         binding.BreakTimeBtn.setOnClickListener(v -> {
 
             if (!sharedPreferences.getAll().containsKey("break")) {
-               //when user open first time app
+                //when user open first time app
                 Toast.makeText(getActivity(), "Break Start : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
                 editor.putString("break", "breakStart");
                 editor.apply();

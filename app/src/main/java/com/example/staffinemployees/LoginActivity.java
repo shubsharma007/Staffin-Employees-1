@@ -69,13 +69,17 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                             if (response.isSuccessful()) {
                                 progressDialog.dismiss();
+//                                int userId = response.body().getResultLogin().getId();
+//                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                intent.putExtra("userid", userId);
+//                                startActivity(intent);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 editor.putString("mobile", number);
                                 editor.apply();
                                 finish();
                                 Toast.makeText(LoginActivity.this, "Successful Login...", Toast.LENGTH_SHORT).show();
                             } else {
-                                Log.d("ERROR1",response.message());
+                                Log.d("ERROR1", response.message());
                                 Log.d("ERROR2", String.valueOf(response.code()));
                                 progressDialog.dismiss();
                                 Toast.makeText(LoginActivity.this, "response not successful...        ", Toast.LENGTH_SHORT).show();
