@@ -38,7 +38,8 @@ public class LeaveRequest extends Fragment {
 
 
         leaves = new ArrayList<>();
-        leaves.add("please select leave type");
+
+    //        leaves.add("please select leave type");
         leaves.add("Paid Leave");
         leaves.add("Unpaid Leave");
         leaves.add("Sick Leave");
@@ -57,6 +58,7 @@ public class LeaveRequest extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

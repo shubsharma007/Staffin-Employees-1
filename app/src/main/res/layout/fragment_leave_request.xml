@@ -203,7 +203,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:background="@drawable/login_btn_bg"
-        android:text="Create An Event"
+        android:text="Submit"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
