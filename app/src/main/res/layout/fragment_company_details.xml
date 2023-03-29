@@ -309,6 +309,8 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
@@ -421,6 +423,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnNext"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
