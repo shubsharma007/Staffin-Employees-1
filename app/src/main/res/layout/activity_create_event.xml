@@ -273,7 +273,7 @@
                     android:background="@drawable/bg_back_btn"
                     android:drawableLeft="@drawable/ic_location"
                     android:drawablePadding="20dp"
-                    android:hint="Name Of Event"
+                    android:hint="Location Of Event"
                     android:inputType="textPersonName"
                     android:paddingStart="20dp"
                     android:textColor="@color/black"

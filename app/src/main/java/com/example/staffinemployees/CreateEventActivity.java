@@ -3,6 +3,7 @@ package com.example.staffinemployees;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.staffinemployees.databinding.ActivityCreateEventBinding;
+
+import java.util.Calendar;
 
 public class CreateEventActivity extends AppCompatActivity {
     ActivityCreateEventBinding binding;
@@ -23,12 +26,16 @@ public class CreateEventActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         TextWatcher mTextEditorWatcher = new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                binding.descriptionCounterTv.setText(String.valueOf(s.length())+"/"+"150");
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.descriptionCounterTv.setText(String.valueOf(s.length()) + "/" + "150");
+            }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
         };
         binding.descriptionEt.addTextChangedListener(mTextEditorWatcher);
@@ -102,8 +109,29 @@ public class CreateEventActivity extends AppCompatActivity {
                 binding.fourth.setImageDrawable(null);
             }
         });
+        binding.dateEt.setOnClickListener(v -> {
 
+            final Calendar c = Calendar.getInstance();
+
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getApplicationContext(),
+                    (view, year1, monthOfYear, dayOfMonth) -> {
+                        //
+                        binding.dateEt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
+                    },
+                    year, month, day);
+            datePickerDialog.show();
+        });
+        binding.locationEt.setOnClickListener(v -> {
+
+
+
+        });
     }   // onCreate end
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

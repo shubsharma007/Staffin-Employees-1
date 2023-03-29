@@ -34,7 +34,7 @@ public class ClaimExpences extends Fragment {
     FragmentClaimExpencesBinding binding;
     TextView addText;
     static int count = 0;
-    Context context;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +49,7 @@ public class ClaimExpences extends Fragment {
         });
         binding.SubmitBtn.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), MainActivity.class));
-
+            getActivity().finish();
         });
 
         return binding.getRoot();
