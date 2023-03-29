@@ -270,6 +270,7 @@
 
                     <RadioButton
                         android:id="@+id/rb_active"
+                        android:clickable="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
@@ -283,6 +284,7 @@
                     <RadioButton
                         android:id="@+id/rb_inactive"
                         android:layout_width="wrap_content"
+                        android:clickable="false"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
