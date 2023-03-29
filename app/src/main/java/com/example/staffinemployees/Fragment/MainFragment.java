@@ -1,11 +1,18 @@
 package com.example.staffinemployees.Fragment;
 
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +26,10 @@ import android.widget.Toast;
 
 import com.example.staffinemployees.Adapters.HomeEventsAdapter;
 
+import com.example.staffinemployees.MainActivity;
 import com.example.staffinemployees.databinding.FragmentMainBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
 
 import java.time.LocalDateTime;
@@ -32,20 +42,28 @@ public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+
     static int minute, second, hour;
 
     RecyclerView.LayoutManager layoutManagerH;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
-
-    LocalDateTime now = null;
-
+    public static final int LOCATION = 100;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         setDigitalClock();
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            requestLocationPermission();
+        }
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+
 
         binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getContext()));
         layoutManagerH = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
@@ -109,6 +127,9 @@ public class MainFragment extends Fragment {
         binding.punchinOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 if (!sharedPreferences.getAll().containsKey("punch")) {
                     Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
                     editor.putString("punch", "punchIn");
@@ -135,14 +156,45 @@ public class MainFragment extends Fragment {
                 }
             }
         });
-
-
 //        Integer loginId = response.body().getId();
 //        editor.putInt("Id", loginId);
 //        editor.putString("number", mobileno);
         editor.apply();
-
         return binding.getRoot();
+    }
+
+
+    private void requestLocationPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Permission Needed")
+                    .setMessage("Location Required For Tracking Punching Locations")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION);
+                        }
+                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "permission Granted...", Toast.LENGTH_SHORT).show();
+            } else {
+//                Toast.makeText(this, "Permission Denied...", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void setDigitalClock() {
