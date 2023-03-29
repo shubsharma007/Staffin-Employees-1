@@ -1,5 +1,11 @@
 package com.example.staffinemployees;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -44,11 +51,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        int userId = getIntent().getIntExtra("userid", 0);
         sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
+
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("userId", userId);
+//        Fragment fragment = new MainFragment();
+//        fragment.setArguments(bundle);
+//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.container, fragment).commit();
+
+
         binding.textView.setText("Home");
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar
                 , 0, 0) {

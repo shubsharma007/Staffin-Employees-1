@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,10 @@ public class MainFragment extends Fragment {
     RecyclerView.LayoutManager layoutManagerH;
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
+
+    LocalDateTime now = null;
+    int userid;
+
     public static final int LOCATION = 100;
 
     @Override
@@ -56,6 +61,14 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         setDigitalClock();
+//
+//        Bundle bundle = this.getArguments();
+//        assert bundle != null;
+//        userid = bundle.getInt("userId");
+//        Log.i("Id Aarahi hai", String.valueOf(userid));
+
+//        binding.txtEventMonth.setText(String.valueOf(userid));
+
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
         } else {
@@ -95,7 +108,7 @@ public class MainFragment extends Fragment {
         binding.BreakTimeBtn.setOnClickListener(v -> {
 
             if (!sharedPreferences.getAll().containsKey("break")) {
-               //when user open first time app
+                //when user open first time app
                 Toast.makeText(getActivity(), "Break Start : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
                 editor.putString("break", "breakStart");
                 editor.apply();
