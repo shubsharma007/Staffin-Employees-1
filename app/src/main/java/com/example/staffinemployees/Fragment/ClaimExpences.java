@@ -2,6 +2,7 @@ package com.example.staffinemployees.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.staffinemployees.MainActivity;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.databinding.FragmentClaimExpencesBinding;
 
@@ -31,7 +33,8 @@ public class ClaimExpences extends Fragment {
     List<String> imagePath;
     FragmentClaimExpencesBinding binding;
     TextView addText;
-    static int count=0;
+    static int count = 0;
+    Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +47,10 @@ public class ClaimExpences extends Fragment {
             imgIntent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(imgIntent, 100);
         });
+        binding.SubmitBtn.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), MainActivity.class));
 
+        });
 
         return binding.getRoot();
     }
@@ -58,15 +64,12 @@ public class ClaimExpences extends Fragment {
             imagePath.add(imgString);
             addText = new TextView(getContext());
 
-            if(count==0)
-            {
-                count=1;
-                addText.setText(count + ".  "+imgString);
-            }
-            else
-            {
-                count+=1;
-                addText.setText(count + ".  "+imgString);
+            if (count == 0) {
+                count = 1;
+                addText.setText(count + ".  " + imgString);
+            } else {
+                count += 1;
+                addText.setText(count + ".  " + imgString);
             }
 
             addText.setTextSize(12);
@@ -79,7 +82,7 @@ public class ClaimExpences extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        count=0;
+        count = 0;
     }
 
     public String getRealPathFromURI(Uri contentURI) {

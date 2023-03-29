@@ -30,6 +30,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.staffinemployees.databinding.FragmentCompanyDetailsBinding;
 
+import org.w3c.dom.Text;
+
 
 public class CompanyDetailsFragment extends Fragment {
     FragmentCompanyDetailsBinding binding;
@@ -40,6 +42,7 @@ public class CompanyDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCompanyDetailsBinding.inflate(inflater, container, false);
         adDialog = new Dialog(getActivity());
+
 
 
         binding.addOvertimeBtn.setOnClickListener(new View.OnClickListener() {
@@ -144,8 +147,8 @@ public class CompanyDetailsFragment extends Fragment {
         adDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         adDialog.show();
 
-        EditText firstAmountEt = adDialog.findViewById(R.id.firstAmountEt);
-        EditText secondAmountEt = adDialog.findViewById(R.id.secondAmountEt);
+        TextView firstAmountEt = adDialog.findViewById(R.id.firstAmountEt);
+        TextView secondAmountEt = adDialog.findViewById(R.id.secondAmountEt);
         AppCompatButton submitBtn = adDialog.findViewById(R.id.submitBtn);
         TextView firstTv = adDialog.findViewById(R.id.firstTv);
         TextView secondTv = adDialog.findViewById(R.id.secondTv);
@@ -177,67 +180,66 @@ public class CompanyDetailsFragment extends Fragment {
         });
 
 
-        firstTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-
-                // on below line we are getting our hour, minute.
-                hour = c.get(Calendar.HOUR_OF_DAY);
-                minute = c.get(Calendar.MINUTE);
-
-                // on below line we are initializing our Time Picker Dialog
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                        (view, hourOfDay, minute1) -> firstTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
-
-                timePickerDialog.show();
-
-            }
-        });
-        secondTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-
-                hour = c.get(Calendar.HOUR_OF_DAY);
-                minute = c.get(Calendar.MINUTE);
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                        (view, hourOfDay, minute1) -> secondTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
-
-                timePickerDialog.show();
-            }
-        });
-
-        thirdTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-
-                hour = c.get(Calendar.HOUR_OF_DAY);
-                minute = c.get(Calendar.MINUTE);
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                        (view, hourOfDay, minute1) -> thirdTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
-
-                timePickerDialog.show();
-            }
-        });
-
-        fourthTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
-
-                hour = c.get(Calendar.HOUR_OF_DAY);
-                minute = c.get(Calendar.MINUTE);
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                        (view, hourOfDay, minute1) -> fourthTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
-
-                timePickerDialog.show();
-            }
-        });
+//        firstTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Calendar c = Calendar.getInstance();
+//
+//                // on below line we are getting our hour, minute.
+//                hour = c.get(Calendar.HOUR_OF_DAY);
+//                minute = c.get(Calendar.MINUTE);
+//
+//                // on below line we are initializing our Time Picker Dialog
+//                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+//                        (view, hourOfDay, minute1) -> firstTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
+//
+//                timePickerDialog.show();
+//
+//            }
+//        });
+//        secondTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Calendar c = Calendar.getInstance();
+//
+//                hour = c.get(Calendar.HOUR_OF_DAY);
+//                minute = c.get(Calendar.MINUTE);
+//
+//                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+//                        (view, hourOfDay, minute1) -> secondTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
+//
+//                timePickerDialog.show();
+//            }
+//        });
+//
+//        thirdTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Calendar c = Calendar.getInstance();
+//
+//                hour = c.get(Calendar.HOUR_OF_DAY);
+//                minute = c.get(Calendar.MINUTE);
+//
+//                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+//                        (view, hourOfDay, minute1) -> thirdTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
+//
+//                timePickerDialog.show();
+//            }
+//        });
+//        fourthTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Calendar c = Calendar.getInstance();
+//
+//                hour = c.get(Calendar.HOUR_OF_DAY);
+//                minute = c.get(Calendar.MINUTE);
+//
+//                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+//                        (view, hourOfDay, minute1) -> fourthTv.setText(hourOfDay + ":" + minute1), hour, minute, false);
+//
+//                timePickerDialog.show();
+//            }
+//        });
 
 
     }
