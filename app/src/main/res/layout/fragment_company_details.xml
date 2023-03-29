@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_top_round_white"
     tools:context=".Fragment.CompanyDetailsFragment">
 
@@ -32,7 +32,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <TextView
                 android:id="@+id/employeeIdEt"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
@@ -41,9 +41,11 @@
                 android:background="@drawable/edittext_layout"
                 android:drawableLeft="@drawable/ic_card"
                 android:drawablePadding="20dp"
+                android:gravity="center_vertical"
                 android:hint="Enter Employee Id"
-
+                android:inputType="text"
                 android:paddingStart="20dp"
+                android:textAlignment="gravity"
                 android:textColor="@color/black"
                 android:textColorHint="#80282729"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -267,7 +269,6 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:clickable="false"
                         android:id="@+id/rb_active"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -280,7 +281,6 @@
 
 
                     <RadioButton
-                        android:clickable="false"
                         android:id="@+id/rb_inactive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -315,8 +315,6 @@
                 android:layout_marginTop="15dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/note">
@@ -361,7 +359,7 @@
                         android:layout_marginTop="7dp"
                         android:background="@drawable/edittext_layout"
                         android:hint="Enter Basic Salary"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:paddingStart="20dp"
                         android:textColor="@color/black"
                         android:textColorHint="#80282729"
@@ -388,26 +386,41 @@
                         android:layout_height="42dp"
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="15dp"
                         android:background="@drawable/edittext_layout"
                         android:hint="Enter Hourly Rate"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:paddingStart="20dp"
                         android:textColor="@color/black"
                         android:textColorHint="#80282729"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/hourlyTv" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/addOvertimeBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="20dp"
+                        android:background="@drawable/bg_back_btn"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="10dp"
+                        android:text="Add Overtime"
+                        android:textAllCaps="false"
+                        android:textColor="@color/mainColor"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/hourlyEt"
+                        app:layout_constraintTop_toBottomOf="@id/hourlyEt" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
 
+
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/nextBtn"
-                android:visibility="gone"
+                android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
