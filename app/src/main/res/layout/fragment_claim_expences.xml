@@ -116,7 +116,7 @@
         android:drawableLeft="@drawable/ic_profile"
         android:drawablePadding="20dp"
         android:hint="Enter Amount Here..."
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:paddingStart="20dp"
         android:textColor="@color/black"
         android:textColorHint="#80282729"

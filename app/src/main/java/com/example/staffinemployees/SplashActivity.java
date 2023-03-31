@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
         new CountDownTimer(3000, 2000) {
 
             public void onTick(long millisUntilFinished) {
-                binding.splashLogo2.animate().alpha(0).setDuration(1500);
+//                binding.splashLogo2.animate().alpha(0).setDuration(1500);
 
 //                binding.splashLogo.setImageResource(R.drawable.splash_logo2);
 //                mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
