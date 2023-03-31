@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         binding.textView.setText("Events");
                         break;
                     case R.id.nav_attendance:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment(),"attendance").commit();
                         binding.textView.setText("Attendance");
                         break;
 //                    case R.id.nav_payroll:
