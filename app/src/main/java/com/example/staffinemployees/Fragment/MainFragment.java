@@ -2,13 +2,16 @@ package com.example.staffinemployees.Fragment;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -27,12 +30,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staffinemployees.Adapters.HomeEventsAdapter;
 import com.example.staffinemployees.databinding.FragmentMainBinding;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.tasks.CancellationTokenSource;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -41,6 +54,8 @@ import java.util.Locale;
 public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
+    private LocationRequest locationRequest;
+
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -52,7 +67,7 @@ public class MainFragment extends Fragment {
     String currentLocation = null;
     LocalDateTime now = null;
     int userid;
-
+    private static final int REQUEST_CHECK_SETTINGS = 10001;
     public static final int LOCATION = 100;
 
     @Override
@@ -60,6 +75,51 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         setDigitalClock();
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH);
+//                int day = cal.get(Calendar.DATE);
+        month += 1;
+        switch (month) {
+            case 1:
+                binding.txtEventMonth.setText("January" + " " + "Events");
+                break;
+            case 2:
+                binding.txtEventMonth.setText("February" + " " + "Events");
+                break;
+            case 3:
+                binding.txtEventMonth.setText("March" + " " + "Events");
+                break;
+            case 4:
+                binding.txtEventMonth.setText("April" + " " + "Events");
+                break;
+            case 5:
+                binding.txtEventMonth.setText("May" + " " + "Events");
+                break;
+            case 6:
+                binding.txtEventMonth.setText("June" + " " + "Events");
+                break;
+            case 7:
+                binding.txtEventMonth.setText("July" + " " + "Events");
+                break;
+            case 8:
+                binding.txtEventMonth.setText("August" + " " + "Events");
+                break;
+            case 9:
+                binding.txtEventMonth.setText("September" + " " + "Events");
+                break;
+            case 10:
+                binding.txtEventMonth.setText("October" + " " + "Events");
+                break;
+            case 11:
+                binding.txtEventMonth.setText("November" + " " + "Events");
+                break;
+            case 12:
+                binding.txtEventMonth.setText("December" + " " + "Events");
+                break;
+        }
 //
 //        Bundle bundle = this.getArguments();
 //        assert bundle != null;
@@ -104,6 +164,9 @@ public class MainFragment extends Fragment {
                 binding.BreakTimeBtn.setText("Break Start");
             }
         }
+
+
+        // break punch in punch out click
         binding.BreakTimeBtn.setOnClickListener(v -> {
 
             if (!sharedPreferences.getAll().containsKey("break")) {
@@ -135,58 +198,63 @@ public class MainFragment extends Fragment {
 
         });
 
-
+        // attendance punch in punch out click
         binding.punchinOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-                    fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                                try {
-                                    List<Address> loc = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                    currentLocation = loc.get(0).getAddressLine(0) + loc.get(0).getLocality();
-                                    Log.d("LOCATION_IS", currentLocation);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                    if (isGPSEnabled()) {
+                        Task<Location> task = fusedLocationProviderClient.getCurrentLocation(
+                                LocationRequest.PRIORITY_HIGH_ACCURACY,
+                                new CancellationTokenSource().getToken());
+                        task.addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                if (location != null) {
+                                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                                    try {
+                                        List<Address> loc = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                        currentLocation = loc.get(0).getAddressLine(0) + loc.get(0).getLocality();
+                                        Log.d("Latitude", String.valueOf(location.getLatitude()));
+                                        Log.d("Logni", String.valueOf(location.getLongitude()));
+                                        Log.d("LOCATION_IS", currentLocation);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    Toast.makeText(getActivity(), "Unable To Find Location", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(getActivity(), "Unable To Find Location", Toast.LENGTH_SHORT).show();
                             }
-                        }
+                        });
 
-                        {
-                            Toast.makeText(getActivity(), "Unable To Proceed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    if (!sharedPreferences.getAll().containsKey("punch")) {
-                        Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
-                        editor.putString("punch", "punchIn");
-                        editor.apply();
-                        binding.punchinOutBtn.setText("Punch Out");
-                        // call punch in api
-                    } else {
-                        if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
-                            Toast.makeText(getActivity(), "Punch Out : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
-                            editor.putString("punch", "punchOut");
-                            editor.apply();
-                            binding.punchinOutBtn.setText("Punch In");
-                            //punch out api call
-                            //shared pref me daalo punch out
-                        } else {
+                        if (!sharedPreferences.getAll().containsKey("punch")) {
                             Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
                             editor.putString("punch", "punchIn");
                             editor.apply();
                             binding.punchinOutBtn.setText("Punch Out");
-                            // punch in api call
-                            // shared pref me punch in
+                            // call punch in api
+                        } else {
+                            if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
+                                Toast.makeText(getActivity(), "Punch Out : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                                editor.putString("punch", "punchOut");
+                                editor.apply();
+                                binding.punchinOutBtn.setText("Punch In");
+                                //punch out api call
+                                //shared pref me daalo punch out
+                            } else {
+                                Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                                editor.putString("punch", "punchIn");
+                                editor.apply();
+                                binding.punchinOutBtn.setText("Punch Out");
+                                // punch in api call
+                                // shared pref me punch in
 
+                            }
                         }
+                    } else {
+                        turnOnGPS();
                     }
 
                 } else {
@@ -201,6 +269,63 @@ public class MainFragment extends Fragment {
 //        editor.putString("number", mobileno);
         editor.apply();
         return binding.getRoot();
+    }
+
+    private void turnOnGPS() {
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(2000);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getActivity())
+                .checkLocationSettings(builder.build());
+
+        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+
+                try {
+                    LocationSettingsResponse response = task.getResult(ApiException.class);
+                    Toast.makeText(getActivity(), "GPS is already tured on", Toast.LENGTH_SHORT).show();
+
+                } catch (ApiException e) {
+
+                    switch (e.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+
+                            try {
+                                ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                                resolvableApiException.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
+                            } catch (IntentSender.SendIntentException ex) {
+                                ex.printStackTrace();
+                            }
+                            break;
+
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            //Device does not have location
+                            break;
+                    }
+                }
+            }
+        });
+
+    }
+
+    private boolean isGPSEnabled() {
+
+        LocationManager locationManager = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            locationManager = (LocationManager) getContext().getSystemService(getContext().LOCATION_SERVICE);
+        }
+        boolean isEnabled = false;
+
+        isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return isEnabled;
     }
 
 
@@ -233,6 +358,17 @@ public class MainFragment extends Fragment {
                 Toast.makeText(getActivity(), "permission Granted...", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getActivity(), "Permission Denied...", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+
+            switch (grantResults[0]) {
+                case Activity.RESULT_OK:
+                    Toast.makeText(getContext(), "GPS is tured on", Toast.LENGTH_SHORT).show();
+
+                case Activity.RESULT_CANCELED:
+                    Toast.makeText(getContext(), "GPS required to be tured on", Toast.LENGTH_SHORT).show();
             }
         }
     }

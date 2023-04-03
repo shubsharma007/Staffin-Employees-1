@@ -1,24 +1,25 @@
 package com.example.staffinemployees;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.staffinemployees.databinding.ActivityPersonalDetailsBinding;
-import com.google.android.material.navigation.NavigationView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import de.hdodenhof.circleimageview.BuildConfig;
+import com.example.staffinemployees.RealPathUtilGithub.RealPathUtil;
+import com.example.staffinemployees.databinding.ActivityPersonalDetailsBinding;
+
+import java.io.File;
+import java.util.Calendar;
 
 public class PersonalDetailsActivity extends AppCompatActivity {
     ActivityPersonalDetailsBinding binding;
     static Boolean dpImageBoolean = false;
+    private static String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +27,33 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         binding = ActivityPersonalDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.editBtn.setOnClickListener(v -> {
+            Intent editImg = new Intent(Intent.ACTION_PICK);
+            editImg.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(editImg, 123);
+        });
+
+        binding.dobEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PersonalDetailsActivity.this,
+                        (view, year1, monthOfYear, dayOfMonth) -> {
+                            binding.dobEt.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1);
+                        },
+                        year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
         binding.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 if (!dpImageBoolean) {
                     Toast.makeText(getApplicationContext(), "Please Upload your Profile Image", Toast.LENGTH_SHORT).show();
@@ -61,12 +85,30 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     binding.permAddEt.setError("Enter Your Permanent Local Address");
                     binding.permAddEt.requestFocus();
                 } else {
-                    startActivity(new Intent(PersonalDetailsActivity.this, MainActivity.class));
+                    Toast.makeText(PersonalDetailsActivity.this, "Changes Saved...", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
         });
 
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 123) {
+            if (!data.equals(null)) {
+                binding.dpImg.setImageURI(data.getData());
+
+                imagePath = RealPathUtil.getRealPath(PersonalDetailsActivity.this, data.getData());
+
+                File file = new File(imagePath);
+                dpImageBoolean = true;
+
+//            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+//            MultipartBody.Part profileimg = MultipartBody.Part.createFormData("document_image", file.getName(), requestFile);
+
+            }
+        }
     }
 }

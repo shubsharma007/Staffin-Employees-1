@@ -409,7 +409,7 @@
                         android:background="@drawable/bg_back_btn"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="10dp"
-                        android:text="Add Overtime"
+                        android:text="View Overtime"
                         android:textAllCaps="false"
                         android:textColor="@color/mainColor"
                         android:textStyle="bold"
