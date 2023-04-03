@@ -2,31 +2,25 @@ package com.example.staffinemployees.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.staffinemployees.MainActivity;
-import com.example.staffinemployees.R;
 import com.example.staffinemployees.databinding.FragmentClaimExpencesBinding;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ClaimExpences extends Fragment {
@@ -34,6 +28,8 @@ public class ClaimExpences extends Fragment {
     FragmentClaimExpencesBinding binding;
     TextView addText;
     static int count = 0;
+
+    boolean atleastOne = false;
 
 
     @Override
@@ -48,8 +44,19 @@ public class ClaimExpences extends Fragment {
             startActivityForResult(imgIntent, 100);
         });
         binding.SubmitBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();
+            if (binding.titleEt.getText().toString().isEmpty()) {
+                binding.titleEt.setError("enter title");
+                binding.titleEt.requestFocus();
+            } else if (!atleastOne) {
+                Toast.makeText(getActivity(), "upload atleast 1 image", Toast.LENGTH_SHORT).show();
+            } else if (binding.amountEt.getText().toString().isEmpty()) {
+                binding.amountEt.setError("enter amount");
+                binding.amountEt.requestFocus();
+            } else {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                Toast.makeText(getContext(), "submitted", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            }
         });
 
         return binding.getRoot();
@@ -76,6 +83,7 @@ public class ClaimExpences extends Fragment {
             addText.setMaxLines(1);
             addText.setTextColor(Color.parseColor("#808080"));
             binding.llVertical.addView(addText);
+            atleastOne = true;
         }
     }
 

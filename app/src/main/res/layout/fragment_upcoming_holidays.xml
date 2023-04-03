@@ -61,8 +61,8 @@
         android:paddingRight="10dp"
         app:compactCalendarBackgroundColor="#FFFFFF"
 
-        app:compactCalendarCurrentDayBackgroundColor="@color/mainColor"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="#D5D3D3"
+        app:compactCalendarCurrentDayBackgroundColor="#004766F9"
+        app:compactCalendarCurrentSelectedDayBackgroundColor="#BAB9B9"
         app:compactCalendarMultiEventIndicatorColor="#fff"
         app:compactCalendarTargetHeight="250dp"
         app:compactCalendarTextColor="#000000"

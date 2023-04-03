@@ -172,7 +172,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.YEAR, 2023);
-        calendar1.set(Calendar.MONTH, 2);
+        calendar1.set(Calendar.MONTH, 3);
         calendar1.set(Calendar.DAY_OF_MONTH, 1);
         milliTime = calendar1.getTimeInMillis();
         Event ev1 = new Event(getResources().getColor(R.color.txtRed), milliTime, "Teachers' Professional Day");
@@ -180,7 +180,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar2 = Calendar.getInstance();
         calendar2.set(Calendar.YEAR, 2023);
-        calendar2.set(Calendar.MONTH, 2);
+        calendar2.set(Calendar.MONTH, 3);
         calendar2.set(Calendar.DAY_OF_MONTH, 2);
         milliTime = calendar2.getTimeInMillis();
         Event ev2 = new Event(getResources().getColor(R.color.yellow), milliTime, "Teachers' Professional Day");
@@ -188,7 +188,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar3 = Calendar.getInstance();
         calendar3.set(Calendar.YEAR, 2023);
-        calendar3.set(Calendar.MONTH, 2);
+        calendar3.set(Calendar.MONTH, 3);
         calendar3.set(Calendar.DAY_OF_MONTH, 3);
         milliTime = calendar3.getTimeInMillis();
         Event ev3 = new Event(getResources().getColor(R.color.green), milliTime, "Teachers' Professional Day");
@@ -196,7 +196,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar4 = Calendar.getInstance();
         calendar4.set(Calendar.YEAR, 2023);
-        calendar4.set(Calendar.MONTH, 2);
+        calendar4.set(Calendar.MONTH, 3);
         calendar4.set(Calendar.DAY_OF_MONTH, 4);
         milliTime = calendar4.getTimeInMillis();
         Event ev4 = new Event(getResources().getColor(R.color.bluetext), milliTime, "Teachers' Professional Day");
@@ -204,7 +204,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar5 = Calendar.getInstance();
         calendar5.set(Calendar.YEAR, 2023);
-        calendar5.set(Calendar.MONTH, 2);
+        calendar5.set(Calendar.MONTH, 3);
         calendar5.set(Calendar.DAY_OF_MONTH, 5);
         milliTime = calendar5.getTimeInMillis();
         Event ev5 = new Event(getResources().getColor(R.color.txtGray), milliTime, "Teachers' Professional Day");
@@ -212,7 +212,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar6 = Calendar.getInstance();
         calendar6.set(Calendar.YEAR, 2023);
-        calendar6.set(Calendar.MONTH, 2);
+        calendar6.set(Calendar.MONTH, 3);
         calendar6.set(Calendar.DAY_OF_MONTH, 6);
         milliTime = calendar6.getTimeInMillis();
         Event ev6 = new Event(getResources().getColor(R.color.txtPurple), milliTime, "Teachers' Professional Day");
@@ -221,7 +221,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar7 = Calendar.getInstance();
         calendar7.set(Calendar.YEAR, 2023);
-        calendar7.set(Calendar.MONTH, 2);
+        calendar7.set(Calendar.MONTH, 3);
         calendar7.set(Calendar.DAY_OF_MONTH, 7);
         milliTime = calendar7.getTimeInMillis();
         Event ev7 = new Event(getResources().getColor(R.color.black), milliTime, "Teachers' Professional Day");
@@ -230,7 +230,7 @@ public class UpcomingHolidaysFragment extends Fragment {
 
         Calendar calendar10 = Calendar.getInstance();
         calendar10.set(Calendar.YEAR, 2023);
-        calendar10.set(Calendar.MONTH, 2);
+        calendar10.set(Calendar.MONTH, 3);
         calendar10.set(Calendar.DAY_OF_MONTH, 29);
         milliTime = calendar10.getTimeInMillis();
         Event ev10 = new Event(getResources().getColor(R.color.purple_200), milliTime, "Ram Navami");

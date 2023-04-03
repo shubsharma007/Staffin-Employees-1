@@ -7,137 +7,170 @@
     android:background="@drawable/bg_top_round_white"
     tools:context=".Fragment.ClaimExpences">
 
-    <TextView
-        android:id="@+id/titleTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
-        android:text="Item Name"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/titleEt"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="7dp"
-        android:background="@drawable/bg_back_btn"
-        android:drawableLeft="@drawable/ic_profile"
-        android:drawablePadding="20dp"
-        android:hint="Enter Expense Title Here"
-        android:inputType="textPersonName"
-        android:paddingStart="20dp"
-        android:textColor="@color/black"
-        android:textColorHint="#80282729"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTv" />
-
-    <TextView
-        android:id="@+id/uploadPhotosTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="Bills Images"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleEt" />
-
-    <LinearLayout
-        android:id="@+id/llVertical"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="7dp"
-        android:padding="10dp"
-        android:background="@drawable/bg_back_btn"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/uploadPhotosTv">
-
-<!--        <ScrollView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_height="match_parent">-->
-<!--            <LinearLayout-->
-<!--                android:orientation="vertical"-->
-<!--                android:id="@+id/ll"-->
-<!--                android:gravity="start|top"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"/>-->
-
-<!--        </ScrollView>-->
-
-    </LinearLayout>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/clickToAddTv"
-        android:layout_width="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:layout_margin="10dp"
-        android:paddingVertical="18dp"
-        android:layout_weight="1"
-        android:background="@drawable/login_btn_bg"
-        android:gravity="center"
-        android:textSize="17sp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/llVertical"
-        android:text="Click To Upload Images"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/amountTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="Amount"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clickToAddTv" />
-
-    <EditText
-        android:id="@+id/amountEt"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="7dp"
-        android:background="@drawable/bg_back_btn"
-        android:drawableLeft="@drawable/ic_profile"
-        android:drawablePadding="20dp"
-        android:hint="Enter Amount Here..."
-        android:inputType="number"
-        android:paddingStart="20dp"
-        android:textColor="@color/black"
-        android:textColorHint="#80282729"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/amountTv" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/SubmitBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:background="@drawable/login_btn_bg"
-        android:paddingVertical="18dp"
-        android:text="Submit"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="30dp"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="40dp"
+                android:text="Expense Title"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/titleEt"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_back_btn"
+                android:drawableLeft="@drawable/ic_profile"
+                android:drawablePadding="20dp"
+                android:hint="Enter Title Here"
+                android:inputType="textPersonName"
+                android:paddingStart="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleTv" />
+
+            <TextView
+                android:id="@+id/uploadPhotosTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Bills Images"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleEt" />
+
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/uploadPhotosTv">
+
+                <LinearLayout
+                    android:id="@+id/llVertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/bg_back_btn"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp"></LinearLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+            <!--        <ScrollView-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_weight="1"-->
+            <!--            android:layout_height="match_parent">-->
+            <!--            <LinearLayout-->
+            <!--                android:orientation="vertical"-->
+            <!--                android:id="@+id/ll"-->
+            <!--                android:gravity="start|top"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"/>-->
+
+            <!--        </ScrollView>-->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/clickToAddTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/login_btn_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="18dp"
+                android:text="Click To Upload Images"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nestedScroll" />
+
+            <TextView
+                android:id="@+id/amountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Amount"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clickToAddTv" />
+
+            <EditText
+                android:id="@+id/amountEt"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_back_btn"
+                android:drawableLeft="@drawable/ic_profile"
+                android:drawablePadding="20dp"
+                android:hint="Enter Amount Here..."
+                android:inputType="number"
+                android:paddingStart="20dp"
+                android:textColor="@color/black"
+                android:textColorHint="#80282729"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amountTv" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/SubmitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/login_btn_bg"
+                android:paddingVertical="18dp"
+                android:text="Submit"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amountEt"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

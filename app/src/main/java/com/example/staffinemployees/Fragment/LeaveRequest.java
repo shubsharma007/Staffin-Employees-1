@@ -4,9 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.staffinemployees.MainActivity;
 import com.example.staffinemployees.R;
@@ -30,6 +29,7 @@ public class LeaveRequest extends Fragment {
     FragmentLeaveRequestBinding binding;
     List<String> leaves;
     static boolean fullDay = true;
+    String leaveSelected = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +39,7 @@ public class LeaveRequest extends Fragment {
 
         leaves = new ArrayList<>();
 
-    //        leaves.add("please select leave type");
+        //        leaves.add("please select leave type");
         leaves.add("Paid Leave");
         leaves.add("Unpaid Leave");
         leaves.add("Sick Leave");
@@ -53,7 +53,8 @@ public class LeaveRequest extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                issueSelected = strArray[position];
-                Toast.makeText(getContext(), leaves.get(position), Toast.LENGTH_SHORT).show();
+                leaveSelected = leaves.get(position);
+//                Toast.makeText(getContext(), leaves.get(position), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -145,12 +146,22 @@ public class LeaveRequest extends Fragment {
         binding.createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Leave Requested Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(),
-                        MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                if (leaveSelected.equalsIgnoreCase("")) {
+                    Toast.makeText(getContext(), "Select leave type", Toast.LENGTH_SHORT).show();
+                } else if (binding.fromDateEt.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Enter date", Toast.LENGTH_SHORT).show();
+                } else if (binding.descriptionEt.getText().toString().isEmpty()) {
+                    binding.descriptionEt.setError("enter description");
+                    binding.descriptionEt.requestFocus();
+                } else {
+                    Toast.makeText(getContext(), "Request submitted", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(),
+                            MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
             }
         });
 
