@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
 
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -54,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         int userId = getIntent().getIntExtra("userid", 0);
         sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+//        String Id = sharedPreferences.getAll().get("Id").toString();
+//        Log.i("Id AArahi AHI", Id);
 
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         binding.textView.setText("Events");
                         break;
                     case R.id.nav_attendance:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment(),"attendance").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment(), "attendance").commit();
                         binding.textView.setText("Attendance");
                         break;
 //                    case R.id.nav_payroll:
@@ -131,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_logout:
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         editor.remove("mobile");
+                        editor.remove("eId");
+                        editor.remove("Id");
                         editor.apply();
                         finish();
                         break;
