@@ -1,6 +1,9 @@
 package com.example.staffinemployees.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,30 +13,91 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.staffinemployees.Adapters.HolidayAdapter;
+import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.R;
+import com.example.staffinemployees.Response.AllHolidays;
+import com.example.staffinemployees.Response.HolidayResponse;
+import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentUpcomingHolidaysBinding;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class UpcomingHolidaysFragment extends Fragment {
     FragmentUpcomingHolidaysBinding binding;
     Context context;
+    ApiInterface apiInterface;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentUpcomingHolidaysBinding.inflate(inflater, container, false);
+        monthSetByDefault();
+        clickListeners();
+        ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("please wait.......");
+        dialog.show();
+        apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        if (isNetworkAvailable()) {
+            Call<HolidayResponse> callGetAllHolidays = apiInterface.getAllHolidays();
+            callGetAllHolidays.enqueue(new Callback<HolidayResponse>() {
+                @Override
+                public void onResponse(Call<HolidayResponse> call, Response<HolidayResponse> response) {
+                    if (response.isSuccessful()) {
+                        binding.holidayRecyclerView.setVisibility(View.VISIBLE);
+                        binding.notFoundLayout.setVisibility(View.INVISIBLE);
+                        HolidayResponse holidayResp = response.body();
+                        List<AllHolidays> holidays = holidayResp.getHoliday_list();
 
-        initializeCalendar();
+                        binding.holidayRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        binding.holidayRecyclerView.setAdapter(new HolidayAdapter(getContext(), holidays));
+                        initializeCalendar(holidays);
+                        dialog.dismiss();
+                    } else {
+                        dialog.dismiss();
+                        binding.holidayRecyclerView.setVisibility(View.INVISIBLE);
+                        binding.notFoundLayout.setVisibility(View.VISIBLE);
+                        Log.d("kfndkfjn", response.message());
+                        Toast.makeText(getActivity(), "unable to get information", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<HolidayResponse> call, Throwable t) {
+                    Log.d("kfndkfjn", t.getMessage());
+                    dialog.dismiss();
+                    binding.holidayRecyclerView.setVisibility(View.INVISIBLE);
+                    binding.notFoundLayout.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "some failure orrured", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        } else {
+            dialog.dismiss();
+            Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+        return binding.getRoot();
+    }
+
+    private void monthSetByDefault() {
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -80,6 +144,9 @@ public class UpcomingHolidaysFragment extends Fragment {
                 break;
         }
 
+    }
+
+    private void clickListeners() {
         binding.rightScroll.setOnClickListener(v -> {
             binding.compactcalendarView.scrollRight();
         });
@@ -87,6 +154,8 @@ public class UpcomingHolidaysFragment extends Fragment {
             binding.compactcalendarView.scrollLeft();
         });
         binding.compactcalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+
+
             @Override
             public void onDayClick(Date dateClicked) {
 //                List<Event> events = binding.compactcalendarView.getEvents(dateClicked);
@@ -157,86 +226,48 @@ public class UpcomingHolidaysFragment extends Fragment {
                 }
             }
 
+
         });
 
-        binding.holidayRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.holidayRecyclerView.setAdapter(new HolidayAdapter(getContext()));
-
-
-        return binding.getRoot();
     }
 
-    private void initializeCalendar() {
+    private void initializeCalendar(List<AllHolidays> allHolidays) {
+        CompactCalendarView compactCalendarView = getActivity().findViewById(R.id.compactcalendar_view);
+        compactCalendarView.setLocale(TimeZone.getDefault(), Locale.ENGLISH);
+        compactCalendarView.setUseThreeLetterAbbreviation(true);
+        int count = 0;
+
         long milliTime;
 
+        for (AllHolidays singleUnit : allHolidays) {
+            String[] dateInParts = singleUnit.getDate().split("-");
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, Integer.parseInt(dateInParts[0]));
+            calendar.set(Calendar.MONTH, Integer.parseInt(dateInParts[1]) - 1);
+            calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateInParts[2]));
+            milliTime = calendar.getTimeInMillis();
+            Event e;
+            if (count % 3 == 0) {
+                e = new Event(getResources().getColor(R.color.mainColor), milliTime, singleUnit.getHoliday_description());
+            } else if (count % 5 == 0) {
+                e = new Event(getResources().getColor(R.color.yellow), milliTime, singleUnit.getHoliday_description());
 
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(Calendar.YEAR, 2023);
-        calendar1.set(Calendar.MONTH, 3);
-        calendar1.set(Calendar.DAY_OF_MONTH, 1);
-        milliTime = calendar1.getTimeInMillis();
-        Event ev1 = new Event(getResources().getColor(R.color.txtRed), milliTime, "Teachers' Professional Day");
-        binding.compactcalendarView.addEvent(ev1);
+            } else if (count % 2 == 0) {
+                e = new Event(getResources().getColor(R.color.pink), milliTime, singleUnit.getHoliday_description());
 
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(Calendar.YEAR, 2023);
-        calendar2.set(Calendar.MONTH, 3);
-        calendar2.set(Calendar.DAY_OF_MONTH, 2);
-        milliTime = calendar2.getTimeInMillis();
-        Event ev2 = new Event(getResources().getColor(R.color.yellow), milliTime, "Teachers' Professional Day");
-        binding.compactcalendarView.addEvent(ev2);
+            } else {
+                e = new Event(getResources().getColor(R.color.green), milliTime, singleUnit.getHoliday_description());
+            }
+            count++;
+            binding.compactcalendarView.addEvent(e);
+        }
+    }
 
-        Calendar calendar3 = Calendar.getInstance();
-        calendar3.set(Calendar.YEAR, 2023);
-        calendar3.set(Calendar.MONTH, 3);
-        calendar3.set(Calendar.DAY_OF_MONTH, 3);
-        milliTime = calendar3.getTimeInMillis();
-        Event ev3 = new Event(getResources().getColor(R.color.green), milliTime, "Teachers' Professional Day");
-        binding.compactcalendarView.addEvent(ev3);
-
-        Calendar calendar4 = Calendar.getInstance();
-        calendar4.set(Calendar.YEAR, 2023);
-        calendar4.set(Calendar.MONTH, 3);
-        calendar4.set(Calendar.DAY_OF_MONTH, 4);
-        milliTime = calendar4.getTimeInMillis();
-        Event ev4 = new Event(getResources().getColor(R.color.bluetext), milliTime, "Teachers' Professional Day");
-        binding.compactcalendarView.addEvent(ev4);
-
-        Calendar calendar5 = Calendar.getInstance();
-        calendar5.set(Calendar.YEAR, 2023);
-        calendar5.set(Calendar.MONTH, 3);
-        calendar5.set(Calendar.DAY_OF_MONTH, 5);
-        milliTime = calendar5.getTimeInMillis();
-        Event ev5 = new Event(getResources().getColor(R.color.txtGray), milliTime, "Teachers' Professional Day");
-        binding.compactcalendarView.addEvent(ev5);
-
-        Calendar calendar6 = Calendar.getInstance();
-        calendar6.set(Calendar.YEAR, 2023);
-        calendar6.set(Calendar.MONTH, 3);
-        calendar6.set(Calendar.DAY_OF_MONTH, 6);
-        milliTime = calendar6.getTimeInMillis();
-        Event ev6 = new Event(getResources().getColor(R.color.txtPurple), milliTime, "Teachers' Professional Day");
-        binding.compactcalendarView.addEvent(ev6);
-
-
-        Calendar calendar7 = Calendar.getInstance();
-        calendar7.set(Calendar.YEAR, 2023);
-        calendar7.set(Calendar.MONTH, 3);
-        calendar7.set(Calendar.DAY_OF_MONTH, 7);
-        milliTime = calendar7.getTimeInMillis();
-        Event ev7 = new Event(getResources().getColor(R.color.black), milliTime, "Teachers' Professional Day");
-        binding.compactcalendarView.addEvent(ev7);
-
-
-        Calendar calendar10 = Calendar.getInstance();
-        calendar10.set(Calendar.YEAR, 2023);
-        calendar10.set(Calendar.MONTH, 3);
-        calendar10.set(Calendar.DAY_OF_MONTH, 29);
-        milliTime = calendar10.getTimeInMillis();
-        Event ev10 = new Event(getResources().getColor(R.color.purple_200), milliTime, "Ram Navami");
-        binding.compactcalendarView.addEvent(ev10);
-
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }

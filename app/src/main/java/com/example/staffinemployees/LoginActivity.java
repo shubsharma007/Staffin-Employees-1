@@ -75,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 //                                startActivity(intent);
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 editor.putString("mobile", number);
+                                editor.putString("eId",response.body().getResultLogin().getEmployeeID());
+                                editor.putString("Id",response.body().getResultLogin().getId().toString());
                                 editor.apply();
                                 finish();
                                 Toast.makeText(LoginActivity.this, "Successful Login...", Toast.LENGTH_SHORT).show();
