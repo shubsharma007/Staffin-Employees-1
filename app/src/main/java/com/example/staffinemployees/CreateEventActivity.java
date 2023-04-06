@@ -1,11 +1,16 @@
 package com.example.staffinemployees;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,74 +19,136 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.staffinemployees.Interface.ApiInterface;
+import com.example.staffinemployees.Response.TotalEmployeeResponse;
+import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.ActivityCreateEventBinding;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateEventActivity extends AppCompatActivity {
     ActivityCreateEventBinding binding;
 
-    String[] employeesList;
+    List<String> employeesList;
     boolean[] selectedEmployees;
     boolean atleastOne = false;
+    ProgressDialog progress;
+    ApiInterface apiInterface;
+    HashMap<String, String> map;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        clickListeners();
 
-        employeesList = new String[]{"shubham raikwar", "pragati", "shubham", "priyanshi", "sakshi", "yogesh"};
-        selectedEmployees = new boolean[employeesList.length];
-        ImageView imageview[] = new ImageView[employeesList.length];
+
+    }   // onCreate end
+
+    private void clickListeners() {
+        map = new HashMap<>();
+        apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        progress = new ProgressDialog(CreateEventActivity.this);
+        progress.setMessage("please wait....");
+        employeesList = new ArrayList<>();
+        if (isNetworkAvailable()) {
+            progress.show();
+            Call<TotalEmployeeResponse> callGetTotalEmployee = apiInterface.getTotalEmployee();
+            callGetTotalEmployee.enqueue(new Callback<TotalEmployeeResponse>() {
+                @Override
+                public void onResponse(Call<TotalEmployeeResponse> call, Response<TotalEmployeeResponse> response) {
+                    if (response.isSuccessful()) {
+                        ImageView imageview[] = new ImageView[response.body().getEmployeeResult().size()];
+
+                        String[] names = new String[response.body().getEmployeeResult().size()];
+
+                        for (int i = 0; i < response.body().getEmployeeResult().size(); i++) {
+                            employeesList.add(response.body().getEmployeeResult().get(i).getFullName());
+                            Log.d("dfuhksdf", employeesList.get(i));
+                            names[i] = employeesList.get(i);
+                            map.put(response.body().getEmployeeResult().get(i).getFullName(), response.body().getEmployeeResult().get(i).getProfileImage());
+                        }
+
+
+                        selectedEmployees = new boolean[response.body().getEmployeeResult().size()];
+
+
+                        binding.addMemberBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
+
+                                builder.setTitle("Add Members");
+                                builder.setIcon(R.drawable.img_dp);
+
+                                builder.setMultiChoiceItems(names, selectedEmployees, (dialog, which, isChecked) -> {
+                                    selectedEmployees[which] = isChecked;
+
+                                });
+
+                                builder.setCancelable(false);
+
+                                builder.setNeutralButton("CLEAR ALL", (dialog, which) -> {
+                                    Arrays.fill(selectedEmployees, false);
+                                    binding.dynamicLl.removeAllViews();
+                                });
+                                builder.setNegativeButton("CANCEL", (dialog, which) -> {
+                                });
+                                builder.setPositiveButton("Done", (dialog, which) -> {
+                                    binding.dynamicLl.removeAllViews();
+                                    for (int i = 0; i < selectedEmployees.length; i++) {
+                                        if (selectedEmployees[i]) {
+                                            imageview[i] = new ImageView(CreateEventActivity.this);
+                                            imageview[i].setImageResource(R.drawable.img_dp);
+                                            View child = getLayoutInflater().inflate(R.layout.add_member_in_event, null);
+                                            child.findViewById(R.id.memberDp);
+                                            binding.dynamicLl.addView(child);
+                                        }
+                                    }
+                                });
+
+                                builder.create();
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }
+                        });
+
+                        progress.dismiss();
+                    } else {
+                        progress.dismiss();
+                        Toast.makeText(CreateEventActivity.this, "some error occured", Toast.LENGTH_SHORT).show();
+                        Log.d("jkdfsdf", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TotalEmployeeResponse> call, Throwable t) {
+                    Log.d("nfkjsf", t.getMessage());
+                    progress.dismiss();
+                    Toast.makeText(CreateEventActivity.this, "Unable to Load", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            Toast.makeText(this, "Internet Not Available", Toast.LENGTH_SHORT).show();
+        }
+
 
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-
-        binding.addMemberBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateEventActivity.this);
-
-                builder.setTitle("Add Members");
-                builder.setIcon(R.drawable.img_dp);
-
-                builder.setMultiChoiceItems(employeesList, selectedEmployees, (dialog, which, isChecked) -> {
-                    selectedEmployees[which] = isChecked;
-
-                });
-
-                builder.setCancelable(false);
-
-                builder.setNeutralButton("CLEAR ALL", (dialog, which) -> {
-                    Arrays.fill(selectedEmployees, false);
-                    binding.dynamicLl.removeAllViews();
-                });
-                builder.setNegativeButton("CANCEL", (dialog, which) -> {
-                });
-                builder.setPositiveButton("Done", (dialog, which) -> {
-                    binding.dynamicLl.removeAllViews();
-                    for (int i = 0; i < selectedEmployees.length; i++) {
-                        if (selectedEmployees[i]) {
-                            imageview[i] = new ImageView(CreateEventActivity.this);
-                            imageview[i].setImageResource(R.drawable.img_dp);
-                            View child = getLayoutInflater().inflate(R.layout.add_member_in_event, null);
-                            child.findViewById(R.id.memberDp);
-                            binding.dynamicLl.addView(child);
-                        }
-                    }
-                });
-
-                builder.create();
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
             }
         });
 
@@ -215,8 +282,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     year, month, day);
             datePickerDialog.show();
         });
-
-    }   // onCreate end
+    }
 
 
     @Override
@@ -253,5 +319,11 @@ public class CreateEventActivity extends AppCompatActivity {
         selectedEmployees = savedInstanceState.getBooleanArray("selecteds");
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 }

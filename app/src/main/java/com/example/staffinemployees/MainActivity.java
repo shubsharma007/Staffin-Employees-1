@@ -1,29 +1,16 @@
 package com.example.staffinemployees;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.staffinemployees.Fragment.AttendanceFragment;
 import com.example.staffinemployees.Fragment.BankDetailsFragment;
@@ -40,8 +27,8 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
-
-
+    private static long backPressed;
+    private static final int TIME_DELAY = 2000;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -97,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_company_details:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new CompanyDetailsFragment()).commit();
-                        binding.textView.setText("Company Details");
+                        binding.textView.setText("Employee Details");
                         break;
                     case R.id.nav_upcoming_holidays:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new UpcomingHolidaysFragment()).commit();
@@ -108,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         binding.textView.setText("Events");
                         break;
                     case R.id.nav_attendance:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment(),"attendance").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new AttendanceFragment(), "attendance").commit();
                         binding.textView.setText("Attendance");
                         break;
 //                    case R.id.nav_payroll:
@@ -148,5 +135,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (backPressed + TIME_DELAY > System.currentTimeMillis()) {
+            finishAffinity();
+        } else {
+            Toast.makeText(this, "Press once again to exit!", Toast.LENGTH_SHORT).show();
+        }
+        backPressed = System.currentTimeMillis();
+    }
 }

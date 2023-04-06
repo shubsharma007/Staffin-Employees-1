@@ -10,8 +10,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:fillViewport="true"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,6 +120,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/nestedScroll" />
 
+            <ImageButton
+                android:id="@+id/openCameraBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="15dp"
+                android:background="@drawable/bg_blue_corner"
+                android:src="@drawable/ic_camera_black"
+                app:layout_constraintBottom_toBottomOf="@id/clickToAddTv"
+                app:layout_constraintStart_toEndOf="@id/clickToAddTv"
+                app:layout_constraintTop_toTopOf="@id/clickToAddTv" />
+
             <TextView
                 android:id="@+id/amountTv"
                 android:layout_width="wrap_content"
@@ -155,11 +166,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/login_btn_bg"
                 android:paddingVertical="18dp"
                 android:text="Submit"
-                android:layout_marginTop="20dp"
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textStyle="bold"
