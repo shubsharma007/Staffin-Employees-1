@@ -18,9 +18,9 @@ public class CalendarSettingActivity extends AppCompatActivity {
         binding = ActivityCalendarSettingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-        binding.holidayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.holidayRecyclerView.setAdapter(new HolidayAdapter(CalendarSettingActivity.this));
+//
+//        binding.holidayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        binding.holidayRecyclerView.setAdapter(new HolidayAdapter(CalendarSettingActivity.this));
 
     }
 }

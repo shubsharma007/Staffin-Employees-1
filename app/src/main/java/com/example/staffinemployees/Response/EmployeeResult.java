@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class EmployeeResult {
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -36,7 +37,7 @@ public class EmployeeResult {
     private String departmentId;
     @SerializedName("designation")
     @Expose
-    private String designation;
+    private Integer designation;
     @SerializedName("joining_date")
     @Expose
     private String joiningDate;
@@ -60,16 +61,34 @@ public class EmployeeResult {
     private String status;
     @SerializedName("last_login")
     @Expose
-    private String lastLogin;
+    private Object lastLogin;
     @SerializedName("remember_token")
     @Expose
-    private String rememberToken;
+    private Object rememberToken;
     @SerializedName("exit_date")
     @Expose
-    private String exitDate;
+    private Object exitDate;
+    @SerializedName("first_over_time_start")
+    @Expose
+    private Object firstOverTimeStart;
+    @SerializedName("first_over_time_end")
+    @Expose
+    private Object firstOverTimeEnd;
+    @SerializedName("first_over_time_amount")
+    @Expose
+    private Object firstOverTimeAmount;
+    @SerializedName("second_over_time_start")
+    @Expose
+    private Object secondOverTimeStart;
+    @SerializedName("second_over_time_end")
+    @Expose
+    private Object secondOverTimeEnd;
+    @SerializedName("second_over_time_amount")
+    @Expose
+    private Object secondOverTimeAmount;
     @SerializedName("reset_code")
     @Expose
-    private String resetCode;
+    private Object resetCode;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -163,11 +182,11 @@ public class EmployeeResult {
         this.departmentId = departmentId;
     }
 
-    public String getDesignation() {
+    public Integer getDesignation() {
         return designation;
     }
 
-    public void setDesignation(String designation) {
+    public void setDesignation(Integer designation) {
         this.designation = designation;
     }
 
@@ -227,35 +246,83 @@ public class EmployeeResult {
         this.status = status;
     }
 
-    public String getLastLogin() {
+    public Object getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(String lastLogin) {
+    public void setLastLogin(Object lastLogin) {
         this.lastLogin = lastLogin;
     }
 
-    public String getRememberToken() {
+    public Object getRememberToken() {
         return rememberToken;
     }
 
-    public void setRememberToken(String rememberToken) {
+    public void setRememberToken(Object rememberToken) {
         this.rememberToken = rememberToken;
     }
 
-    public String getExitDate() {
+    public Object getExitDate() {
         return exitDate;
     }
 
-    public void setExitDate(String exitDate) {
+    public void setExitDate(Object exitDate) {
         this.exitDate = exitDate;
     }
 
-    public String getResetCode() {
+    public Object getFirstOverTimeStart() {
+        return firstOverTimeStart;
+    }
+
+    public void setFirstOverTimeStart(Object firstOverTimeStart) {
+        this.firstOverTimeStart = firstOverTimeStart;
+    }
+
+    public Object getFirstOverTimeEnd() {
+        return firstOverTimeEnd;
+    }
+
+    public void setFirstOverTimeEnd(Object firstOverTimeEnd) {
+        this.firstOverTimeEnd = firstOverTimeEnd;
+    }
+
+    public Object getFirstOverTimeAmount() {
+        return firstOverTimeAmount;
+    }
+
+    public void setFirstOverTimeAmount(Object firstOverTimeAmount) {
+        this.firstOverTimeAmount = firstOverTimeAmount;
+    }
+
+    public Object getSecondOverTimeStart() {
+        return secondOverTimeStart;
+    }
+
+    public void setSecondOverTimeStart(Object secondOverTimeStart) {
+        this.secondOverTimeStart = secondOverTimeStart;
+    }
+
+    public Object getSecondOverTimeEnd() {
+        return secondOverTimeEnd;
+    }
+
+    public void setSecondOverTimeEnd(Object secondOverTimeEnd) {
+        this.secondOverTimeEnd = secondOverTimeEnd;
+    }
+
+    public Object getSecondOverTimeAmount() {
+        return secondOverTimeAmount;
+    }
+
+    public void setSecondOverTimeAmount(Object secondOverTimeAmount) {
+        this.secondOverTimeAmount = secondOverTimeAmount;
+    }
+
+    public Object getResetCode() {
         return resetCode;
     }
 
-    public void setResetCode(String resetCode) {
+    public void setResetCode(Object resetCode) {
         this.resetCode = resetCode;
     }
 
@@ -290,4 +357,5 @@ public class EmployeeResult {
     public void setWorkDuration(String workDuration) {
         this.workDuration = workDuration;
     }
+
 }
