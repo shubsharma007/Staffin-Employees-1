@@ -1,5 +1,6 @@
 package com.example.staffinemployees.Interface;
 
+import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
@@ -22,7 +23,11 @@ public interface ApiInterface {
     @GET("get-holiday")
     Call<HolidayResponse> getAllHolidays();
 
+    //get employee details
     @GET("get-employee-details/{id}")
     Call<EmployeeProfileResponse> getEmployeeProfile(@Path("id") int id);
+
+    @GET("get-bank-details/{id}")
+    Call<EmployeeBankDetails> getEmployeeBankDetails(@Path("id") int id);
 
 }
