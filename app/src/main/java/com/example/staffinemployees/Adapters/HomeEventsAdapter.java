@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staffinemployees.R;
 
-public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.HomeEventsViewHolder>
-{
+public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.HomeEventsViewHolder> {
     Context context;
 
     public HomeEventsAdapter(Context context) {
@@ -21,14 +21,19 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
     @NonNull
     @Override
     public HomeEventsAdapter.HomeEventsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(parent.getContext());
-        View view=inflater.inflate(R.layout.rv_event_layout,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.rv_event_layout, parent, false);
         return new HomeEventsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HomeEventsAdapter.HomeEventsViewHolder holder, int position) {
-
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
     }
 
     @Override
@@ -37,8 +42,11 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
     }
 
     public class HomeEventsViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout card;
+
         public HomeEventsViewHolder(@NonNull View itemView) {
             super(itemView);
+            card = itemView.findViewById(R.id.card);
         }
     }
 }

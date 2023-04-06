@@ -76,6 +76,7 @@
                 app:layout_constraintTop_toBottomOf="@id/uploadPhotosTv">
 
                 <LinearLayout
+
                     android:id="@+id/llVertical"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
@@ -83,7 +84,7 @@
                     android:layout_marginTop="7dp"
                     android:background="@drawable/bg_back_btn"
                     android:orientation="vertical"
-                    android:paddingHorizontal="10dp"></LinearLayout>
+                    android:paddingHorizontal="10dp" />
 
 
             </androidx.core.widget.NestedScrollView>
