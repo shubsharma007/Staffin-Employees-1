@@ -77,8 +77,10 @@
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/drawernavigationView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:background="@color/white"
             android:layout_gravity="start"
+            app:itemIconTint="@color/black"
+            android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:itemTextColor="@color/mainColor"
             app:menu="@menu/menu" />

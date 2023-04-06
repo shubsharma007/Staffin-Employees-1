@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
     android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_margin="3dp"
     android:background="@color/white"
-    android:padding="1dp"
     android:elevation="3dp"
-    android:layout_height="wrap_content">
+    android:padding="1dp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -102,9 +103,9 @@
             android:layout_height="0dp"
             android:layout_marginStart="-10dp"
             android:background="@drawable/bg_20"
+            android:gravity="center_vertical|center_horizontal"
             android:text="20+"
             android:textAlignment="gravity"
-            android:gravity="center_vertical|center_horizontal"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/el3"
             app:layout_constraintStart_toEndOf="@+id/el3"
@@ -119,11 +120,11 @@
         android:gravity="center_horizontal|center_vertical"
         android:paddingHorizontal="7dp"
         android:text="Intrastate"
-        android:visibility="gone"
         android:textAlignment="gravity"
         android:textColor="@color/white"
         android:textSize="10sp"
         android:textStyle="normal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/cl2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cl2"
