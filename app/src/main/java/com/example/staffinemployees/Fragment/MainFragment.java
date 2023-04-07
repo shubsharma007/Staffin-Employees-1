@@ -29,6 +29,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staffinemployees.Adapters.HomeEventsAdapter;
+import com.example.staffinemployees.Interface.ApiInterface;
+import com.example.staffinemployees.Response.Punch;
+import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentMainBinding;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -50,6 +53,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+
 
 public class MainFragment extends Fragment {
 
@@ -65,16 +70,25 @@ public class MainFragment extends Fragment {
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     String currentLocation = null;
-    LocalDateTime now = null;
-    int userid;
+
+    String Id, eId;
+    String currentMonth, currentYear, currentDate;
     private static final int REQUEST_CHECK_SETTINGS = 10001;
     public static final int LOCATION = 100;
+
+    ApiInterface apiInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
+        apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        sharedPreferences = this.requireContext().getSharedPreferences("staffin", Context.MODE_PRIVATE);
+
         setDigitalClock();
+
+        Id = sharedPreferences.getAll().get("Id").toString();
+        eId = sharedPreferences.getAll().get("eId").toString();
 
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -142,7 +156,6 @@ public class MainFragment extends Fragment {
         binding.recyclerViewMonthEvents.setLayoutManager(layoutManagerH);
 
 
-        sharedPreferences = this.requireContext().getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         if (!sharedPreferences.getAll().containsKey("punch")) {
@@ -175,6 +188,8 @@ public class MainFragment extends Fragment {
                 editor.putString("break", "breakStart");
                 editor.apply();
                 binding.BreakTimeBtn.setText("Break End");
+
+
                 // call punch in api
             } else {
                 if (sharedPreferences.getAll().get("break").toString().equalsIgnoreCase("breakStart")) {
@@ -220,6 +235,51 @@ public class MainFragment extends Fragment {
                                         Log.d("Latitude", String.valueOf(location.getLatitude()));
                                         Log.d("Logni", String.valueOf(location.getLongitude()));
                                         Log.d("LOCATION_IS", currentLocation);
+
+                                        Date date = new Date();
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.setTime(date);
+                                        cal.get(Calendar.MONTH);
+
+                                        String punchDate = currentYear + "-" + currentMonth + "-" + currentDate;
+                                        String punchTime = String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second);
+
+                                        if (!sharedPreferences.getAll().containsKey("punch")) {
+                                            Toast.makeText(getActivity(), "Punch In : " + punchTime, Toast.LENGTH_SHORT).show();
+                                            editor.putString("punch", "punchIn");
+                                            editor.apply();
+                                            binding.punchinOutBtn.setText("Punch Out");
+
+                                            Log.d("PUNCHDATE", punchDate);
+                                            Log.d("PUNCHTIME", punchTime);
+
+//                                            Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime);
+                                            // call punch in api
+                                        } else {
+                                            if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
+                                                Toast.makeText(getActivity(), "Punch Out : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                                                editor.putString("punch", "punchOut");
+                                                editor.apply();
+                                                binding.punchinOutBtn.setText("Punch In");
+
+                                                Log.d("PUNCHDATE", punchDate);
+                                                Log.d("PUNCHTIME", punchTime);
+                                                //punch out api call
+                                                //shared pref me daalo punch out
+                                            } else {
+                                                Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
+                                                editor.putString("punch", "punchIn");
+                                                editor.apply();
+                                                binding.punchinOutBtn.setText("Punch Out");
+
+                                                Log.d("PUNCHDATE", punchDate);
+                                                Log.d("PUNCHTIME", punchTime);
+                                                // punch in api call
+                                                // shared pref me punch in
+
+                                            }
+                                        }
+
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -228,31 +288,6 @@ public class MainFragment extends Fragment {
                                 }
                             }
                         });
-
-                        if (!sharedPreferences.getAll().containsKey("punch")) {
-                            Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
-                            editor.putString("punch", "punchIn");
-                            editor.apply();
-                            binding.punchinOutBtn.setText("Punch Out");
-                            // call punch in api
-                        } else {
-                            if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
-                                Toast.makeText(getActivity(), "Punch Out : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
-                                editor.putString("punch", "punchOut");
-                                editor.apply();
-                                binding.punchinOutBtn.setText("Punch In");
-                                //punch out api call
-                                //shared pref me daalo punch out
-                            } else {
-                                Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
-                                editor.putString("punch", "punchIn");
-                                editor.apply();
-                                binding.punchinOutBtn.setText("Punch Out");
-                                // punch in api call
-                                // shared pref me punch in
-
-                            }
-                        }
                     } else {
                         turnOnGPS();
                     }
@@ -269,6 +304,37 @@ public class MainFragment extends Fragment {
 //        editor.putString("number", mobileno);
         editor.apply();
         return binding.getRoot();
+    }
+
+    private String getMonthByNumber(int i) {
+        switch (i) {
+            case 1:
+                return ("January" + " " + "Events");
+            case 2:
+                return ("February" + " " + "Events");
+            case 3:
+                return ("March" + " " + "Events");
+            case 4:
+                return ("April" + " " + "Events");
+            case 5:
+                return ("May" + " " + "Events");
+            case 6:
+                return ("June" + " " + "Events");
+            case 7:
+                return ("July" + " " + "Events");
+            case 8:
+                return ("August" + " " + "Events");
+            case 9:
+                return ("September" + " " + "Events");
+            case 10:
+                return ("October" + " " + "Events");
+            case 11:
+                return ("November" + " " + "Events");
+            case 12:
+                return ("December" + " " + "Events");
+            default:
+                return "";
+        }
     }
 
     private void turnOnGPS() {
@@ -394,6 +460,9 @@ public class MainFragment extends Fragment {
                             hour = now.getHour();
                             minute = now.getMinute();
                             second = now.getSecond();
+                            currentMonth = now.getMonth().toString();
+                            currentDate = String.valueOf(now.getDayOfMonth());
+                            currentYear = String.valueOf(now.getYear());
                         }
                         binding.hourTv.setText(String.format("%02d", hour));
                         binding.minTv.setText(String.format("%02d", minute));

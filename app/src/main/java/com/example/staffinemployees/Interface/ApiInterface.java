@@ -4,6 +4,7 @@ import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
+import com.example.staffinemployees.Response.Punch;
 import com.example.staffinemployees.Response.TotalEmployeeResponse;
 
 import retrofit2.Call;
@@ -42,5 +43,19 @@ public interface ApiInterface {
                                          @Field("leave_type") String leave_type,
                                          @Field("reason") String reason,
                                          @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("clock-in-attendance/{id}")
+    Call<Punch> punchIn(@Path("id") int id,
+                        @Field("date") String date,
+                        @Field("status") String status,
+                        @Field("clock_in") String clock_in
+    );
+
+    @FormUrlEncoded
+    @POST("clock-out-attendance/{id}")
+    Call<Punch> punchOut(@Path("id") int id,
+                         @Field("clock_out") String clock_out
+    );
 
 }
