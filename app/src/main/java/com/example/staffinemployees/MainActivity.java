@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_logout:
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         editor.remove("mobile");
+                        editor.remove("eId");
+                        editor.remove("Id");
                         editor.apply();
                         finish();
                         break;
