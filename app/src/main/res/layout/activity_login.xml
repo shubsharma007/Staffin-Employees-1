@@ -58,9 +58,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneEt"
-                android:textColorHint="@color/txtGray"
                 android:textColor="@color/black"
-                android:hint="Mobile Number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
@@ -85,8 +83,6 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
-                android:textColorHint="@color/txtGray"
-                android:hint="Password"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
