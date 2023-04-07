@@ -3,6 +3,7 @@ package com.example.staffinemployees.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentSender;
@@ -12,6 +13,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -54,6 +57,10 @@ import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.Path;
 
 
 public class MainFragment extends Fragment {
@@ -77,6 +84,7 @@ public class MainFragment extends Fragment {
     public static final int LOCATION = 100;
 
     ApiInterface apiInterface;
+    ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,7 +92,8 @@ public class MainFragment extends Fragment {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         sharedPreferences = this.requireContext().getSharedPreferences("staffin", Context.MODE_PRIVATE);
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please Wait....");
         setDigitalClock();
 
         Id = sharedPreferences.getAll().get("Id").toString();
@@ -218,82 +227,168 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (isNetworkAvailable()) {
+                    if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        if (isGPSEnabled()) {
+                            Task<Location> task = fusedLocationProviderClient.getCurrentLocation(
+                                    LocationRequest.PRIORITY_HIGH_ACCURACY,
+                                    new CancellationTokenSource().getToken());
+                            task.addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    if (location != null) {
+                                        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                                        try {
+                                            List<Address> loc = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                            currentLocation = loc.get(0).getAddressLine(0) + loc.get(0).getLocality();
+                                            Log.d("Latitude", String.valueOf(location.getLatitude()));
+                                            Log.d("Logni", String.valueOf(location.getLongitude()));
+                                            Log.d("LOCATION_IS", currentLocation);
 
-                    if (isGPSEnabled()) {
-                        Task<Location> task = fusedLocationProviderClient.getCurrentLocation(
-                                LocationRequest.PRIORITY_HIGH_ACCURACY,
-                                new CancellationTokenSource().getToken());
-                        task.addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                if (location != null) {
-                                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                                    try {
-                                        List<Address> loc = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                        currentLocation = loc.get(0).getAddressLine(0) + loc.get(0).getLocality();
-                                        Log.d("Latitude", String.valueOf(location.getLatitude()));
-                                        Log.d("Logni", String.valueOf(location.getLongitude()));
-                                        Log.d("LOCATION_IS", currentLocation);
+                                            Date date = new Date();
+                                            Calendar cal = Calendar.getInstance();
+                                            cal.setTime(date);
+                                            cal.get(Calendar.MONTH);
 
-                                        Date date = new Date();
-                                        Calendar cal = Calendar.getInstance();
-                                        cal.setTime(date);
-                                        cal.get(Calendar.MONTH);
+                                            String punchDate = currentYear + "-" + currentMonth + "-" + currentDate;
+                                            String punchTime = String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second);
+                                            //current location send krna he remaining in api
 
-                                        String punchDate = currentYear + "-" + currentMonth + "-" + currentDate;
-                                        String punchTime = String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second);
+                                            if (!sharedPreferences.getAll().containsKey("punch")) {
+                                                Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime);
+                                                progressDialog.show();
+                                                callPunchIn.enqueue(new Callback<Punch>() {
+                                                    @Override
+                                                    public void onResponse(Call<Punch> call, Response<Punch> response) {
+                                                        if (response.isSuccessful()) {
+                                                            Toast.makeText(getActivity(), "Punch In : " + punchTime, Toast.LENGTH_SHORT).show();
+                                                            editor.putString("punch", "punchIn");
+                                                            editor.apply();
+                                                            binding.punchinOutBtn.setText("Punch Out");
+                                                            progressDialog.dismiss();
+                                                            Log.d("PUNCHDATE", punchDate);
+                                                            Log.d("PUNCHTIME", punchTime);
 
-                                        if (!sharedPreferences.getAll().containsKey("punch")) {
-                                            Toast.makeText(getActivity(), "Punch In : " + punchTime, Toast.LENGTH_SHORT).show();
-                                            editor.putString("punch", "punchIn");
-                                            editor.apply();
-                                            binding.punchinOutBtn.setText("Punch Out");
+                                                        } else if (response.code() == 400) {
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(getActivity(), "You Have Already Punched In", Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
+                                                            Log.d("fuh", response.message());
+                                                        }
+                                                    }
 
-                                            Log.d("PUNCHDATE", punchDate);
-                                            Log.d("PUNCHTIME", punchTime);
+                                                    @Override
+                                                    public void onFailure(Call<Punch> call, Throwable t) {
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(getContext(), "some failure occured", Toast.LENGTH_SHORT).show();
+                                                        Log.d("ndf", t.getMessage());
+                                                    }
+                                                });
 
-//                                            Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime);
-                                            // call punch in api
-                                        } else {
-                                            if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
-                                                Toast.makeText(getActivity(), "Punch Out : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
-                                                editor.putString("punch", "punchOut");
-                                                editor.apply();
-                                                binding.punchinOutBtn.setText("Punch In");
 
-                                                Log.d("PUNCHDATE", punchDate);
-                                                Log.d("PUNCHTIME", punchTime);
-                                                //punch out api call
-                                                //shared pref me daalo punch out
                                             } else {
-                                                Toast.makeText(getActivity(), "Punch In : " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second), Toast.LENGTH_SHORT).show();
-                                                editor.putString("punch", "punchIn");
-                                                editor.apply();
-                                                binding.punchinOutBtn.setText("Punch Out");
+                                                if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
 
-                                                Log.d("PUNCHDATE", punchDate);
-                                                Log.d("PUNCHTIME", punchTime);
-                                                // punch in api call
-                                                // shared pref me punch in
 
+                                                    Call<Punch> callPunchOut = apiInterface.punchOut(Integer.parseInt(Id), punchTime);
+                                                    progressDialog.show();
+                                                    callPunchOut.enqueue(new Callback<Punch>() {
+                                                        @Override
+                                                        public void onResponse(Call<Punch> call, Response<Punch> response) {
+                                                            if (response.isSuccessful()) {
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(getActivity(), "Punch Out : " + punchTime, Toast.LENGTH_SHORT).show();
+                                                                editor.putString("punch", "punchOut");
+                                                                editor.apply();
+                                                                binding.punchinOutBtn.setText("Punch In");
+
+                                                                Log.d("PUNCHDATE", punchDate);
+                                                                Log.d("PUNCHTIME", punchTime);
+                                                            } else if (response.code() == 400) {
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(getActivity(), "You Have Already Punched Out", Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                progressDialog.dismiss();
+
+                                                                Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
+                                                                Log.d("fuh", response.message());
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<Punch> call, Throwable t) {
+                                                            Toast.makeText(getContext(), "some failure occured", Toast.LENGTH_SHORT).show();
+                                                            progressDialog.dismiss();
+                                                            Log.d("ndf", t.getMessage());
+                                                        }
+                                                    });
+
+
+                                                    //punch out api call
+
+
+                                                    //shared pref me daalo punch out
+                                                } else {
+
+                                                    Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime);
+                                                    progressDialog.show();
+                                                    callPunchIn.enqueue(new Callback<Punch>() {
+                                                        @Override
+                                                        public void onResponse(Call<Punch> call, Response<Punch> response) {
+
+                                                            if (response.isSuccessful()) {
+                                                                Toast.makeText(getActivity(), "Punch In : " + punchTime, Toast.LENGTH_SHORT).show();
+                                                                progressDialog.dismiss();
+
+                                                                editor.putString("punch", "punchIn");
+                                                                editor.apply();
+                                                                binding.punchinOutBtn.setText("Punch Out");
+
+                                                                Log.d("PUNCHDATE", punchDate);
+                                                                Log.d("PUNCHTIME", punchTime);
+                                                                // punch in api call
+                                                                // shared pref me punch in
+                                                            } else if (response.code() == 400) {
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(getActivity(), "You Have Already Punched In", Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
+
+                                                                progressDialog.dismiss();
+                                                                Log.d("fuh", response.message());
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<Punch> call, Throwable t) {
+                                                            Toast.makeText(getContext(), "some failure occured", Toast.LENGTH_SHORT).show();
+                                                            progressDialog.dismiss();
+
+                                                            Log.d("ndf", t.getMessage());
+                                                        }
+                                                    });
+                                                }
                                             }
+
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
                                         }
-
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                    } else {
+                                        Toast.makeText(getActivity(), "Unable To Find Location", Toast.LENGTH_SHORT).show();
                                     }
-                                } else {
-                                    Toast.makeText(getActivity(), "Unable To Find Location", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
-                    } else {
-                        turnOnGPS();
-                    }
+                            });
+                        } else {
+                            turnOnGPS();
+                        }
 
+                    } else {
+                        Toast.makeText(getActivity(), "Location Permission Required , Open Settings And Allow Permission", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity(), "Location Permission Required , Open Settings And Allow Permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Internet Not Available", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -306,36 +401,6 @@ public class MainFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private String getMonthByNumber(int i) {
-        switch (i) {
-            case 1:
-                return ("January" + " " + "Events");
-            case 2:
-                return ("February" + " " + "Events");
-            case 3:
-                return ("March" + " " + "Events");
-            case 4:
-                return ("April" + " " + "Events");
-            case 5:
-                return ("May" + " " + "Events");
-            case 6:
-                return ("June" + " " + "Events");
-            case 7:
-                return ("July" + " " + "Events");
-            case 8:
-                return ("August" + " " + "Events");
-            case 9:
-                return ("September" + " " + "Events");
-            case 10:
-                return ("October" + " " + "Events");
-            case 11:
-                return ("November" + " " + "Events");
-            case 12:
-                return ("December" + " " + "Events");
-            default:
-                return "";
-        }
-    }
 
     private void turnOnGPS() {
 
@@ -460,7 +525,8 @@ public class MainFragment extends Fragment {
                             hour = now.getHour();
                             minute = now.getMinute();
                             second = now.getSecond();
-                            currentMonth = now.getMonth().toString();
+
+                            currentMonth = String.valueOf(now.getMonthValue());
                             currentDate = String.valueOf(now.getDayOfMonth());
                             currentYear = String.valueOf(now.getYear());
                         }
@@ -473,6 +539,13 @@ public class MainFragment extends Fragment {
                 });
             }
         }).start();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
