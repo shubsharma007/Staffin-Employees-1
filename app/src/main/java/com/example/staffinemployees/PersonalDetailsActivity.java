@@ -50,6 +50,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         id = sharedPreferences.getAll().get("Id").toString();
 
+        binding.btnBack.setOnClickListener(v -> {
+            finish();
+        });
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         getUserApi();
         binding.editBtn.setOnClickListener(v -> {
