@@ -54,33 +54,33 @@ public class BankDetailsFragment extends Fragment {
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-//        Call<EmployeeBankDetails> employeeBankDetailsCall = apiInterface.getEmployeeBankDetails(Integer.parseInt(Id));
-//        employeeBankDetailsCall.enqueue(new Callback<EmployeeBankDetails>() {
-//            @Override
-//            public void onResponse(Call<EmployeeBankDetails> call, Response<EmployeeBankDetails> response) {
-//                if (response.isSuccessful()) {
-//                    List<BankDetail> user = response.body().getBankDetails();
-//                    BankDetail singleUser = user.get(0);
-//
-//                    binding.holderEt.setText(singleUser.getAccountName());
-//                    Log.e("Account Name Aya", singleUser.getAccountName());
-//                    binding.accNoEt.setText(singleUser.getAccountNumber());
-//                    Log.e("Account Number Aya", singleUser.getAccountNumber());
-//                    binding.ifscEt.setText(singleUser.getBranch());
-//                    Log.e("branch Name Aya", singleUser.getBranch());
-//                    binding.bankEt.setText(singleUser.getBank());
-//                    Log.e("Bank Name Aya", singleUser.getBank());
-//                } else {
-//                    Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<EmployeeBankDetails> call, Throwable t) {
-//                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+        Call<EmployeeBankDetails> employeeBankDetailsCall = apiInterface.getEmployeeBankDetails(Integer.parseInt(Id));
+        employeeBankDetailsCall.enqueue(new Callback<EmployeeBankDetails>() {
+            @Override
+            public void onResponse(Call<EmployeeBankDetails> call, Response<EmployeeBankDetails> response) {
+                if (response.isSuccessful()) {
+                    List<BankDetail> user = response.body().getBankDetails();
+                    BankDetail singleUser = user.get(0);
+
+                    binding.holderEt.setText(singleUser.getAccountName());
+                    Log.e("Account Name Aya", singleUser.getAccountName());
+                    binding.accNoEt.setText(singleUser.getAccountNumber());
+                    Log.e("Account Number Aya", singleUser.getAccountNumber());
+                    binding.ifscEt.setText(singleUser.getBranch());
+                    Log.e("branch Name Aya", singleUser.getBranch());
+                    binding.bankEt.setText(singleUser.getBank());
+                    Log.e("Bank Name Aya", singleUser.getBank());
+                } else {
+                    Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeBankDetails> call, Throwable t) {
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         return binding.getRoot();
     }
