@@ -136,9 +136,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     binding.departmentEt.setText(singleUser.getFatherName());
                     String DOB = singleUser.getDateOfBirth();
                     DOB = DOB.split("T")[0];
-
-
                     binding.dobEt.setText(DOB);
+
                     if (singleUser.getGender().equalsIgnoreCase("male")) {
                         binding.rbMale.setChecked(true);
                     } else if (singleUser.getGender().equalsIgnoreCase("female")) {
@@ -146,6 +145,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     } else {
                         binding.rbOther.setChecked(true);
                     }
+
                     binding.mobileEt.setText(singleUser.getMobileNumber());
                     binding.emailEt.setText(singleUser.getEmail());
                     binding.localAddEt.setText(singleUser.getLocalAddress());

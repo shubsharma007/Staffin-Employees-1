@@ -5,12 +5,15 @@ import static com.example.staffinemployees.Fragment.MainFragment.minute;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +21,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.MainActivity;
+import com.example.staffinemployees.PersonalDetailsActivity;
 import com.example.staffinemployees.R;
+import com.example.staffinemployees.Response.EmployeeProfileResponse;
+import com.example.staffinemployees.Response.EmployeeResult;
+import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentCompanyDetailsBinding;
 
 import java.util.Calendar;
@@ -32,17 +40,29 @@ import com.example.staffinemployees.databinding.FragmentCompanyDetailsBinding;
 
 import org.w3c.dom.Text;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class CompanyDetailsFragment extends Fragment {
     FragmentCompanyDetailsBinding binding;
     Dialog adDialog;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String id;
+    ApiInterface apiInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCompanyDetailsBinding.inflate(inflater, container, false);
         adDialog = new Dialog(getActivity());
-
+        sharedPreferences = getActivity().getSharedPreferences("staffin", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        id = sharedPreferences.getAll().get("Id").toString();
+        apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        getUserApi();
 
 
         binding.addOvertimeBtn.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +104,8 @@ public class CompanyDetailsFragment extends Fragment {
                 binding.hourlyEt.setError("Enter Hourly Rate");
                 binding.hourlyEt.requestFocus();
             } else {
+
+
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 requireActivity().finish();
             }
@@ -138,6 +160,52 @@ public class CompanyDetailsFragment extends Fragment {
         binding.medicalLeaveEt.setKeyListener(null);
 
         return binding.getRoot();
+    }
+
+    private void getUserApi() {
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+        Call<EmployeeProfileResponse> employeeDetailsCall = apiInterface.getEmployeeProfile(Integer.parseInt(id));
+        employeeDetailsCall.enqueue(new Callback<EmployeeProfileResponse>() {
+            @Override
+            public void onResponse(Call<EmployeeProfileResponse> call, Response<EmployeeProfileResponse> response) {
+                if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    EmployeeResult singleUser = response.body().getEmployeeResult().get(0);
+                    binding.employeeIdEt.setText(singleUser.getEmployeeID());
+                    binding.departmentEt.setText(singleUser.getDepartmentId());
+                    binding.designationEt.setText(singleUser.getDesignation().toString());
+                    binding.annualLeaveEt.setText(singleUser.getAnnualLeave().toString());
+                    binding.medicalLeaveEt.setText(singleUser.getMedicalLeave());
+                    String JDATE = singleUser.getJoiningDate();
+                    JDATE = JDATE.split("T")[0];
+                    binding.jDateEt.setText(JDATE);
+
+
+                    binding.rDateEt.setText((CharSequence) singleUser.getExitDate());
+                    if (singleUser.getStatus().equalsIgnoreCase("active")) {
+                        binding.rbActive.setChecked(true);
+                    } else {
+                        binding.rbInactive.setChecked(true);
+                    }
+
+
+                } else {
+                    progressDialog.dismiss();
+                    Log.d("dkfnsdf", response.message());
+                    Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeProfileResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.d("dkfnsdf", t.getMessage());
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void showPopup() {

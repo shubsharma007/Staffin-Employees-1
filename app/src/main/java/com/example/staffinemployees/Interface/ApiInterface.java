@@ -31,5 +31,16 @@ public interface ApiInterface {
     @GET("get-employee-details/{id}")
     Call<EmployeeProfileResponse> getEmployeeProfile(@Path("id") int id);
 
+    //get employee bank details
+    @GET("get-bank-details/{id}")
+    Call<EmployeeBankDetails> getEmployeeBankDetails(@Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("employee-leave-apply/{id}")
+    Call<LoginResponse> postLeaveRequest(@Field("date") String date,
+                                         @Field("day") String day,
+                                         @Field("leave_type") String leave_type,
+                                         @Field("reason") String reason,
+                                         @Path("id") int id);
 
 }

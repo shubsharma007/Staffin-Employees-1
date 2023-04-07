@@ -145,7 +145,6 @@ public class AttendanceFragment extends Fragment {
 
         });
 
-
         binding.txtLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
