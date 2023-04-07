@@ -1,5 +1,6 @@
 package com.example.staffinemployees.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,7 +50,9 @@ public class BankDetailsFragment extends Fragment {
         editor = sharedPreferences.edit();
         Id = sharedPreferences.getAll().get("Id").toString();
         Log.i("Id AArahi AHI", Id);
-
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -59,6 +62,7 @@ public class BankDetailsFragment extends Fragment {
             @Override
             public void onResponse(Call<EmployeeBankDetails> call, Response<EmployeeBankDetails> response) {
                 if (response.isSuccessful()) {
+                    progressDialog.dismiss();
                     List<BankDetail> user = response.body().getBankDetails();
                     BankDetail singleUser = user.get(0);
 
@@ -71,12 +75,14 @@ public class BankDetailsFragment extends Fragment {
                     binding.bankEt.setText(singleUser.getBank());
                     Log.e("Bank Name Aya", singleUser.getBank());
                 } else {
+                    progressDialog.dismiss();
                     Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<EmployeeBankDetails> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
 
             }
