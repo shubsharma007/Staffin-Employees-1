@@ -27,10 +27,13 @@ import com.example.staffinemployees.PersonalDetailsActivity;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.EmployeeResult;
+import com.example.staffinemployees.Response.OverTimeResponse;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentCompanyDetailsBinding;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -52,6 +55,7 @@ public class CompanyDetailsFragment extends Fragment {
     SharedPreferences.Editor editor;
     String id;
     ApiInterface apiInterface;
+    List<String> time;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +66,8 @@ public class CompanyDetailsFragment extends Fragment {
         editor = sharedPreferences.edit();
         id = sharedPreferences.getAll().get("Id").toString();
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        time = new ArrayList<>();
+
         getUserApi();
 
 
@@ -214,39 +220,46 @@ public class CompanyDetailsFragment extends Fragment {
         adDialog.setContentView(R.layout.popup_overtime);
         adDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         adDialog.show();
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         TextView firstAmountEt = adDialog.findViewById(R.id.firstAmountEt);
         TextView secondAmountEt = adDialog.findViewById(R.id.secondAmountEt);
-        AppCompatButton submitBtn = adDialog.findViewById(R.id.submitBtn);
         TextView firstTv = adDialog.findViewById(R.id.firstTv);
         TextView secondTv = adDialog.findViewById(R.id.secondTv);
         TextView thirdTv = adDialog.findViewById(R.id.thirdTv);
         TextView fourthTv = adDialog.findViewById(R.id.fourthTv);
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        Call<OverTimeResponse> overTimeResponseCall = apiInterface.getOverTime(Integer.parseInt(id));
+        overTimeResponseCall.enqueue(new Callback<OverTimeResponse>() {
             @Override
-            public void onClick(View v) {
-                if (firstTv.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Enter Start Time For 1st Overtime", Toast.LENGTH_SHORT).show();
-                } else if (secondTv.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Enter End Time For 1st Overtime", Toast.LENGTH_SHORT).show();
-                } else if (thirdTv.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Enter Start Time For 2nd Overtime", Toast.LENGTH_SHORT).show();
-                } else if (fourthTv.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Enter End Time For 2nd Overtime", Toast.LENGTH_SHORT).show();
-                } else if (firstAmountEt.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Enter Amount For 1st Overtime", Toast.LENGTH_SHORT).show();
-                } else if (secondAmountEt.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Enter Amount For 2nd Overtime", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<OverTimeResponse> call, Response<OverTimeResponse> response) {
+                if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    time = response.body().getOverTime();
+                    Log.e("sfdfdf", time.toString());
+                    firstTv.setText(time.get(0));
+                    secondTv.setText(time.get(1));
+                    firstAmountEt.setText(time.get(2));
+                    thirdTv.setText(time.get(3));
+                    fourthTv.setText(time.get(4));
+                    secondAmountEt.setText(time.get(5));
                 } else {
-
-                    adDialog.dismiss();
+                    progressDialog.dismiss();
+                    Log.e("diufhyeiufhiu", response.message());
+                    Toast.makeText(getActivity(), "On Response Fail", Toast.LENGTH_SHORT).show();
                 }
+            }
 
+            @Override
+            public void onFailure(Call<OverTimeResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e("fdiufgidsu", t.getMessage());
+                Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
 
             }
         });
-
 
 //        firstTv.setOnClickListener(new View.OnClickListener() {
 //            @Override
