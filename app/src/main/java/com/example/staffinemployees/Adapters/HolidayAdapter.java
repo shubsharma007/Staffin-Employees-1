@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.TintTypedArray;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.AllHolidays;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HolidayAdapter extends RecyclerView.Adapter<HolidayAdapter.HolidayViewHolder> {
@@ -66,12 +69,56 @@ public class HolidayAdapter extends RecyclerView.Adapter<HolidayAdapter.HolidayV
 //            holder.holidayDay.setText("Sun");
 //            holder.ll2.setBackgroundResource(R.color.green);
 //        }
-
         AllHolidays singleUnit = holidays.get(position);
         holder.holidayName.setText(singleUnit.getOccassion());
         String[] tempDate = singleUnit.getDate().split("-");
         holder.holidayDate.setText(tempDate[2]);
-        holder.holidayDay.setText(singleUnit.getHoliday_day());
+
+//        String[] days = singleUnit.getDate().split("-");
+        String din = tempDate[1];
+
+            switch (din) {
+                case "01":
+                    holder.holidayDay.setText("Jan");
+                    break;
+                case "02":
+                    holder.holidayDay.setText("Feb");
+                    break;
+                case "03":
+                    holder.holidayDay.setText("Mar");
+                    break;
+                case "04":
+                    holder.holidayDay.setText("Apr");
+                    break;
+                case "05":
+                    holder.holidayDay.setText("May");
+                    break;
+                case "06":
+                    holder.holidayDay.setText("Jun");
+                    break;
+                case "07":
+                    holder.holidayDay.setText("July");
+                    break;
+                case "08":
+                    holder.holidayDay.setText("Aug");
+                    break;
+                case "09":
+                    holder.holidayDay.setText("Sep");
+                    break;
+                case "10":
+                    holder.holidayDay.setText("Oct");
+                    break;
+                case "11":
+                    holder.holidayDay.setText("Nov");
+                    break;
+                case "12":
+                    holder.holidayDay.setText("Dec");
+                    break;
+
+            }
+
+
+//        holder.holidayDay.setText(singleUnit.getHoliday_day());
         holder.holidayTime.setText(singleUnit.getHoliday_description());
         if (position % 3 == 0) {
             holder.ll2.setBackgroundResource(R.color.mainColor);
