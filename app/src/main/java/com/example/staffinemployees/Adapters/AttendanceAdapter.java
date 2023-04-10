@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.staffinemployees.MainActivity;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.AttendanceResponse;
 
@@ -20,6 +21,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
 
     List<AttendanceResponse> attendanceResponseList;
     Context context;
+
 
     public AttendanceAdapter(List<AttendanceResponse> attendanceResponseList, Context context) {
         this.attendanceResponseList = attendanceResponseList;

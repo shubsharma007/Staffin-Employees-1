@@ -49,13 +49,15 @@ public interface ApiInterface {
     Call<Punch> punchIn(@Path("id") int id,
                         @Field("date") String date,
                         @Field("status") String status,
-                        @Field("clock_in") String clock_in
+                        @Field("clock_in") String clock_in,
+                        @Field("clock_in_location") String clock_in_location
     );
 
     @FormUrlEncoded
     @POST("clock-out-attendance/{id}")
     Call<Punch> punchOut(@Path("id") int id,
-                         @Field("clock_out") String clock_out
+                         @Field("clock_out") String clock_out,
+                         @Field("clock_out_location") String clock_out_location
     );
 
 }

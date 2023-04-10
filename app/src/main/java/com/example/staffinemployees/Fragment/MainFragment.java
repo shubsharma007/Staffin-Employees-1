@@ -255,7 +255,7 @@ public class MainFragment extends Fragment {
                                             //current location send krna he remaining in api
 
                                             if (!sharedPreferences.getAll().containsKey("punch")) {
-                                                Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime);
+                                                Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime, currentLocation);
                                                 progressDialog.show();
                                                 callPunchIn.enqueue(new Callback<Punch>() {
                                                     @Override
@@ -292,7 +292,7 @@ public class MainFragment extends Fragment {
                                                 if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
 
 
-                                                    Call<Punch> callPunchOut = apiInterface.punchOut(Integer.parseInt(Id), punchTime);
+                                                    Call<Punch> callPunchOut = apiInterface.punchOut(Integer.parseInt(Id), punchTime, currentLocation);
                                                     progressDialog.show();
                                                     callPunchOut.enqueue(new Callback<Punch>() {
                                                         @Override
@@ -311,7 +311,6 @@ public class MainFragment extends Fragment {
                                                                 Toast.makeText(getActivity(), "You Have Already Punched Out", Toast.LENGTH_SHORT).show();
                                                             } else {
                                                                 progressDialog.dismiss();
-
                                                                 Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
                                                                 Log.d("fuh", response.message());
                                                             }
@@ -325,14 +324,9 @@ public class MainFragment extends Fragment {
                                                         }
                                                     });
 
-
-                                                    //punch out api call
-
-
-                                                    //shared pref me daalo punch out
                                                 } else {
 
-                                                    Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime);
+                                                    Call<Punch> callPunchIn = apiInterface.punchIn(Integer.parseInt(Id), punchDate, "present", punchTime, currentLocation);
                                                     progressDialog.show();
                                                     callPunchIn.enqueue(new Callback<Punch>() {
                                                         @Override

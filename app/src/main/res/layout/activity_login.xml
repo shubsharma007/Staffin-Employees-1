@@ -89,7 +89,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv3"
+            android:id="@+id/forgotPasswordTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -114,7 +114,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv3" />
+            app:layout_constraintTop_toBottomOf="@id/forgotPasswordTv" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
