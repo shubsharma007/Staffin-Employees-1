@@ -4,6 +4,7 @@ import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
+import com.example.staffinemployees.Response.OverTimeResponse;
 import com.example.staffinemployees.Response.Punch;
 import com.example.staffinemployees.Response.TotalEmployeeResponse;
 
@@ -57,5 +58,8 @@ public interface ApiInterface {
     Call<Punch> punchOut(@Path("id") int id,
                          @Field("clock_out") String clock_out
     );
+
+    @GET("get-over-time/{id}")
+    Call<OverTimeResponse> getOverTime(@Path("id") int id);
 
 }
