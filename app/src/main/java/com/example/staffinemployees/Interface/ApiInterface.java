@@ -1,5 +1,6 @@
 package com.example.staffinemployees.Interface;
 
+import com.example.staffinemployees.Response.CompanyResponseById;
 import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.HolidayResponse;
@@ -63,5 +64,8 @@ public interface ApiInterface {
 
     @GET("get-over-time/{id}")
     Call<OverTimeResponse> getOverTime(@Path("id") int id);
+
+    @GET("get-company/{id}")
+    Call<CompanyResponseById> getCompanyDetailsById(@Path("id") int id);
 
 }
