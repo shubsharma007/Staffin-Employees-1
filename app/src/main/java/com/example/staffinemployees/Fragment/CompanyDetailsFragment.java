@@ -174,73 +174,36 @@ public class CompanyDetailsFragment extends Fragment {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-//        Call<CompanyResponseById> companyResponseByIdCall = apiInterface.getCompanyDetailsById(Integer.parseInt(id));
-//        companyResponseByIdCall.enqueue(new Callback<CompanyResponseById>() {
-//            @Override
-//            public void onResponse(Call<CompanyResponseById> call, Response<CompanyResponseById> response) {
-//                if (response.isSuccessful()) {
-//
-//                    CompanyDetails singleUser = response.body().getCompanyDetails();
-////                    binding.employeeIdEt.setText(singleUser.getEmployeeID());
-//                    binding.departmentEt.setText(singleUser.getDepartment().get(0).getName());
-//                    binding.designationEt.setText(singleUser.getDesignation().get(0).getDesignation());
-//                    binding.annualLeaveEt.setText(singleUser.getAnnualLeave().toString());
-//                    binding.medicalLeaveEt.setText(singleUser.getMedicalLeave());
-//                    binding.basicEt.setText(singleUser.getBasic().get(0).getSalary());
-//                    binding.hourlyEt.setText(singleUser.getHourlyRate().get(0).getSalary());
-//                    String JDATE = singleUser.getJoiningDate();
-//                    JDATE = JDATE.split("T")[0];
-//                    binding.jDateEt.setText(JDATE);
-//
-//
-////                    binding.rDateEt.setText((CharSequence) singleUser.getExitDate());
-//                    if (singleUser.getStatus().equalsIgnoreCase("active")) {
-//                        binding.rbActive.setChecked(true);
-//                    } else {
-//                        binding.rbInactive.setChecked(true);
-//                    }
-//
-//                } else {
-//                    progressDialog.dismiss();
-//                    Log.d("dkfnsdf", response.message());
-//                    Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<CompanyResponseById> call, Throwable t) {
-//                progressDialog.dismiss();
-//                Log.d("dkfnsdf", t.getMessage());
-//                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-        Call<EmployeeProfileResponse> employeeDetailsCall = apiInterface.getEmployeeProfile(Integer.parseInt(id));
-        employeeDetailsCall.enqueue(new Callback<EmployeeProfileResponse>() {
+        Call<CompanyResponseById> companyResponseByIdCall = apiInterface.getCompanyDetailsById(Integer.parseInt(id));
+        companyResponseByIdCall.enqueue(new Callback<CompanyResponseById>() {
             @Override
-            public void onResponse(Call<EmployeeProfileResponse> call, Response<EmployeeProfileResponse> response) {
+            public void onResponse(Call<CompanyResponseById> call, Response<CompanyResponseById> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
-                    EmployeeResult singleUser = response.body().getEmployeeResult().get(0);
+                    CompanyDetails singleUser = response.body().getCompanyDetails();
                     binding.employeeIdEt.setText(singleUser.getEmployeeID());
-                    binding.departmentEt.setText(singleUser.getDepartmentId().get(0).getName());
+                    binding.departmentEt.setText(singleUser.getDepartment().get(0).getName());
                     binding.designationEt.setText(singleUser.getDesignation().get(0).getDesignation());
                     binding.annualLeaveEt.setText(singleUser.getAnnualLeave().toString());
                     binding.medicalLeaveEt.setText(singleUser.getMedicalLeave());
-//                    binding.basicEt.setText(singleUser.getBasic().get(0).getSalary());
-//                    binding.hourlyEt.setText(singleUser.getHourly_rate().get(0).getSalary().toString());
+
                     String JDATE = singleUser.getJoiningDate();
                     JDATE = JDATE.split("T")[0];
                     binding.jDateEt.setText(JDATE);
-
-
-                    binding.rDateEt.setText((CharSequence) singleUser.getExitDate());
+                    if (singleUser.getExitDate() == null) {
+                        binding.rDateEt.setText("");
+                    } else {
+                        String RDATE = singleUser.getExitDate();
+                        RDATE = RDATE.split("T")[0];
+                        binding.rDateEt.setText(RDATE);
+                    }
                     if (singleUser.getStatus().equalsIgnoreCase("active")) {
                         binding.rbActive.setChecked(true);
                     } else {
                         binding.rbInactive.setChecked(true);
                     }
+                    binding.basicEt.setText(String.valueOf(singleUser.getBasic().get(0).getSalary()));
+                    binding.hourlyEt.setText(String.valueOf(singleUser.getHourlyRate().get(0).getSalary()));
 
 
                 } else {
@@ -251,13 +214,12 @@ public class CompanyDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<EmployeeProfileResponse> call, Throwable t) {
+            public void onFailure(Call<CompanyResponseById> call, Throwable t) {
                 progressDialog.dismiss();
                 Log.d("dkfnsdf", t.getMessage());
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void showPopup() {
