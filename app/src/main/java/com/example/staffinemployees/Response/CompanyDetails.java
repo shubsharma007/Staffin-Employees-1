@@ -22,9 +22,15 @@ public class CompanyDetails {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("employeeID")
+    @Expose
+    private String employeeID;
     @SerializedName("joining_date")
     @Expose
     private String joiningDate;
+    @SerializedName("exit_date")
+    @Expose
+    private String exitDate;
     @SerializedName("basic")
     @Expose
     private List<Basic> basic;
@@ -72,12 +78,28 @@ public class CompanyDetails {
         this.status = status;
     }
 
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
     public String getJoiningDate() {
         return joiningDate;
     }
 
     public void setJoiningDate(String joiningDate) {
         this.joiningDate = joiningDate;
+    }
+
+    public String getExitDate() {
+        return exitDate;
+    }
+
+    public void setExitDate(String exitDate) {
+        this.exitDate = exitDate;
     }
 
     public List<Basic> getBasic() {
