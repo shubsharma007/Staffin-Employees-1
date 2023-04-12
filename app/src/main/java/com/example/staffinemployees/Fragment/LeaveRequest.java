@@ -40,7 +40,7 @@ public class LeaveRequest extends Fragment {
 
     FragmentLeaveRequestBinding binding;
     List<String> leaves;
-    static boolean fullDay = true;
+    static boolean halfDay = true;
     String leaveSelected = "";
     ApiInterface apiInterface;
     String Id;
@@ -142,8 +142,8 @@ public class LeaveRequest extends Fragment {
         binding.fullDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!fullDay) {
-                    fullDay = true;
+                if (!halfDay) {
+                    halfDay = true;
                     binding.fullDayBtn.setBackgroundResource(R.drawable.bg_left_blue);
                     binding.fullDayBtn.setTextColor(Color.WHITE);
                     binding.halfDayBtn.setBackgroundResource(R.drawable.bg_right_white);
@@ -155,8 +155,8 @@ public class LeaveRequest extends Fragment {
         binding.halfDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fullDay) {
-                    fullDay = false;
+                if (halfDay) {
+                    halfDay = false;
                     binding.halfDayBtn.setBackgroundResource(R.drawable.bg_right_blue);
                     binding.halfDayBtn.setTextColor(Color.WHITE);
                     binding.fullDayBtn.setBackgroundResource(R.drawable.bg_left_white);
@@ -177,11 +177,12 @@ public class LeaveRequest extends Fragment {
                     binding.descriptionEt.requestFocus();
                 } else {
                     String jdate = binding.fromDateEt.getText().toString();
+                    String edate = binding.toDateEt.getText().toString();
                     String day;
-                    if (!fullDay) {
-                        day = "Half Day";
+                    if (!halfDay) {
+                        day = "yes";
                     } else {
-                        day = "Full Day";
+                        day = "no";
                     }
                     String leaveType = binding.leaveTypeSpinner.getSelectedItem().toString();
                     String reason = binding.descriptionEt.getText().toString();
@@ -190,13 +191,22 @@ public class LeaveRequest extends Fragment {
                     progressDialog.setMessage("Loading...");
                     progressDialog.show();
 
+/////////ek baar check krna hai ki day jo hai usme halfday select karne pr yes ja rha hai ya nahi ja raha database me
+                    ///or fullday select krne pr no
 
-                    Call<LoginResponse> leaveRequestCall = apiInterface.postLeaveRequest(jdate, day, leaveType, reason, Integer.parseInt(Id));
+                    Call<LoginResponse> leaveRequestCall = apiInterface.postLeaveRequest(jdate, leaveType, reason, edate, day, Integer.parseInt(Id));
+                    Log.e("JDATE", jdate);
+                    Log.e("LeaveType", leaveType);
+                    Log.e("Reason", reason);
+                    Log.e("EDATE", edate);
+                    Log.e("HalfDay", day);
+                    Log.e("ID hai ye", Id);
                     leaveRequestCall.enqueue(new Callback<LoginResponse>() {
                         @Override
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                             if (response.isSuccessful()) {
                                 progressDialog.dismiss();
+
                                 Toast.makeText(getContext(), "Request submitted", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -229,7 +239,7 @@ public class LeaveRequest extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        fullDay = true;
+        halfDay = true;
     }
 
 }

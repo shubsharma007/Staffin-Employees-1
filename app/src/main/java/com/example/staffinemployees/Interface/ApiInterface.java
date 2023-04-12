@@ -41,9 +41,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("employee-leave-apply/{id}")
     Call<LoginResponse> postLeaveRequest(@Field("date") String date,
-                                         @Field("day") String day,
                                          @Field("leave_type") String leave_type,
                                          @Field("reason") String reason,
+                                         @Field("end_date") String end_date,
+                                         @Field("half_day") String half_day,
                                          @Path("id") int id);
 
     @FormUrlEncoded
