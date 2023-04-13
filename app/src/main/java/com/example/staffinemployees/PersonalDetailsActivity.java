@@ -5,6 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -28,6 +32,9 @@ import java.time.Instant;
 import java.util.Calendar;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +47,13 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String id;
+
+    Uri profileImage;
+    String uripi = " ";
+    File PImg;
+    String name, fName, dob, gender, email, localAddress, permanentAddress, finalGender, number;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +97,11 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!dpImageBoolean) {
-                    Toast.makeText(getApplicationContext(), "Please Upload your Profile Image", Toast.LENGTH_SHORT).show();
-                } else if (binding.employeeIdEt.getText().toString().isEmpty()) {
+//                if (!dpImageBoolean) {
+//                    Toast.makeText(getApplicationContext(), "Please Upload your Profile Image", Toast.LENGTH_SHORT).show();
+//                }
+//                else
+                    if (binding.employeeIdEt.getText().toString().isEmpty()) {
                     binding.employeeIdEt.setError("Enter Your Name");
                     binding.employeeIdEt.requestFocus();
                 } else if (binding.departmentEt.getText().toString().isEmpty()) {
@@ -113,11 +129,112 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     binding.permAddEt.setError("Enter Your Permanent Local Address");
                     binding.permAddEt.requestFocus();
                 } else {
-                    Toast.makeText(PersonalDetailsActivity.this, "Changes Saved...", Toast.LENGTH_SHORT).show();
-                    finish();
+
+                        name = binding.employeeIdEt.getText().toString();
+                        fName = binding.departmentEt.getText().toString();
+                        dob = binding.dobEt.getText().toString();
+                        gender = "";
+                        if (binding.rbMale.isChecked()) {
+                            binding.rbMale.getText().toString();
+                            gender = "Male";
+                        } else if (binding.rbFemale.isChecked()) {
+                            binding.rbFemale.getText().toString();
+                            gender = "Female";
+                        } else {
+                            binding.rbOther.getText().toString();
+                            gender = "Other";
+                        }
+                        finalGender = gender;
+                        number = binding.mobileEt.getText().toString();
+                        email = binding.emailEt.getText().toString();
+                        localAddress = binding.localAddEt.getText().toString();
+                        permanentAddress = binding.permAddEt.getText().toString();
+
+                    updateDetails(Integer.parseInt(id), uripi, name, fName, dob, finalGender, number, email, localAddress, permanentAddress);
+//                    Toast.makeText(PersonalDetailsActivity.this, "Changes Saved...", Toast.LENGTH_SHORT).show();
+//                    finish();
                 }
             }
         });
+
+    }
+
+    private void updateDetails(int id, String uripi, String name, String fName, String xdob, String finalGender, String number, String email, String localAddress, String permanentAddress) {
+        RequestBody fullname = RequestBody.create(MediaType.parse("text/plain"), name);
+        RequestBody father = RequestBody.create(MediaType.parse("text/plain"), fName);
+        RequestBody dob = RequestBody.create(MediaType.parse("text/plain"), xdob);
+        RequestBody mobile = RequestBody.create(MediaType.parse("text/plain"), number);
+        RequestBody gender = RequestBody.create(MediaType.parse("text/plain"), finalGender);
+        RequestBody mail = RequestBody.create(MediaType.parse("text/plain"), email);
+        RequestBody lAddress = RequestBody.create(MediaType.parse("text/plain"), localAddress);
+        RequestBody pAddress = RequestBody.create(MediaType.parse("text/plain"), permanentAddress);
+
+        final ProgressDialog progressDialog = new ProgressDialog(PersonalDetailsActivity.this);
+        progressDialog.setMessage("Loading...");
+
+        if (dpImageBoolean) {
+            PImg = new File(uripi);
+            RequestBody proImg = RequestBody.create(MediaType.parse("image/*"), PImg);
+            MultipartBody.Part profile_img = MultipartBody.Part.createFormData("profile_image", PImg.getName(), proImg);
+
+            Call<EmployeeProfileResponse> callUpdateEmployee = apiInterface.postUpdateEmployee(id, profile_img, fullname, father, dob, mobile, gender, mail, lAddress, pAddress);
+            if (isNetworkAvailable()) {
+                progressDialog.show();
+                callUpdateEmployee.enqueue(new Callback<EmployeeProfileResponse>() {
+                    @Override
+                    public void onResponse(Call<EmployeeProfileResponse> call, Response<EmployeeProfileResponse> response) {
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            finish();
+                        } else {
+                            Log.d("fkdjfnsdf", response.message());
+                            progressDialog.dismiss();
+                            Toast.makeText(PersonalDetailsActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<EmployeeProfileResponse> call, Throwable t) {
+                        Log.d("Pdkjfnsdf", t.getMessage());
+                        progressDialog.dismiss();
+                        Toast.makeText(PersonalDetailsActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        else {
+                Toast.makeText(this, "Internet Not Available", Toast.LENGTH_SHORT).show();
+            }
+//           image le k api chlegi
+        } else {
+
+            Call<EmployeeProfileResponse> callPostUpdateEmployeeWithoutImage = apiInterface.postUpdateEmployeeWithoutImage(id, name, fName, xdob, number, finalGender, email, localAddress, permanentAddress);
+            if (isNetworkAvailable()) {
+                progressDialog.show();
+                callPostUpdateEmployeeWithoutImage.enqueue(new Callback<EmployeeProfileResponse>() {
+                    @Override
+                    public void onResponse(Call<EmployeeProfileResponse> call, Response<EmployeeProfileResponse> response) {
+                        if (response.isSuccessful()) {
+                            progressDialog.dismiss();
+                            finish();
+                        } else {
+                            Log.d("fkgfdgddjfnsdf", response.message());
+                            progressDialog.dismiss();
+                            Toast.makeText(PersonalDetailsActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<EmployeeProfileResponse> call, Throwable t) {
+                        Log.d("dfgdfgd", t.getMessage());
+                        progressDialog.dismiss();
+                        Toast.makeText(PersonalDetailsActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Internet Not Available", Toast.LENGTH_SHORT).show();
+            }
+//           image k bina api chlegi
+        }
 
     }
 
@@ -172,22 +289,47 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK && requestCode == 123) {
+//            if (!data.equals(null)) {
+//                binding.dpImg.setImageURI(data.getData());
+//                profileImage = data.getData();
+//                uripi = getRealPathFromURI(profileImage);
+//                dpImageBoolean = true;
+//            }
+//        }
+//    }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 123) {
-            if (!data.equals(null)) {
-                binding.dpImg.setImageURI(data.getData());
-
-                imagePath = RealPathUtil.getRealPath(PersonalDetailsActivity.this, data.getData());
-
-                File file = new File(imagePath);
-                dpImageBoolean = true;
-
-//            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-//            MultipartBody.Part profileimg = MultipartBody.Part.createFormData("document_image", file.getName(), requestFile);
-
-            }
+            binding.dpImg.setImageURI(data.getData());
+            profileImage = data.getData();
+            uripi = getRealPathFromURI(profileImage);
+            dpImageBoolean = true;
         }
+    }
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
