@@ -3,6 +3,7 @@ package com.example.staffinemployees.Interface;
 import com.example.staffinemployees.Response.CompanyResponseById;
 import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
+import com.example.staffinemployees.Response.EventsByYearResponse;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
 import com.example.staffinemployees.Response.OverTimeResponse;
@@ -17,6 +18,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
+    @GET("get-event-details/{year}")
+    Call<EventsByYearResponse> getEventsByYear(@Path("year") int year);
 
     @FormUrlEncoded
     @POST("emp-login")
