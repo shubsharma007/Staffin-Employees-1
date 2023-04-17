@@ -8,7 +8,6 @@
     tools:context=".LoginActivity">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainCl"
         android:layout_width="match_parent"
@@ -58,11 +57,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneEt"
-                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:maxLength="13" />
+                android:maxLength="13"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,9 +82,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
-                android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -100,21 +99,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordTf" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/loginBtn"
+        <com.balysv.materialripple.MaterialRippleLayout
+            style="@style/RippleStyleWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/login_btn_bg"
-            android:paddingVertical="18dp"
-            android:text="Login"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textStyle="bold"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/forgotPasswordTv" />
+            app:layout_constraintTop_toBottomOf="@id/forgotPasswordTv">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/loginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/login_btn_bg"
+                android:paddingVertical="18dp"
+                android:text="Login"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/forgotPasswordTv" />
+
+        </com.balysv.materialripple.MaterialRippleLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -132,8 +142,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@color/white"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
 
             <ImageView
