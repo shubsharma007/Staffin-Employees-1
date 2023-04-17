@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,17 +13,31 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.Response.TotalEmployeeResponse;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.ActivityCreateEventBinding;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+//import com.google.android.libraries.places.api.Places;
+//import com.google.android.libraries.places.api.net.PlacesClient;
+//import com.google.android.libraries.places.widget.Autocomplete;
+//import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,16 +59,74 @@ public class CreateEventActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     HashMap<String, String> map;
 
+//    EditText placeSearch_Tv;
+//    private String apiKey = "AIzaSyBHdfJUk9pq_4V1fY337xHCc1dA9ebeueM";
+//    int AUTOCOMPLETE_REQUEST_CODE = 1;
+//    List<com.google.android.libraries.places.api.model.Place.Field> fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        clickListeners();
+//        placeSearch_Tv = findViewById(R.id.location_ET);
+//        Places.initialize(getApplicationContext(), apiKey);
 
+        clickListeners();
+//        googlePlaces();
+//        placeSearch_Tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+//                FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
+//                PlacesClient placesClient = Places.createClient(getApplicationContext());
+//
+//                if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    ActivityCompat#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for ActivityCompat#requestPermissions for more details.
+//                    return;
+//                }
+//                placesClient.findCurrentPlace(request).addOnSuccessListener((response) -> {
+//                    for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
+//                        Place place = placeLikelihood.getPlace();
+//                Log.i( "Place found: ",  place.getName() + " (" + place.getAddress() + ") " + place.getLatLng());
+//                    }
+//                }).addOnFailureListener((exception) -> {
+//                    if (exception instanceof ApiException) {
+//                        ApiException apiException = (ApiException) exception;
+//                Log.e( "Place not found: ", String.valueOf(apiException.getStatusCode()));
+//                    }
+//                });
+//            }
+//        });
 
     }   // onCreate end
+
+//    private void googlePlaces() {
+//        int AUTOCOMPLETE_REQUEST_CODE = 1;
+//
+//        List<com.google.android.libraries.places.api.model.Place.Field> fields;
+//        if (!Places.isInitialized()) {
+//            Places.initialize(getApplicationContext(), apiKey);
+//        }
+//        PlacesClient placesClient = Places.createClient(this);
+//        fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+//        placeSearch_Tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Autocomplete.IntentBuilder(
+//                        AutocompleteActivityMode.FULLSCREEN, fields)
+//                        .build(getApplicationContext());
+//                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+//            }
+//        });
+//
+//    }
 
     private void clickListeners() {
         map = new HashMap<>();
@@ -184,9 +257,9 @@ public class CreateEventActivity extends AppCompatActivity {
                     binding.titleEt.requestFocus();
                 } else if (!atleastOne) {
                     Toast.makeText(CreateEventActivity.this, "Upload atleast 1 image", Toast.LENGTH_SHORT).show();
-                } else if (binding.locationEt.getText().toString().isEmpty()) {
-                    binding.locationEt.setError("enter location");
-                    binding.locationEt.requestFocus();
+                } else if (binding.locationET.getText().toString().isEmpty()) {
+                    binding.locationET.setError("enter location");
+                    binding.locationET.requestFocus();
                 } else if (binding.descriptionEt.getText().toString().isEmpty()) {
                     binding.descriptionEt.setError("enter description");
                     binding.descriptionEt.requestFocus();
