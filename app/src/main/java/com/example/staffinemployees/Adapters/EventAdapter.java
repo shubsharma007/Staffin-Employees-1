@@ -1,15 +1,19 @@
 package com.example.staffinemployees.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.staffinemployees.InsideEvent;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.EventsByYearResponse;
 
@@ -134,6 +138,18 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
             holder.txtDate.setText(singleUnit.getDate());
             holder.txtEventName.setText(singleUnit.getTitleName());
         }
+        holder.interested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "You are interested in this event", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, InsideEvent.class));
+            }
+        });
     }
 
     @Override
@@ -142,10 +158,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txtDate, txtEventName;
+        TextView txtDate, txtEventName, interested;
+        ConstraintLayout card;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            card = itemView.findViewById(R.id.cardEvent);
+            interested = itemView.findViewById(R.id.interested);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtEventName = itemView.findViewById(R.id.txtEventName);
         }

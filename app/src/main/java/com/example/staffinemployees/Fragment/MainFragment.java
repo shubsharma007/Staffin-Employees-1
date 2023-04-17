@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.staffinemployees.Adapters.HomeEventsAdapter;
 import com.example.staffinemployees.Interface.ApiInterface;
+import com.example.staffinemployees.Response.EventsByYearResponse;
 import com.example.staffinemployees.Response.Punch;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentMainBinding;
@@ -51,6 +52,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -59,8 +61,6 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
-import retrofit2.http.Path;
 
 
 public class MainFragment extends Fragment {
@@ -68,6 +68,18 @@ public class MainFragment extends Fragment {
     FragmentMainBinding binding;
     private LocationRequest locationRequest;
 
+    List<EventsByYearResponse.EventDetails.January> jan;
+    List<EventsByYearResponse.EventDetails.February> feb;
+    List<EventsByYearResponse.EventDetails.March> mar;
+    List<EventsByYearResponse.EventDetails.April> apr;
+    List<EventsByYearResponse.EventDetails.May> may;
+    List<EventsByYearResponse.EventDetails.June> june;
+    List<EventsByYearResponse.EventDetails.July> july;
+    List<EventsByYearResponse.EventDetails.August> aug;
+    List<EventsByYearResponse.EventDetails.September> sept;
+    List<EventsByYearResponse.EventDetails.October> oct;
+    List<EventsByYearResponse.EventDetails.November> nov;
+    List<EventsByYearResponse.EventDetails.December> dec;
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -87,15 +99,25 @@ public class MainFragment extends Fragment {
     ProgressDialog progressDialog;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         sharedPreferences = this.requireContext().getSharedPreferences("staffin", Context.MODE_PRIVATE);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please Wait....");
+        jan = new ArrayList<>();
+        feb = new ArrayList<>();
+        mar = new ArrayList<>();
+        apr = new ArrayList<>();
+        may = new ArrayList<>();
+        june = new ArrayList<>();
+        july = new ArrayList<>();
+        aug = new ArrayList<>();
+        sept = new ArrayList<>();
+        oct = new ArrayList<>();
+        nov = new ArrayList<>();
+        dec = new ArrayList<>();
         setDigitalClock();
-
         Id = sharedPreferences.getAll().get("Id").toString();
         eId = sharedPreferences.getAll().get("eId").toString();
 
@@ -105,45 +127,183 @@ public class MainFragment extends Fragment {
         int month = cal.get(Calendar.MONTH);
 //                int day = cal.get(Calendar.DATE);
         month += 1;
-        switch (month) {
-            case 1:
-                binding.txtEventMonth.setText("January" + " " + "Events");
-                break;
-            case 2:
-                binding.txtEventMonth.setText("February" + " " + "Events");
-                break;
-            case 3:
-                binding.txtEventMonth.setText("March" + " " + "Events");
-                break;
-            case 4:
-                binding.txtEventMonth.setText("April" + " " + "Events");
-                break;
-            case 5:
-                binding.txtEventMonth.setText("May" + " " + "Events");
-                break;
-            case 6:
-                binding.txtEventMonth.setText("June" + " " + "Events");
-                break;
-            case 7:
-                binding.txtEventMonth.setText("July" + " " + "Events");
-                break;
-            case 8:
-                binding.txtEventMonth.setText("August" + " " + "Events");
-                break;
-            case 9:
-                binding.txtEventMonth.setText("September" + " " + "Events");
-                break;
-            case 10:
-                binding.txtEventMonth.setText("October" + " " + "Events");
-                break;
-            case 11:
-                binding.txtEventMonth.setText("November" + " " + "Events");
-                break;
-            case 12:
-                binding.txtEventMonth.setText("December" + " " + "Events");
-                break;
-        }
-//
+        binding.txtEventMonth.setText("Events");
+        int year = cal.get(Calendar.YEAR);
+        Call<EventsByYearResponse> callGetEventByYear = apiInterface.getEventsByYear(year);
+        int finalMonth = month;
+        callGetEventByYear.enqueue(new Callback<EventsByYearResponse>() {
+            @Override
+            public void onResponse(Call<EventsByYearResponse> call, Response<EventsByYearResponse> response) {
+                if (response.isSuccessful()) {
+                    switch (finalMonth) {
+                        case 1:
+                            binding.txtEventMonth.setText("January" + " " + "Events");
+                            jan = response.body().getEventDetails().getJanuary();
+                            Log.d("jan event count", String.valueOf(jan.size()));
+                            if (jan.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), jan, null, null, null, null, null, null, null, null, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 2:
+                            binding.txtEventMonth.setText("February" + " " + "Events");
+                            feb = response.body().getEventDetails().getFebruary();
+                            if (feb.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, feb, null, null, null, null, null, null, null, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 3:
+                            binding.txtEventMonth.setText("March" + " " + "Events");
+                            mar = response.body().getEventDetails().getMarch();
+                            if (mar.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, mar, null, null, null, null, null, null, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 4:
+                            binding.txtEventMonth.setText("April" + " " + "Events");
+                            apr = response.body().getEventDetails().getApril();
+                            Log.d("Apr event count", String.valueOf(apr.size()));
+                            if (apr.size() != 0) {
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, apr, null, null, null, null, null, null, null, null));
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+
+                            break;
+                        case 5:
+                            binding.txtEventMonth.setText("May" + " " + "Events");
+                            may = response.body().getEventDetails().getMay();
+                            if (may.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, may, null, null, null, null, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 6:
+                            binding.txtEventMonth.setText("June" + " " + "Events");
+                            june = response.body().getEventDetails().getJune();
+                            if (june.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, june, null, null, null, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 7:
+                            binding.txtEventMonth.setText("July" + " " + "Events");
+                            july = response.body().getEventDetails().getJuly();
+                            if (july.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, july, null, null, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 8:
+                            binding.txtEventMonth.setText("August" + " " + "Events");
+                            aug = response.body().getEventDetails().getAugust();
+                            if (aug.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, aug, null, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 9:
+                            binding.txtEventMonth.setText("September" + " " + "Events");
+                            sept = response.body().getEventDetails().getSeptember();
+                            if (sept.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, sept, null, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 10:
+                            binding.txtEventMonth.setText("October" + " " + "Events");
+                            oct = response.body().getEventDetails().getOctober();
+                            if (oct.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, oct, null, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 11:
+                            binding.txtEventMonth.setText("November" + " " + "Events");
+                            nov = response.body().getEventDetails().getNovember();
+                            if (nov.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, null, nov, null));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case 12:
+                            binding.txtEventMonth.setText("December" + " " + "Events");
+                            dec = response.body().getEventDetails().getDecember();
+                            if (dec.size() > 0) {
+                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                                binding.noEventFound.setVisibility(View.GONE);
+                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, null, null, dec));
+                            } else {
+                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                                binding.noEventFound.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                    }
+
+                } else {
+                    binding.noEventFound.setVisibility(View.VISIBLE);
+                    progressDialog.dismiss();
+                    Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
+                    Log.d("ndf", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EventsByYearResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                binding.noEventFound.setVisibility(View.VISIBLE);
+
+                Toast.makeText(getContext(), "some failure occured", Toast.LENGTH_SHORT).show();
+                Log.d("ndf", t.getMessage());
+            }
+        });
+
+
 //        Bundle bundle = this.getArguments();
 //        assert bundle != null;
 //        userid = bundle.getInt("userId");
@@ -151,7 +311,9 @@ public class MainFragment extends Fragment {
 
 //        binding.txtEventMonth.setText(String.valueOf(userid));
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+
+                getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
         } else {
             requestLocationPermission();
@@ -159,15 +321,15 @@ public class MainFragment extends Fragment {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
-
-        binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getContext()));
         layoutManagerH = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
         binding.recyclerViewMonthEvents.setLayoutManager(layoutManagerH);
 
 
         editor = sharedPreferences.edit();
 
-        if (!sharedPreferences.getAll().containsKey("punch")) {
+        if (!sharedPreferences.getAll().
+
+                containsKey("punch")) {
             binding.punchinOutBtn.setText("Punch In");
         } else {
             if (sharedPreferences.getAll().get("punch").toString().equalsIgnoreCase("punchIn")) {
@@ -177,7 +339,9 @@ public class MainFragment extends Fragment {
             }
         }
 
-        if (!sharedPreferences.getAll().containsKey("break")) {
+        if (!sharedPreferences.getAll().
+
+                containsKey("break")) {
             binding.BreakTimeBtn.setText("Break Start");
         } else {
             if (sharedPreferences.getAll().get("break").toString().equalsIgnoreCase("breakStart")) {
@@ -189,7 +353,9 @@ public class MainFragment extends Fragment {
 
 
         // break punch in punch out click
-        binding.BreakTimeBtn.setOnClickListener(v -> {
+        binding.BreakTimeBtn.setOnClickListener(v ->
+
+        {
 
             if (!sharedPreferences.getAll().containsKey("break")) {
                 //when user open first time app
@@ -476,7 +642,8 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
