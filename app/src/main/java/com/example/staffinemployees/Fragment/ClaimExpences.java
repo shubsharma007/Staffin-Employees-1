@@ -33,7 +33,8 @@ public class ClaimExpences extends Fragment {
     FragmentClaimExpencesBinding binding;
     TextView addText;
     static int count = 0;
-
+    String title;
+    String amount;
     boolean atleastOne = false;
 
 
@@ -73,8 +74,12 @@ public class ClaimExpences extends Fragment {
                 binding.amountEt.setError("enter amount");
                 binding.amountEt.requestFocus();
             } else {
+                title = binding.titleEt.getText().toString();
+                amount = binding.amountEt.getText().toString();
+
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 Toast.makeText(getContext(), "submitted", Toast.LENGTH_SHORT).show();
+                Log.d("imagePathImagePath", String.valueOf(imagePath));
                 getActivity().finish();
             }
         });

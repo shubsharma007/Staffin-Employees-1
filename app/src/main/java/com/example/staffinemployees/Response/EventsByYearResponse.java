@@ -185,6 +185,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -226,6 +235,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -287,6 +320,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -328,6 +370,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -377,7 +443,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class March {
@@ -390,6 +455,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -431,6 +505,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -480,7 +578,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class April {
@@ -493,6 +590,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -534,6 +640,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -583,7 +713,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class May {
@@ -596,6 +725,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -637,6 +775,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -686,7 +848,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class June {
@@ -699,6 +860,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -740,6 +910,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -789,7 +983,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class July {
@@ -802,6 +995,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -843,6 +1045,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -892,7 +1118,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class August {
@@ -905,6 +1130,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -946,6 +1180,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -995,7 +1253,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class September {
@@ -1008,6 +1265,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -1049,6 +1315,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -1098,7 +1388,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class October {
@@ -1111,6 +1400,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -1152,6 +1450,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -1201,7 +1523,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class November {
@@ -1215,6 +1536,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -1256,6 +1586,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -1305,7 +1659,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
         public class December {
@@ -1318,6 +1671,15 @@ public class EventsByYearResponse {
             @SerializedName("image")
             @Expose
             private String image;
+            @SerializedName("img1")
+            @Expose
+            private String img1;
+            @SerializedName("img2")
+            @Expose
+            private String img2;
+            @SerializedName("img3")
+            @Expose
+            private String img3;
             @SerializedName("location")
             @Expose
             private String location;
@@ -1359,6 +1721,30 @@ public class EventsByYearResponse {
 
             public void setImage(String image) {
                 this.image = image;
+            }
+
+            public String getImg1() {
+                return img1;
+            }
+
+            public void setImg1(String img1) {
+                this.img1 = img1;
+            }
+
+            public String getImg2() {
+                return img2;
+            }
+
+            public void setImg2(String img2) {
+                this.img2 = img2;
+            }
+
+            public String getImg3() {
+                return img3;
+            }
+
+            public void setImg3(String img3) {
+                this.img3 = img3;
             }
 
             public String getLocation() {
@@ -1408,7 +1794,6 @@ public class EventsByYearResponse {
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
             }
-
         }
 
     }

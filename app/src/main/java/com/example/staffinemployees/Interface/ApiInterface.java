@@ -4,6 +4,7 @@ import com.example.staffinemployees.Response.CompanyResponseById;
 import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.EventsByYearResponse;
+import com.example.staffinemployees.Response.GetMonthlyAttendance;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
 import com.example.staffinemployees.Response.OverTimeResponse;
@@ -105,4 +106,24 @@ public interface ApiInterface {
             @Field("local_address") String local_address,
             @Field("parmanent_address") String parmanent_address
     );
+
+    @Multipart
+    @POST("add-event")
+    Call<LoginResponse> addEventFunc(
+            @Part MultipartBody.Part image,
+            @Part MultipartBody.Part image1,
+            @Part MultipartBody.Part image2,
+            @Part MultipartBody.Part image3,
+            @Part("title_name") RequestBody title_name,
+            @Part("location") RequestBody location,
+            @Part("description") RequestBody description,
+            @Part("date") RequestBody date,
+            @Part("add_member") RequestBody add_member
+    );
+
+    @FormUrlEncoded
+    @POST("get-attendance")
+    Call<GetMonthlyAttendance> getMonthlyAttendanceByEid(@Field("month") int month,
+                                                         @Field("year") int year,
+                                                         @Field("employeeID") int employeeID);
 }

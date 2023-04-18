@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.Response.TotalEmployeeResponse;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
@@ -28,6 +29,8 @@ public class InsideEvent extends AppCompatActivity {
     ApiInterface apiInterface;
     private static final String TAG = "InsideEvent";
     String[] employees;
+
+    List<String> invitedMembers;
     ProgressDialog progress;
 
     @Override
@@ -38,6 +41,18 @@ public class InsideEvent extends AppCompatActivity {
         progress = new ProgressDialog(InsideEvent.this);
         progress.setMessage("please wait...");
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        invitedMembers = new ArrayList<>();
+        String image = getIntent().getStringExtra("image");
+        String image1 = getIntent().getStringExtra("image1");
+        String image2 = getIntent().getStringExtra("image2");
+        String image3 = getIntent().getStringExtra("image3");
+        String title = getIntent().getStringExtra("title");
+        String desc = getIntent().getStringExtra("desc");
+        String date = getIntent().getStringExtra("date");
+        String location = getIntent().getStringExtra("location");
+        ArrayList<String> members = getIntent().getStringArrayListExtra("members");
+
+
         Call<TotalEmployeeResponse> callGetTotalEmployee = apiInterface.getTotalEmployee();
         progress.show();
         callGetTotalEmployee.enqueue(new Callback<TotalEmployeeResponse>() {
@@ -45,38 +60,59 @@ public class InsideEvent extends AppCompatActivity {
             public void onResponse(Call<TotalEmployeeResponse> call, Response<TotalEmployeeResponse> response) {
                 if (response.isSuccessful()) {
                     employees = new String[response.body().getEmployeeResult().size()];
-
+                    invitedMembers.clear();
                     for (int i = 0; i < response.body().getEmployeeResult().size(); i++) {
                         employees[i] = response.body().getEmployeeResult().get(i).getFullName();
+
+                        for (String member : members) {
+                            Log.d("nfsdfsdf", member);
+                            if (String.valueOf(response.body().getEmployeeResult().get(i).getId()).equals(member))
+                                invitedMembers.add(response.body().getEmployeeResult().get(i).getFullName());
+                        }
                     }
+
+
+                    Glide.with(getApplicationContext()).load(image).into(binding.image1);
+                    Glide.with(getApplicationContext()).load(image1).into(binding.image2);
+                    Glide.with(getApplicationContext()).load(image2).into(binding.image3);
+                    Glide.with(getApplicationContext()).load(image3).into(binding.image4);
+
+                    binding.title.setText(title);
+                    binding.desc.setText(desc);
+                    binding.date.setText(date);
+                    binding.location.setText(location);
+
+
                     ArrayAdapter<String> arr;
-                    arr = new ArrayAdapter<String>(InsideEvent.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, employees);
+                    arr = new ArrayAdapter<>(InsideEvent.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, invitedMembers);
                     binding.listView.setAdapter(arr);
                     progress.dismiss();
                     binding.image1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            previewImage();
+                            previewImage(image);
                         }
                     });
                     binding.image2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            binding.image1.performClick();
+                            previewImage(image1);
                         }
                     });
                     binding.image3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            binding.image1.performClick();
+                            previewImage(image2);
                         }
                     });
                     binding.image4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            binding.image1.performClick();
+                            previewImage(image3);
                         }
                     });
+
+
                 } else {
                     progress.dismiss();
                     Log.d(TAG, "onResponse: " + response.message());
@@ -93,11 +129,11 @@ public class InsideEvent extends AppCompatActivity {
         });
     }
 
-    private void previewImage() {
+    private void previewImage(String img) {
         Dialog imagePreview = new Dialog(InsideEvent.this);
         imagePreview.setContentView(R.layout.preview_image);
         ImageView image = imagePreview.findViewById(R.id.previewImage);
-        image.setImageResource(R.drawable.image_employee);
+        Glide.with(getApplicationContext()).load(img).placeholder(R.drawable.img_event_placeholder).into(image);
         imagePreview.show();
     }
 }

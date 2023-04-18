@@ -223,8 +223,6 @@ public class CompanyDetailsFragment extends Fragment {
     }
 
     private void showPopup() {
-
-
         adDialog.setContentView(R.layout.popup_overtime);
         adDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         adDialog.show();
@@ -246,13 +244,48 @@ public class CompanyDetailsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
                     time = response.body().getOverTime();
-                    Log.e("sfdfdf", time.toString());
-                    firstTv.setText(time.get(0));
-                    secondTv.setText(time.get(1));
-                    firstAmountEt.setText(time.get(2));
-                    thirdTv.setText(time.get(3));
-                    fourthTv.setText(time.get(4));
-                    secondAmountEt.setText(time.get(5));
+//                    Log.e("sfdfdf", time.toString());
+//                    Log.d("hahahaha", time.get(0));
+//                    Log.d("hahahaha", time.get(1));
+//                    Log.d("hahahaha", time.get(2));
+//                    Log.d("hahahaha", time.get(3));
+//                    Log.d("hahahaha", time.get(4));
+//                    Log.d("hahahaha", time.get(5));
+                    if (time.get(0) == null) {
+                        firstTv.setText("no data");
+                    } else {
+                        firstTv.setText(time.get(0));
+
+                    }
+                    if (time.get(1) == null) {
+                        secondTv.setText("no data");
+                    } else {
+                        secondTv.setText(time.get(1));
+
+                    }
+                    if (time.get(2) == null) {
+                        firstAmountEt.setText("no data");
+                    } else {
+                        firstAmountEt.setText(time.get(2));
+                    }
+                    if (time.get(3) == null) {
+                        thirdTv.setText("no data");
+                    } else {
+                        thirdTv.setText(time.get(3));
+
+                    }
+                    if (time.get(4) == null) {
+                        fourthTv.setText("no data");
+                    } else {
+                        fourthTv.setText(time.get(4));
+
+                    }
+                    if (time.get(5) == null) {
+                        secondAmountEt.setText("no data");
+                    } else {
+                        secondAmountEt.setText(time.get(5));
+                    }
+
                 } else {
                     progressDialog.dismiss();
                     Log.e("diufhyeiufhiu", response.message());

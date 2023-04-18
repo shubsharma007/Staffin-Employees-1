@@ -13,6 +13,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.metrics.Event;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.staffinemployees.Adapters.HomeEventsAdapter;
 import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.Response.EventsByYearResponse;
+import com.example.staffinemployees.Response.EventsMix;
 import com.example.staffinemployees.Response.Punch;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentMainBinding;
@@ -67,7 +69,7 @@ public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
     private LocationRequest locationRequest;
-
+    List<EventsMix> eventsMixList;
     List<EventsByYearResponse.EventDetails.January> jan;
     List<EventsByYearResponse.EventDetails.February> feb;
     List<EventsByYearResponse.EventDetails.March> mar;
@@ -105,6 +107,7 @@ public class MainFragment extends Fragment {
         sharedPreferences = this.requireContext().getSharedPreferences("staffin", Context.MODE_PRIVATE);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please Wait....");
+        eventsMixList = new ArrayList<>();
         jan = new ArrayList<>();
         feb = new ArrayList<>();
         mar = new ArrayList<>();
@@ -135,153 +138,229 @@ public class MainFragment extends Fragment {
             @Override
             public void onResponse(Call<EventsByYearResponse> call, Response<EventsByYearResponse> response) {
                 if (response.isSuccessful()) {
+                    if (response.body().getEventDetails().getJanuary().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.January x : response.body().getEventDetails().getJanuary()) {
+                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 1));
+                        }
+                    }
+                    if (response.body().getEventDetails().getFebruary().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.February x : response.body().getEventDetails().getFebruary()) {
+                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 2));
+                        }
+                    }
+                    if (response.body().getEventDetails().getMarch().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.March x : response.body().getEventDetails().getMarch()) {
+                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 3));
+                        }
+                    }
+                    if (response.body().getEventDetails().getApril().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.April f : response.body().getEventDetails().getApril()) {
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 4));
+                        }
+                    }
+                    if (response.body().getEventDetails().getMay().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.May j : response.body().getEventDetails().getMay()) {
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 5));
+                        }
+                    }
+                    if (response.body().getEventDetails().getJune().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.June f : response.body().getEventDetails().getJune()) {
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 6));
+                        }
+                    }
+                    if (response.body().getEventDetails().getJuly().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.July j : response.body().getEventDetails().getJuly()) {
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 7));
+                        }
+                    }
+                    if (response.body().getEventDetails().getAugust().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.August f : response.body().getEventDetails().getAugust()) {
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 8));
+                        }
+                    }
+                    if (response.body().getEventDetails().getSeptember().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.September j : response.body().getEventDetails().getSeptember()) {
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 9));
+                        }
+                    }
+                    if (response.body().getEventDetails().getOctober().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.October f : response.body().getEventDetails().getOctober()) {
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 10));
+                        }
+                    }
+                    if (response.body().getEventDetails().getNovember().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.November j : response.body().getEventDetails().getNovember()) {
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 11));
+                        }
+                    }
+                    if (response.body().getEventDetails().getDecember().size() > 0) {
+                        for (EventsByYearResponse.EventDetails.December f : response.body().getEventDetails().getDecember()) {
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 12));
+                        }
+                    }
+                    int eventCount = 0;
+                    for (EventsMix ex : eventsMixList) {
+                        Log.d("EVENTMIX " + ex.getMonth(), ex.getDate());
+                        if (ex.getMonth() == finalMonth) {
+                            eventCount += 1;
+                        }
+                    }
+                    if (eventCount > 0) {
+                        binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+                        binding.noEventFound.setVisibility(View.GONE);
+                        binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(eventsMixList, finalMonth, getActivity()));
+                    } else {
+                        binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+                        binding.noEventFound.setVisibility(View.VISIBLE);
+                    }
+
                     switch (finalMonth) {
                         case 1:
                             binding.txtEventMonth.setText("January" + " " + "Events");
                             jan = response.body().getEventDetails().getJanuary();
                             Log.d("jan event count", String.valueOf(jan.size()));
-                            if (jan.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), jan, null, null, null, null, null, null, null, null, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (jan.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), jan, null, null, null, null, null, null, null, null, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 2:
                             binding.txtEventMonth.setText("February" + " " + "Events");
                             feb = response.body().getEventDetails().getFebruary();
-                            if (feb.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, feb, null, null, null, null, null, null, null, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (feb.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, feb, null, null, null, null, null, null, null, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 3:
                             binding.txtEventMonth.setText("March" + " " + "Events");
                             mar = response.body().getEventDetails().getMarch();
-                            if (mar.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, mar, null, null, null, null, null, null, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (mar.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, mar, null, null, null, null, null, null, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 4:
                             binding.txtEventMonth.setText("April" + " " + "Events");
                             apr = response.body().getEventDetails().getApril();
                             Log.d("Apr event count", String.valueOf(apr.size()));
-                            if (apr.size() != 0) {
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, apr, null, null, null, null, null, null, null, null));
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (apr.size() != 0) {
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, apr, null, null, null, null, null, null, null, null));
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
 
                             break;
                         case 5:
                             binding.txtEventMonth.setText("May" + " " + "Events");
                             may = response.body().getEventDetails().getMay();
-                            if (may.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, may, null, null, null, null, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (may.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, may, null, null, null, null, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 6:
                             binding.txtEventMonth.setText("June" + " " + "Events");
                             june = response.body().getEventDetails().getJune();
-                            if (june.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, june, null, null, null, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (june.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, june, null, null, null, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 7:
                             binding.txtEventMonth.setText("July" + " " + "Events");
                             july = response.body().getEventDetails().getJuly();
-                            if (july.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, july, null, null, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (july.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, july, null, null, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 8:
                             binding.txtEventMonth.setText("August" + " " + "Events");
                             aug = response.body().getEventDetails().getAugust();
-                            if (aug.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, aug, null, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (aug.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, aug, null, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 9:
                             binding.txtEventMonth.setText("September" + " " + "Events");
                             sept = response.body().getEventDetails().getSeptember();
-                            if (sept.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, sept, null, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (sept.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, sept, null, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 10:
                             binding.txtEventMonth.setText("October" + " " + "Events");
                             oct = response.body().getEventDetails().getOctober();
-                            if (oct.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, oct, null, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (oct.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, oct, null, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 11:
                             binding.txtEventMonth.setText("November" + " " + "Events");
                             nov = response.body().getEventDetails().getNovember();
-                            if (nov.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, null, nov, null));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (nov.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, null, nov, null));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                         case 12:
                             binding.txtEventMonth.setText("December" + " " + "Events");
                             dec = response.body().getEventDetails().getDecember();
-                            if (dec.size() > 0) {
-                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
-                                binding.noEventFound.setVisibility(View.GONE);
-                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, null, null, dec));
-                            } else {
-                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
-                                binding.noEventFound.setVisibility(View.VISIBLE);
-                            }
+//                            if (dec.size() > 0) {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.VISIBLE);
+//                                binding.noEventFound.setVisibility(View.GONE);
+//                                binding.recyclerViewMonthEvents.setAdapter(new HomeEventsAdapter(getActivity(), null, null, null, null, null, null, null, null, null, null, null, dec));
+//                            } else {
+//                                binding.recyclerViewMonthEvents.setVisibility(View.GONE);
+//                                binding.noEventFound.setVisibility(View.VISIBLE);
+//                            }
                             break;
                     }
 
@@ -298,7 +377,7 @@ public class MainFragment extends Fragment {
                 progressDialog.dismiss();
                 binding.noEventFound.setVisibility(View.VISIBLE);
 
-                Toast.makeText(getContext(), "some failure occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "some failure occured", Toast.LENGTH_SHORT).show();
                 Log.d("ndf", t.getMessage());
             }
         });
