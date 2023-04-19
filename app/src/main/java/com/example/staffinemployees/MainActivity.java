@@ -1,7 +1,9 @@
 package com.example.staffinemployees;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,6 +40,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
+    String dp, mail, name;
     private static long backPressed;
     private static final int TIME_DELAY = 2000;
     SharedPreferences sharedPreferences;
@@ -131,12 +134,36 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_logout:
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        editor.remove("mobile");
-                        editor.remove("eId");
-                        editor.remove("Id");
-                        editor.apply();
-                        finish();
+
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                        dialog.setTitle("Logout");
+                        dialog.setCancelable(false);
+                        dialog.setMessage("Are you sure");
+
+                        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                editor.remove("mobile");
+                                editor.remove("eId");
+                                editor.remove("Id");
+                                editor.remove("dp");
+                                editor.remove("name");
+                                editor.remove("mail");
+
+                                editor.apply();
+                                finish();
+
+                            }
+                        });
+                        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog alertDialog = dialog.create();
+                        alertDialog.show();
                         break;
                 }
                 binding.drawerLayout.close();
@@ -164,7 +191,13 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
                     EmployeeResult singleUser = response.body().getEmployeeResult().get(0);
-
+                    dp = singleUser.getProfileImage();
+                    mail = singleUser.getEmail();
+                    name = singleUser.getFullName();
+                    editor.putString("dp", dp);
+                    editor.putString("mail", mail);
+                    editor.putString("name", name);
+                   editor.commit();
                     Glide.with(getApplicationContext()).load(singleUser.getProfileImage()).placeholder(R.drawable.img_dp).into(binding.dpImg);
 
                 } else {
@@ -182,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }

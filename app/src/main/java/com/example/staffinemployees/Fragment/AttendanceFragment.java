@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.example.staffinemployees.Adapters.AttendanceAdapter;
 import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.R;
@@ -49,6 +50,10 @@ public class AttendanceFragment extends Fragment {
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         sharedPreferences = getActivity().getSharedPreferences("staffin", Context.MODE_PRIVATE);
         Id = Integer.parseInt(sharedPreferences.getAll().get("Id").toString());
+        Glide.with(getActivity()).load(sharedPreferences.getAll().get("dp")).into(binding.imageView2);
+        binding.textView8.setText(sharedPreferences.getAll().get("name").toString());
+        binding.textView9.setText(sharedPreferences.getAll().get("mail").toString());
+
         progress = new ProgressDialog(getActivity());
         progress.setMessage("please wait...");
         presentAbsentMixList = new ArrayList<>();
