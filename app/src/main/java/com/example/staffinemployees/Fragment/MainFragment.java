@@ -769,12 +769,24 @@ public class MainFragment extends Fragment {
                             currentMonth = String.valueOf(now.getMonthValue());
                             currentDate = String.valueOf(now.getDayOfMonth());
                             currentYear = String.valueOf(now.getYear());
-                        }
-                        binding.hourTv.setText(String.format("%02d", hour));
-                        binding.minTv.setText(String.format("%02d", minute));
-                        binding.secTv.setText(String.format("%02d", second));
+                            binding.hourTv.setText(String.format("%02d", hour));
+                            binding.minTv.setText(String.format("%02d", minute));
+                            binding.secTv.setText(String.format("%02d", second));
 
-                        setDigitalClock();
+                            setDigitalClock();
+                        } else {
+                            binding.digitalClock.setVisibility(View.VISIBLE);
+                            binding.card1.setVisibility(View.GONE);
+                            binding.card2.setVisibility(View.GONE);
+                            binding.card3.setVisibility(View.GONE);
+
+
+                        }
+//                        binding.hourTv.setText(String.format("%02d", hour));
+//                        binding.minTv.setText(String.format("%02d", minute));
+//                        binding.secTv.setText(String.format("%02d", second));
+//
+//                        setDigitalClock();
                     }
                 });
             }
