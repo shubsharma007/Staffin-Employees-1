@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("dp", dp);
                     editor.putString("mail", mail);
                     editor.putString("name", name);
-                   editor.commit();
+                    editor.commit();
                     Glide.with(getApplicationContext()).load(singleUser.getProfileImage()).placeholder(R.drawable.img_dp).into(binding.dpImg);
 
                 } else {
