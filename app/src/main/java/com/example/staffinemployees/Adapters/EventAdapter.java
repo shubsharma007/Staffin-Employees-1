@@ -29,21 +29,21 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     List<EventsMix> eventsMixList;
     List<EventsMix> currentMonthEventsList;
     String image, image1, image2, image3, title, desc, date, location;
-    List<String> add_members;
+//    List<String> add_members;
     String[] membersArray;
-    List<EventsByYearResponse.EventDetails.January> januaries;
-    List<EventsByYearResponse.EventDetails.February> februaries;
-    List<EventsByYearResponse.EventDetails.March> marches;
-    List<EventsByYearResponse.EventDetails.April> aprils;
-    List<EventsByYearResponse.EventDetails.May> mays;
-    List<EventsByYearResponse.EventDetails.June> junes;
-    List<EventsByYearResponse.EventDetails.July> julies;
-    List<EventsByYearResponse.EventDetails.August> augusts;
-    List<EventsByYearResponse.EventDetails.September> septembers;
-    List<EventsByYearResponse.EventDetails.October> octobers;
-    List<EventsByYearResponse.EventDetails.November> novembers;
-    List<EventsByYearResponse.EventDetails.December> decembers;
-    int size;
+//    List<EventsByYearResponse.EventDetails.January> januaries;
+//    List<EventsByYearResponse.EventDetails.February> februaries;
+//    List<EventsByYearResponse.EventDetails.March> marches;
+//    List<EventsByYearResponse.EventDetails.April> aprils;
+//    List<EventsByYearResponse.EventDetails.May> mays;
+//    List<EventsByYearResponse.EventDetails.June> junes;
+//    List<EventsByYearResponse.EventDetails.July> julies;
+//    List<EventsByYearResponse.EventDetails.August> augusts;
+//    List<EventsByYearResponse.EventDetails.September> septembers;
+//    List<EventsByYearResponse.EventDetails.October> octobers;
+//    List<EventsByYearResponse.EventDetails.November> novembers;
+//    List<EventsByYearResponse.EventDetails.December> decembers;
+//    int size;
 
     public EventAdapter(Context context, int month, List<EventsMix> eventsMixList) {
         this.context = context;

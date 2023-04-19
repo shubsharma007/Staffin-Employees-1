@@ -42,7 +42,7 @@ public class EventsFragment extends Fragment {
     //    List<MyMonth> monthsList;
     MonthAdapter adapter;
     //    List<MembersOfEvent> membersOnly;
-    EventsByYearResponse.EventDetails eventDetails;
+//    EventsByYearResponse.EventDetails eventDetails;
     ApiInterface apiInterface;
     ProgressDialog progress;
 
