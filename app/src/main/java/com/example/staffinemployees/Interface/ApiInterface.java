@@ -8,6 +8,7 @@ import com.example.staffinemployees.Response.GetMonthlyAttendance;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
 import com.example.staffinemployees.Response.OverTimeResponse;
+import com.example.staffinemployees.Response.PaySlipResponse;
 import com.example.staffinemployees.Response.Punch;
 import com.example.staffinemployees.Response.TotalEmployeeResponse;
 
@@ -126,4 +127,8 @@ public interface ApiInterface {
     Call<GetMonthlyAttendance> getMonthlyAttendanceByEid(@Field("month") int month,
                                                          @Field("year") int year,
                                                          @Field("employeeID") int employeeID);
+
+    //getPaySLip
+    @GET("get-payslip/{id}")
+    Call<PaySlipResponse> getPaySlip(@Path("id") int id);
 }
