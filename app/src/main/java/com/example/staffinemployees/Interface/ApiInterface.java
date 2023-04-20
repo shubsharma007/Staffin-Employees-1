@@ -1,12 +1,14 @@
 package com.example.staffinemployees.Interface;
 
 import com.example.staffinemployees.Response.CompanyResponseById;
+import com.example.staffinemployees.Response.CreatedHolidayResp;
 import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.EventsByYearResponse;
 import com.example.staffinemployees.Response.GetMonthlyAttendance;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
+import com.example.staffinemployees.Response.NationalHolidayResp;
 import com.example.staffinemployees.Response.OverTimeResponse;
 import com.example.staffinemployees.Response.PaySlipResponse;
 import com.example.staffinemployees.Response.Punch;
@@ -131,4 +133,21 @@ public interface ApiInterface {
     //getPaySLip
     @GET("get-payslip/{id}")
     Call<PaySlipResponse> getPaySlip(@Path("id") int id);
+
+
+
+    //get all holidays
+    @GET("get-holiday")
+    Call<CreatedHolidayResp> getCreatedHolidays();
+
+    @FormUrlEncoded
+    @POST("get-national-holiday")
+    Call<NationalHolidayResp> getNationalHolidayMonthly(@Field("country") String country,
+                                                        @Field("month") int month,
+                                                        @Field("year") int year);
+
+    @FormUrlEncoded
+    @POST("get-national-holiday")
+    Call<NationalHolidayResp> getNationalHoliday(@Field("country") String country,
+                                                 @Field("year") int year);
 }
