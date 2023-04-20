@@ -114,35 +114,38 @@ public class ClaimExpences extends Fragment {
 
         if (requestCode == 101 && resultCode == RESULT_OK) {
 
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-//            binding.openCameraBtn.setImageBitmap(photo);
-            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-            Uri tempUri = getImageUri(getActivity(), photo);
 
-            // CALL THIS METHOD TO GET THE ACTUAL PATH
-            File finalFile = new File(getRealPathFromURI(tempUri));
+            if (data.getExtras().get("data") == null) {
 
-            // Set the image in imageview for display
-            Log.d("ndfsdnf", finalFile.toString());
-
-            imgString = finalFile.toString();
-            imagePath.add(finalFile.toString());
-            addText = new TextView(getContext());
-
-            if (count == 0) {
-                count = 1;
-                addText.setText(count + ".  " + imgString);
+                Toast.makeText(getContext(), "this device is unable to perform this functionality", Toast.LENGTH_SHORT).show();
             } else {
-                count += 1;
-                addText.setText(count + ".  " + imgString);
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                Uri tempUri = getImageUri(getActivity(), photo);
+
+                // CALL THIS METHOD TO GET THE ACTUAL PATH
+                File finalFile = new File(getRealPathFromURI(tempUri));
+
+                // Set the image in imageview for display
+                Log.d("ndfsdnf", finalFile.toString());
+
+                imgString = finalFile.toString();
+                imagePath.add(finalFile.toString());
+                addText = new TextView(getContext());
+
+                if (count == 0) {
+                    count = 1;
+                    addText.setText(count + ".  " + imgString);
+                } else {
+                    count += 1;
+                    addText.setText(count + ".  " + imgString);
+                }
+
+                addText.setTextSize(12);
+                addText.setMaxLines(1);
+                addText.setTextColor(Color.parseColor("#808080"));
+                binding.llVertical.addView(addText);
+                atleastOne = true;
             }
-
-            addText.setTextSize(12);
-            addText.setMaxLines(1);
-            addText.setTextColor(Color.parseColor("#808080"));
-            binding.llVertical.addView(addText);
-            atleastOne = true;
-
         }
     }
 
