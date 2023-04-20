@@ -53,8 +53,13 @@ public class ClaimExpences extends Fragment {
         binding.openCameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, 101);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, 101);
+                }else {
+                    Toast.makeText(getActivity(), "Your Device Does not Support This Functionality", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
