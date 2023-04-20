@@ -497,7 +497,7 @@ public class MainFragment extends Fragment {
                                             cal.get(Calendar.MONTH);
 
                                             String punchDate = currentYear + "-" + currentMonth + "-" + currentDate;
-                                           String punchTime = String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second);
+                                            String punchTime = String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second);
                                             //current location send krna he remaining in api
 
                                             if (!sharedPreferences.getAll().containsKey("punch")) {
@@ -781,7 +781,6 @@ public class MainFragment extends Fragment {
                             binding.card1.setVisibility(View.GONE);
                             binding.card2.setVisibility(View.GONE);
                             binding.card3.setVisibility(View.GONE);
-
 
                         }
 //                        binding.hourTv.setText(String.format("%02d", hour));
