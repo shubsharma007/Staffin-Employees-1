@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -54,24 +56,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
-//        int userId = getIntent().getIntExtra("userid", 0);
         sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         id = sharedPreferences.getAll().get("Id").toString();
-        userProfileImage();
-
-
+        if (isNetworkAvailable()) {
+            userProfileImage();
+        } else {
+            Toast.makeText(this, "Please Check Your Network...", Toast.LENGTH_SHORT).show();
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
-
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("userId", userId);
-//        Fragment fragment = new MainFragment();
-//        fragment.setArguments(bundle);
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.container, fragment).commit();
-
-
         binding.textView.setText("Home");
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.drawerLayout, binding.toolbar
                 , 0, 0) {
@@ -182,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     private void userProfileImage() {
 
         final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         Call<EmployeeProfileResponse> employeeProfileResponseCall = apiInterface.getEmployeeProfile(Integer.parseInt(id));
@@ -198,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("mail", mail);
                     editor.putString("name", name);
                     editor.commit();
+                    Log.e("profile aagai", response.message());
                     Glide.with(getApplicationContext()).load(singleUser.getProfileImage()).placeholder(R.drawable.img_dp).into(binding.dpImg);
 
                 } else {
@@ -227,5 +222,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Press once again to exit!", Toast.LENGTH_SHORT).show();
         }
         backPressed = System.currentTimeMillis();
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

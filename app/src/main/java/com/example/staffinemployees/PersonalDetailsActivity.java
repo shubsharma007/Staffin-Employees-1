@@ -54,7 +54,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     String name, fName, dob, gender, email, localAddress, permanentAddress, finalGender, number;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,18 +62,22 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         id = sharedPreferences.getAll().get("Id").toString();
-
-        binding.btnBack.setOnClickListener(v -> {
-            finish();
-        });
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         getUserApi();
+        setOnClickListener();
+
+
+    }
+
+    private void setOnClickListener() {
         binding.editBtn.setOnClickListener(v -> {
             Intent editImg = new Intent(Intent.ACTION_PICK);
             editImg.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(editImg, 123);
         });
-
+        binding.btnBack.setOnClickListener(v -> {
+            finish();
+        });
         binding.dobEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +95,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
         binding.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +103,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), "Please Upload your Profile Image", Toast.LENGTH_SHORT).show();
 //                }
 //                else
-                    if (binding.employeeIdEt.getText().toString().isEmpty()) {
+                if (binding.employeeIdEt.getText().toString().isEmpty()) {
                     binding.employeeIdEt.setError("Enter Your Name");
                     binding.employeeIdEt.requestFocus();
                 } else if (binding.departmentEt.getText().toString().isEmpty()) {
@@ -130,33 +132,31 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     binding.permAddEt.requestFocus();
                 } else {
 
-                        name = binding.employeeIdEt.getText().toString();
-                        fName = binding.departmentEt.getText().toString();
-                        dob = binding.dobEt.getText().toString();
-                        gender = "";
-                        if (binding.rbMale.isChecked()) {
-                            binding.rbMale.getText().toString();
-                            gender = "Male";
-                        } else if (binding.rbFemale.isChecked()) {
-                            binding.rbFemale.getText().toString();
-                            gender = "Female";
-                        } else {
-                            binding.rbOther.getText().toString();
-                            gender = "Other";
-                        }
-                        finalGender = gender;
-                        number = binding.mobileEt.getText().toString();
-                        email = binding.emailEt.getText().toString();
-                        localAddress = binding.localAddEt.getText().toString();
-                        permanentAddress = binding.permAddEt.getText().toString();
+                    name = binding.employeeIdEt.getText().toString();
+                    fName = binding.departmentEt.getText().toString();
+                    dob = binding.dobEt.getText().toString();
+                    gender = "";
+                    if (binding.rbMale.isChecked()) {
+                        binding.rbMale.getText().toString();
+                        gender = "Male";
+                    } else if (binding.rbFemale.isChecked()) {
+                        binding.rbFemale.getText().toString();
+                        gender = "Female";
+                    } else {
+                        binding.rbOther.getText().toString();
+                        gender = "Other";
+                    }
+                    finalGender = gender;
+                    number = binding.mobileEt.getText().toString();
+                    email = binding.emailEt.getText().toString();
+                    localAddress = binding.localAddEt.getText().toString();
+                    permanentAddress = binding.permAddEt.getText().toString();
 
                     updateDetails(Integer.parseInt(id), uripi, name, fName, dob, finalGender, number, email, localAddress, permanentAddress);
-//                    Toast.makeText(PersonalDetailsActivity.this, "Changes Saved...", Toast.LENGTH_SHORT).show();
-//                    finish();
+
                 }
             }
         });
-
     }
 
     private void updateDetails(int id, String uripi, String name, String fName, String xdob, String finalGender, String number, String email, String localAddress, String permanentAddress) {
@@ -200,8 +200,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                         Toast.makeText(PersonalDetailsActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-        else {
+            } else {
                 Toast.makeText(this, "Internet Not Available", Toast.LENGTH_SHORT).show();
             }
 //           image le k api chlegi
@@ -240,6 +239,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     private void getUserApi() {
         final ProgressDialog progressDialog = new ProgressDialog(PersonalDetailsActivity.this);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         Call<EmployeeProfileResponse> employeeProfileResponseCall = apiInterface.getEmployeeProfile(Integer.parseInt(id));
@@ -301,7 +301,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //            }
 //        }
 //    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -312,6 +311,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             dpImageBoolean = true;
         }
     }
+
     private String getRealPathFromURI(Uri contentURI) {
         String result;
         Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);

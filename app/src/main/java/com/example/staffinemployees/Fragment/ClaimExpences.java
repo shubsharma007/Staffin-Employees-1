@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -53,11 +54,11 @@ public class ClaimExpences extends Fragment {
         binding.openCameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, 101);
                 }else {
-                    Toast.makeText(getActivity(), "Your Device Does not Support This Functionality", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Your Device Does not Support This Functionality\n Please Click On (Click To Upload Images)", Toast.LENGTH_SHORT).show();
                 }
 
             }

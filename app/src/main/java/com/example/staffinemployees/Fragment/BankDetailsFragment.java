@@ -52,6 +52,7 @@ public class BankDetailsFragment extends Fragment {
         Log.i("Id AArahi AHI", Id);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);

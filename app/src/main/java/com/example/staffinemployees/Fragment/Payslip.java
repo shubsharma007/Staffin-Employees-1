@@ -27,7 +27,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class Payslip extends Fragment {
     FragmentPayslipBinding binding;
     ApiInterface apiInterface;
@@ -44,15 +43,11 @@ public class Payslip extends Fragment {
         editor = sharedPreferences.edit();
         Id = sharedPreferences.getAll().get("Id").toString();
         Log.i("Id AArahi AHI", Id);
-
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
-
-
         getApi();
 
         return binding.getRoot();
     }
-
     private void getApi() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
@@ -81,8 +76,6 @@ public class Payslip extends Fragment {
                         binding.netAmount.setText(singleUnit.getNetSalary());
                         binding.empId.setText("Emp. ID - " + singleUnit.getEmployeeId());
                     }
-
-
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
@@ -95,8 +88,6 @@ public class Payslip extends Fragment {
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
                 Log.e("Api not Working", t.getMessage());
-
-
             }
         });
 
