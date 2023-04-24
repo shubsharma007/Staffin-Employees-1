@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/mainColor"
     android:layout_height="match_parent"
+    android:background="@color/mainColor"
     tools:context=".MainActivity">
 
 
@@ -24,10 +24,10 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:backgroundTint="@color/mainColor"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@color/white"
+                android:backgroundTint="@color/mainColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -77,13 +77,15 @@
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/drawernavigationView"
             android:layout_width="wrap_content"
-            android:background="@color/white"
-            android:layout_gravity="start"
-            app:itemIconTint="@color/black"
             android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/white"
             android:fitsSystemWindows="true"
-            app:itemTextColor="@color/mainColor"
+            app:elevation="5dp"
+            app:itemBackground="@android:color/transparent"
+            app:itemIconTint="@color/bluetext"
+            app:itemTextColor="@color/bluetext"
             app:menu="@menu/menu" />
-<!--        app:headerLayout="@layout/header"-->
+        <!--        app:headerLayout="@layout/header"-->
     </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

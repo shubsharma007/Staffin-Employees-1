@@ -25,12 +25,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.staffinemployees.Interface.ApiInterface;
+import com.example.staffinemployees.Response.EmployeeResult;
 import com.example.staffinemployees.Response.LoginResponse;
 import com.example.staffinemployees.Response.TotalEmployeeResponse;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.ActivityCreateEventBinding;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,7 +46,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -59,15 +69,15 @@ public class CreateEventActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     HashMap<String, String> map;
     List<Integer> add_member;
-
+    List<EmployeeResult> results;
     Uri uriImage1, uriImage2, uriImage3, uriImage4;
     String image1 = null, image2 = null, image3 = null, image4 = null;
     File file1, file2, file3, file4;
     String title, description, date, location;
 
 
-//    EditText placeSearch_Tv;
-//    private String apiKey = "AIzaSyBHdfJUk9pq_4V1fY337xHCc1dA9ebeueM";
+    //    EditText placeSearch_Tv;
+    private String apiKey = "AIzaSyBHdfJUk9pq_4V1fY337xHCc1dA9ebeueM";
 //    int AUTOCOMPLETE_REQUEST_CODE = 1;
 //    List<com.google.android.libraries.places.api.model.Place.Field> fields;
 
@@ -78,6 +88,20 @@ public class CreateEventActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 //        placeSearch_Tv = findViewById(R.id.location_ET);
 //        Places.initialize(getApplicationContext(), apiKey);
+
+        Places.initialize(CreateEventActivity.this, apiKey);
+
+        binding.locationET.setFocusable(false);
+        binding.locationET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(CreateEventActivity.this);
+                startActivityForResult(intent, 12321);
+            }
+        });
+
+        PlacesClient placesClient = Places.createClient(CreateEventActivity.this);
 
         clickListeners();
 //        googlePlaces();
@@ -137,6 +161,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
     private void clickListeners() {
         map = new HashMap<>();
+        results = new ArrayList<>();
         add_member = new ArrayList<>();
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         progress = new ProgressDialog(CreateEventActivity.this);
@@ -153,7 +178,7 @@ public class CreateEventActivity extends AppCompatActivity {
                         ImageView imageview[] = new ImageView[response.body().getEmployeeResult().size()];
 
                         String[] names = new String[response.body().getEmployeeResult().size()];
-
+                        results = response.body().getEmployeeResult();
                         for (int i = 0; i < response.body().getEmployeeResult().size(); i++) {
                             employeesList.add(response.body().getEmployeeResult().get(i).getFullName());
                             Log.d("dfuhksdf", employeesList.get(i));
@@ -198,7 +223,13 @@ public class CreateEventActivity extends AppCompatActivity {
                                             imageview[i] = new ImageView(CreateEventActivity.this);
                                             imageview[i].setImageResource(R.drawable.img_dp);
                                             View child = getLayoutInflater().inflate(R.layout.add_member_in_event, null);
-                                            child.findViewById(R.id.memberDp);
+                                            CircleImageView dp = child.findViewById(R.id.memberDp);
+                                            for (EmployeeResult e : results) {
+                                                if (Objects.equals(e.getId(), idsList.get(i))) {
+                                                    Glide.with(CreateEventActivity.this).load(e.getProfileImage()).placeholder(R.drawable.img_dp).into(dp);
+                                                }
+                                            }
+
                                             binding.dynamicLl.addView(child);
                                         }
                                         if (selectedIds[i]) {
@@ -500,6 +531,17 @@ public class CreateEventActivity extends AppCompatActivity {
                 binding.fourth.setTag("filled");
             }
         }
+
+        if (requestCode == 12321) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                binding.locationET.setText(place.getAddress());
+            } else {
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.d("FFFFFFFFFFFss", status.getStatusMessage());
+            }
+        }
+
     }
 
     @Override

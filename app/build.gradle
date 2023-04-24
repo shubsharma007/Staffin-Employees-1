@@ -26,7 +26,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 }
@@ -66,4 +66,6 @@ dependencies {
     //ripple
     implementation 'com.balysv:material-ripple:1.0.2'
 
+    //google places api
+    implementation 'com.google.android.libraries.places:places:3.1.0'
 }

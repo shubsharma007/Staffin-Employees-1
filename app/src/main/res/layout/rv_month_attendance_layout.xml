@@ -92,7 +92,7 @@
                 android:maxLength="5"
                 android:text="12:00"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -128,7 +128,7 @@
                 android:maxLength="5"
                 android:text="08:00"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

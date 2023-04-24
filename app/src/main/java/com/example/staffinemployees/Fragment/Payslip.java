@@ -43,14 +43,18 @@ public class Payslip extends Fragment {
         editor = sharedPreferences.edit();
         Id = sharedPreferences.getAll().get("Id").toString();
         Log.i("Id AArahi AHI", Id);
+        binding.notFoundLayout.setVisibility(View.VISIBLE);
+        binding.nestedScrollFirst.setVisibility(View.GONE);
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         getApi();
 
         return binding.getRoot();
     }
+
     private void getApi() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         Call<PaySlipResponse> paySlipResponseCall = apiInterface.getPaySlip(Integer.parseInt(Id));
         paySlipResponseCall.enqueue(new Callback<PaySlipResponse>() {
@@ -77,6 +81,8 @@ public class Payslip extends Fragment {
                         binding.empId.setText("Emp. ID - " + singleUnit.getEmployeeId());
                     }
                 } else {
+                    binding.notFoundLayout.setVisibility(View.VISIBLE);
+                    binding.nestedScrollFirst.setVisibility(View.GONE);
                     progressDialog.dismiss();
                     Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
                     Log.e("Try Again Karo", response.message());

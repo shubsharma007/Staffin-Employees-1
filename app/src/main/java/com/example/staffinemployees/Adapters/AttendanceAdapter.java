@@ -42,12 +42,21 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
     @Override
     public void onBindViewHolder(@NonNull AttendanceAdapter.AttendanceViewHolder holder, int position) {
         PresentAbsentMix singleUnit = presentAbsentMixList.get(position);
-        String punchIn = "no data";
-        String punchOut = "no data";
+        String punchIn = ".....";
+        String punchOut = ".....";
+
         // tareekh
-        holder.dateTv.setText(singleUnit.getDate().split("-")[2]);
+        if (singleUnit.getDate().contains("T")) {
+            holder.dateTv.setText(singleUnit.getDate().split("T")[0].split("-")[2]);
+            holder.dayTv.setText(idharSeAlooDaaloUdharSeSonaNikaalo(Integer.parseInt(singleUnit.getDate().split("T")[0].split("-")[1])));
+
+        } else {
+            holder.dateTv.setText(singleUnit.getDate().split("-")[2]);
+            holder.dayTv.setText(idharSeAlooDaaloUdharSeSonaNikaalo(Integer.parseInt(singleUnit.getDate().split("-")[1])));
+
+        }
+
         // month
-        holder.dayTv.setText(idharSeAlooDaaloUdharSeSonaNikaalo(Integer.parseInt(singleUnit.getDate().split("-")[1])));
 
         if (singleUnit.getStatus().equalsIgnoreCase("present")) {
             holder.status.setText(singleUnit.getStatus());
@@ -58,9 +67,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
             if (singleUnit.getTime_out() != null) {
                 Log.d("dfnsdfsdf", punchOut);
                 holder.outTimeTv.setText(punchOut);
-            }
-            else
-            {
+            } else {
                 Toast.makeText(context, "...", Toast.LENGTH_SHORT).show();
             }
 
