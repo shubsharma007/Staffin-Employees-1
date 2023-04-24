@@ -145,6 +145,10 @@ public class InsideEvent extends AppCompatActivity {
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
+
+        binding.btnBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     private void previewImage(String img) {

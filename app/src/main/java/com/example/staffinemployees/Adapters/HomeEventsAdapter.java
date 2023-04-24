@@ -2,9 +2,11 @@ package com.example.staffinemployees.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.staffinemployees.InsideEvent;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.EventsByYearResponse;
@@ -184,9 +187,14 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
         EventsMix singleUnit = currentMonthEventList.get(position);
         holder.txtDate.setText(singleUnit.getDate());
         holder.txtEventName.setText(singleUnit.getTitleName());
+        Glide.with(context.getApplicationContext()).load(singleUnit.getImage()).placeholder(R.drawable.img_birthday).into(holder.imageView);
+
         holder.textView5.setText(singleUnit.getLocation());
         membersArray = new String[singleUnit.getAddMember().split(",").length];
-        List<String> membersArray= List.of(singleUnit.getAddMember().split(","));
+        List<String> membersArray = List.of(singleUnit.getAddMember().split(","));
+        holder.interested.setOnClickListener(v -> {
+            Log.d("You Are Interested...","Okay...");
+        });
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,7 +216,7 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
                 intent.putExtra("desc", desc);
                 intent.putExtra("date", date);
                 intent.putExtra("location", location);
-                intent.putStringArrayListExtra("members",new ArrayList<>(membersArray));
+                intent.putStringArrayListExtra("members", new ArrayList<>(membersArray));
                 context.startActivity(intent);
 //                context.startActivity(new Intent(context, InsideEvent.class));
             }
@@ -222,7 +230,8 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
 
     public class HomeEventsViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout card;
-        TextView txtDate, txtEventName, textView5;
+        TextView txtDate, txtEventName, textView5, interested;
+        ImageView imageView;
 
         public HomeEventsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -230,6 +239,8 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
             txtEventName = itemView.findViewById(R.id.txtEventName);
             textView5 = itemView.findViewById(R.id.textView5);
             card = itemView.findViewById(R.id.cardEvent);
+            imageView = itemView.findViewById(R.id.imageView);
+            interested = itemView.findViewById(R.id.interested);
         }
     }
 }
