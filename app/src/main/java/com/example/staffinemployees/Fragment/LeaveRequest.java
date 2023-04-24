@@ -189,6 +189,8 @@ public class LeaveRequest extends Fragment {
 
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
                     progressDialog.setMessage("Loading...");
+                    progressDialog.setCancelable(false);
+
                     progressDialog.show();
 
 /////////ek baar check krna hai ki day jo hai usme halfday select karne pr yes ja rha hai ya nahi ja raha database me

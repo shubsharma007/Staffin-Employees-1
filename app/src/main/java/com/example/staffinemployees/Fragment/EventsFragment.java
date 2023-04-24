@@ -55,6 +55,7 @@ public class EventsFragment extends Fragment {
         binding = FragmentEventsBinding.inflate(inflater, container, false);
 
         progress = new ProgressDialog(getActivity());
+        progress.setCancelable(false);
         progress.setMessage("Please Wait....");
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         binding.EventMonthRv.setLayoutManager(new LinearLayoutManager(getActivity()));

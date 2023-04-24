@@ -55,6 +55,7 @@ public class AttendanceFragment extends Fragment {
         binding.textView9.setText(sharedPreferences.getAll().get("mail").toString());
 
         progress = new ProgressDialog(getActivity());
+        progress.setCancelable(false);
         progress.setMessage("please wait...");
         presentAbsentMixList = new ArrayList<>();
         if (getArguments() != null) {

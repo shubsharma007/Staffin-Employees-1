@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,22 +66,38 @@ public class CompanyDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCompanyDetailsBinding.inflate(inflater, container, false);
         adDialog = new Dialog(getActivity());
+
         sharedPreferences = getActivity().getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         id = sharedPreferences.getAll().get("Id").toString();
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         time = new ArrayList<>();
+        if (isNetworkAvailable()) {
+            getUserApi();
+            ClickListener();
+        } else {
+            Toast.makeText(getActivity(), "Please Check Your Network...", Toast.LENGTH_SHORT).show();
+        }
+        binding.employeeIdEt.setKeyListener(null);
+        binding.annualLeaveEt.setKeyListener(null);
+        binding.basicEt.setKeyListener(null);
+        binding.departmentEt.setKeyListener(null);
+        binding.designationEt.setKeyListener(null);
+        binding.jDateEt.setKeyListener(null);
+        binding.rDateEt.setKeyListener(null);
+        binding.hourlyEt.setKeyListener(null);
+        binding.medicalLeaveEt.setKeyListener(null);
 
-        getUserApi();
+        return binding.getRoot();
+    }
 
-
+    private void ClickListener() {
         binding.addOvertimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopup();
             }
         });
-
         binding.btnNext.setOnClickListener(v -> {
 
 
@@ -137,7 +155,6 @@ public class CompanyDetailsFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-
         binding.rDateEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,22 +174,12 @@ public class CompanyDetailsFragment extends Fragment {
             }
         });
 
-        binding.employeeIdEt.setKeyListener(null);
-        binding.annualLeaveEt.setKeyListener(null);
-        binding.basicEt.setKeyListener(null);
-        binding.departmentEt.setKeyListener(null);
-        binding.designationEt.setKeyListener(null);
-        binding.jDateEt.setKeyListener(null);
-        binding.rDateEt.setKeyListener(null);
-        binding.hourlyEt.setKeyListener(null);
-        binding.medicalLeaveEt.setKeyListener(null);
-
-        return binding.getRoot();
     }
 
     private void getUserApi() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         Call<CompanyResponseById> companyResponseByIdCall = apiInterface.getCompanyDetailsById(Integer.parseInt(id));
         companyResponseByIdCall.enqueue(new Callback<CompanyResponseById>() {
@@ -366,4 +373,10 @@ public class CompanyDetailsFragment extends Fragment {
 
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 }
