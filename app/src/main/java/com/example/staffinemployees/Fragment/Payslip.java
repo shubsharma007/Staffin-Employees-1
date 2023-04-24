@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.PaySlipResponse;
@@ -71,6 +72,12 @@ public class Payslip extends Fragment {
                         binding.nestedScrollFirst.setVisibility(View.VISIBLE);
                         binding.notFoundLayout.setVisibility(View.GONE);
                         PayslipDetail singleUnit = response.body().getPayslipDetails().get(0);
+
+                        //Model me sahi krna hai
+//                        kuch changes aaye hai
+//                        Glide.with(getActivity()).load(singleUnit.getEmployeeId().get(0).getProfileImageUrl()).placeholder(R.drawable.img_dp).into(binding.dpImg);
+//                        binding.nameTv.setText(singleUnit.getEmployeeId().get(0).getFullName());
+
                         binding.indicator.setText(singleUnit.getStatus());
                         binding.basicAmount.setText(singleUnit.getBasic());
                         binding.hourlyAmount.setText(singleUnit.getOvertimeHours());
@@ -79,6 +86,7 @@ public class Payslip extends Fragment {
                         binding.deductionAmount.setText(singleUnit.getDeductions());
                         binding.netAmount.setText(singleUnit.getNetSalary());
                         binding.empId.setText("Emp. ID - " + singleUnit.getEmployeeId());
+                        Log.e("data DEkho to", response.message());
                     }
                 } else {
                     binding.notFoundLayout.setVisibility(View.VISIBLE);
