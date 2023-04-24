@@ -1,5 +1,6 @@
 package com.example.staffinemployees.Interface;
 
+import com.example.staffinemployees.Fragment.ClaimExpences;
 import com.example.staffinemployees.Response.CompanyResponseById;
 import com.example.staffinemployees.Response.CreatedHolidayResp;
 import com.example.staffinemployees.Response.EmployeeBankDetails;
@@ -81,7 +82,6 @@ public interface ApiInterface {
     Call<CompanyResponseById> getCompanyDetailsById(@Path("id") int id);
 
 
-
     @Multipart
     @POST("employee-update/{id}")
     Call<EmployeeProfileResponse> postUpdateEmployee(
@@ -96,6 +96,7 @@ public interface ApiInterface {
             @Part("local_address") RequestBody local_address,
             @Part("parmanent_address") RequestBody parmanent_address
     );
+
     @FormUrlEncoded
     @POST("employee-update/{id}")
     Call<EmployeeProfileResponse> postUpdateEmployeeWithoutImage(
@@ -135,7 +136,6 @@ public interface ApiInterface {
     Call<PaySlipResponse> getPaySlip(@Path("id") int id);
 
 
-
     //get all holidays
     @GET("get-holiday")
     Call<CreatedHolidayResp> getCreatedHolidays();
@@ -150,4 +150,13 @@ public interface ApiInterface {
     @POST("get-national-holiday")
     Call<NationalHolidayResp> getNationalHoliday(@Field("country") String country,
                                                  @Field("year") int year);
+
+    // claim expenses api , array of images post
+    @Multipart
+    @POST("add-expense/{id}")
+    Call<LoginResponse> postExpenses(@Path("id") int id,
+                                     @Part MultipartBody.Part[] bill_image,
+                                     @Part("name") RequestBody name,
+                                     @Part("price") RequestBody price);
+
 }

@@ -41,7 +41,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_employee" />
+                 />
 
             <ImageView
                 android:id="@+id/image2"
@@ -51,7 +51,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_employee" />
+                 />
 
             <ImageView
                 android:id="@+id/image3"
@@ -61,7 +61,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_employee" />
+                 />
 
             <ImageView
                 android:id="@+id/image4"
@@ -71,7 +71,7 @@
                 android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_employee" />
+                 />
         </LinearLayout>
 
         <TextView
@@ -95,7 +95,6 @@
             android:id="@+id/title"
             android:paddingHorizontal="5dp"
             android:paddingVertical="5dp"
-            android:text="Employee birthday party"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -123,7 +122,6 @@
             android:gravity="start"
             android:paddingHorizontal="5dp"
             android:paddingVertical="5dp"
-            android:text="Birthday party of our employee paryul jain android developer from delhi......"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -151,7 +149,6 @@
             android:gravity="start"
             android:paddingHorizontal="5dp"
             android:paddingVertical="5dp"
-            android:text="24-07-2023"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -179,7 +176,6 @@
             android:gravity="start"
             android:paddingHorizontal="5dp"
             android:paddingVertical="5dp"
-            android:text="savitri empire badi bhamori near sayaji hotel indore MP india."
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
