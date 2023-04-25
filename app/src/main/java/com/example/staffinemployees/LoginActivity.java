@@ -9,6 +9,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.staffinemployees.Interface.ApiInterface;
@@ -25,7 +28,10 @@ public class LoginActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
+    LinearLayout ll;
+    Toast toast;
+    View vieww;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        toast = new Toast(LoginActivity.this);
+
+        // for custom toast
+        vieww = getLayoutInflater().inflate(R.layout.custom_toast_layout, (ViewGroup) findViewById(R.id.toastRoot));
+        ll = (LinearLayout) vieww.findViewById(R.id.toastBg);
+        textView = vieww.findViewById(R.id.textToast);
 
         binding.forgotPasswordTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,25 +93,46 @@ public class LoginActivity extends AppCompatActivity {
 //                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //                                intent.putExtra("userid", userId);
 //                                startActivity(intent);
+
+
+                                ll.setBackgroundResource(R.color.green);
+                                textView.setText("Login Successful...");
+                                toast.setView(vieww);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.show();
+
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 editor.putString("mobile", number);
                                 editor.putString("eId", response.body().getResultLogin().getEmployeeID());
                                 editor.putString("Id", response.body().getResultLogin().getId().toString());
                                 editor.apply();
                                 finish();
-                                Toast.makeText(LoginActivity.this, "Successful Login...", Toast.LENGTH_SHORT).show();
+
+
+//                                Toast.makeText(LoginActivity.this, "Login Successful...", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("ERROR1", response.message());
                                 Log.d("ERROR2", String.valueOf(response.code()));
                                 progressDialog.dismiss();
-                                Toast.makeText(LoginActivity.this, "response not successful...        ", Toast.LENGTH_SHORT).show();
+
+                                ll.setBackgroundResource(R.color.txtRed);
+                                textView.setText("Login failure...");
+                                toast.setView(vieww);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<LoginResponse> call, Throwable t) {
                             progressDialog.dismiss();
-                            Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            ll.setBackgroundResource(R.color.txtRed);
+                            textView.setText(t.getMessage());
+                            toast.setView(vieww);
+                            toast.setDuration(Toast.LENGTH_SHORT);
+                            toast.show();
+
                             Log.d("ERROR", t.getMessage());
                         }
                     });
