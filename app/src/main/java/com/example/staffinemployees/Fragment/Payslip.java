@@ -2,9 +2,13 @@ package com.example.staffinemployees.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -22,6 +26,10 @@ import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentPayrollBinding;
 import com.example.staffinemployees.databinding.FragmentPayslipBinding;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,8 +56,17 @@ public class Payslip extends Fragment {
         binding.nestedScrollFirst.setVisibility(View.GONE);
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
         getApi();
-
+        clickListener();
         return binding.getRoot();
+    }
+
+    private void clickListener() {
+        binding.downloadBtn.setOnClickListener(v -> {
+
+
+
+        });
+
     }
 
     private void getApi() {
@@ -72,11 +89,8 @@ public class Payslip extends Fragment {
                         binding.nestedScrollFirst.setVisibility(View.VISIBLE);
                         binding.notFoundLayout.setVisibility(View.GONE);
                         PayslipDetail singleUnit = response.body().getPayslipDetails().get(0);
-
-                        //Model me sahi krna hai
-//                        kuch changes aaye hai
-//                        Glide.with(getActivity()).load(singleUnit.getEmployeeId().get(0).getProfileImageUrl()).placeholder(R.drawable.img_dp).into(binding.dpImg);
-//                        binding.nameTv.setText(singleUnit.getEmployeeId().get(0).getFullName());
+                        Glide.with(getActivity()).load(singleUnit.getEmployeeId().get(0).getProfileImageUrl()).placeholder(R.drawable.img_dp).into(binding.dpImg);
+                        binding.nameTv.setText(singleUnit.getEmployeeId().get(0).getFullName());
 
                         binding.indicator.setText(singleUnit.getStatus());
                         binding.basicAmount.setText(singleUnit.getBasic());
@@ -85,7 +99,9 @@ public class Payslip extends Fragment {
                         binding.bounceAmount.setText(singleUnit.getTotalAllowance());
                         binding.deductionAmount.setText(singleUnit.getDeductions());
                         binding.netAmount.setText(singleUnit.getNetSalary());
-                        binding.empId.setText("Emp. ID - " + singleUnit.getEmployeeId());
+                        binding.empId.setText("Emp. ID - " + singleUnit.getEmployeeId().get(0).getEmployeeID());
+                        binding.txt1.setText("Month:-"+singleUnit.getMonth());
+                        binding.txt2.setText("Year:-"+singleUnit.getYear());
                         Log.e("data DEkho to", response.message());
                     }
                 } else {
