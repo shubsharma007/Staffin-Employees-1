@@ -97,7 +97,7 @@ public class Payslip extends Fragment {
                         binding.hourlyAmount.setText(singleUnit.getOvertimeHours());
                         binding.expenseAmount.setText(singleUnit.getExpense());
                         binding.bounceAmount.setText(singleUnit.getTotalAllowance());
-                        binding.deductionAmount.setText(singleUnit.getDeductions());
+                        binding.deductionAmount.setText(singleUnit.getTotalDeduction());
                         binding.netAmount.setText(singleUnit.getNetSalary());
                         binding.empId.setText("Emp. ID - " + singleUnit.getEmployeeId().get(0).getEmployeeID());
                         binding.txt1.setText("Month:-"+singleUnit.getMonth());
