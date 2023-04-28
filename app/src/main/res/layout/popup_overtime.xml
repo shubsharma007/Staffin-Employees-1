@@ -62,7 +62,7 @@
     </LinearLayout>
 
 
-    <EditText
+    <TextView
         android:id="@+id/firstAmountEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
     </LinearLayout>
 
 
-    <EditText
+    <TextView
         android:id="@+id/secondAmountEt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

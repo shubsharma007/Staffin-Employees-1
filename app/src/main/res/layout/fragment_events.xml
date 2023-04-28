@@ -18,7 +18,7 @@
         android:background="@drawable/bg_searchview"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="10dp"
-        android:hint="Search employee"
+        android:hint="Search Event"
         android:paddingVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
