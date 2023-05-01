@@ -45,6 +45,8 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
     ArrayList<String> interestedMembers;
     String[] membersArray;
     SharedPreferences sharedPreferences;
+    String[] FirstImage;
+    int count;
 //    List<EventsByYearResponse.EventDetails.January> jan;
 //    List<EventsByYearResponse.EventDetails.February> feb;
 //    List<EventsByYearResponse.EventDetails.March> mar;
@@ -205,7 +207,64 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
         holder.txtDate.setText(singleUnit.getDate());
         holder.txtEventName.setText(singleUnit.getTitleName());
         Glide.with(context.getApplicationContext()).load(singleUnit.getImage()).placeholder(R.drawable.img_birthday).into(holder.imageView);
-
+        FirstImage = (singleUnit.getAdd_member_images().split(",,,,,,,,,,"));
+        Log.e("onBindViewHolder: ", "Images");
+        if (Integer.parseInt(singleUnit.getAdd_member_count()) == 1) {
+            Log.e("onBindViewHolder: ", "FirstImages");
+            String image1 = FirstImage[0];
+            holder.el1.setVisibility(View.VISIBLE);
+            holder.el2.setVisibility(View.INVISIBLE);
+            holder.el3.setVisibility(View.INVISIBLE);
+            holder.el4.setVisibility(View.INVISIBLE);
+            Glide.with(context.getApplicationContext()).load(image1).placeholder(R.drawable.img_user).into(holder.el1);
+        } else if (Integer.parseInt(singleUnit.getAdd_member_count()) == 2) {
+            Log.e("onBindViewHolder: ", "SecondImages");
+            String image1 = FirstImage[0];
+            String image2 = FirstImage[1];
+            holder.el1.setVisibility(View.VISIBLE);
+            holder.el2.setVisibility(View.VISIBLE);
+            holder.el3.setVisibility(View.INVISIBLE);
+            holder.el4.setVisibility(View.INVISIBLE);
+            Glide.with(context.getApplicationContext()).load(image1).placeholder(R.drawable.img_user).into(holder.el1);
+            Glide.with(context.getApplicationContext()).load(image2).placeholder(R.drawable.img_user).into(holder.el2);
+        } else if (Integer.parseInt(singleUnit.getAdd_member_count()) == 3) {
+            Log.e("onBindViewHolder: ", "ThirdImages");
+            String image1 = FirstImage[0];
+            String image2 = FirstImage[1];
+            String image3 = FirstImage[2];
+            holder.el1.setVisibility(View.VISIBLE);
+            holder.el2.setVisibility(View.VISIBLE);
+            holder.el3.setVisibility(View.VISIBLE);
+            holder.el4.setVisibility(View.INVISIBLE);
+            Glide.with(context.getApplicationContext()).load(image1).placeholder(R.drawable.img_user).into(holder.el1);
+            Glide.with(context.getApplicationContext()).load(image2).placeholder(R.drawable.img_user).into(holder.el2);
+            Glide.with(context.getApplicationContext()).load(image3).placeholder(R.drawable.img_user).into(holder.el3);
+        } else if (Integer.parseInt(singleUnit.getAdd_member_count()) >= 4) {
+            String image1 = FirstImage[0];
+            String image2 = FirstImage[1];
+            String image3 = FirstImage[2];
+            holder.el1.setVisibility(View.VISIBLE);
+            holder.el2.setVisibility(View.VISIBLE);
+            holder.el3.setVisibility(View.VISIBLE);
+            Log.e("onBindViewHolder: ", "CountImages");
+            Glide.with(context.getApplicationContext()).load(image1).placeholder(R.drawable.img_user).into(holder.el1);
+            Glide.with(context.getApplicationContext()).load(image2).placeholder(R.drawable.img_user).into(holder.el2);
+            Glide.with(context.getApplicationContext()).load(image3).placeholder(R.drawable.img_user).into(holder.el3);
+            count = Integer.parseInt(singleUnit.getAdd_member_count());
+            count -= 3;
+            if (count == 0) {
+                holder.el4.setVisibility(View.INVISIBLE);
+            } else {
+                holder.el4.setVisibility(View.VISIBLE);
+                holder.el4.setText(count + "+");
+            }
+        } else {
+            Log.e("onBindViewHolder: ", "else me aagya");
+            holder.el1.setVisibility(View.INVISIBLE);
+            holder.el2.setVisibility(View.INVISIBLE);
+            holder.el3.setVisibility(View.INVISIBLE);
+            holder.el4.setVisibility(View.INVISIBLE);
+        }
         holder.textView5.setText(singleUnit.getLocation());
         membersArray = new String[singleUnit.getAddMember().split(",").length];
         List<String> membersArray = List.of(singleUnit.getAddMember().split(","));
@@ -310,11 +369,15 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
 
     public class HomeEventsViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout card;
-        TextView txtDate, txtEventName, textView5, interested;
-        ImageView imageView;
+        TextView txtDate, txtEventName, textView5, interested, el4;
+        ImageView imageView, el1, el2, el3;
 
         public HomeEventsViewHolder(@NonNull View itemView) {
             super(itemView);
+            el4 = itemView.findViewById(R.id.el4);
+            el1 = itemView.findViewById(R.id.el1);
+            el2 = itemView.findViewById(R.id.el2);
+            el3 = itemView.findViewById(R.id.el3);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtEventName = itemView.findViewById(R.id.txtEventName);
             textView5 = itemView.findViewById(R.id.textView5);
