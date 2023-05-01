@@ -28,6 +28,7 @@ import com.example.staffinemployees.Retrofit.RetrofitServices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,10 +44,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     List<EventsMix> eventsMixList;
     List<EventsMix> currentMonthEventsList;
     String image, image1, image2, image3, title, desc, date, location;
-    String[] membersArray;
     ProgressDialog progress;
     SharedPreferences sharedPreferences;
-
+    ArrayList<String> interestedMembers;
 
     public EventAdapter(Context context, int month, List<EventsMix> eventsMixList) {
         this.context = context;
@@ -60,6 +60,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         }
         progress = new ProgressDialog(context);
         progress.setCancelable(false);
+        interestedMembers = new ArrayList<>();
         sharedPreferences = context.getSharedPreferences("staffin", Context.MODE_PRIVATE);
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
     }
@@ -80,14 +81,21 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         holder.txtDate.setText(singleUnit.getDate());
         holder.txtEventName.setText(singleUnit.getTitleName());
         Glide.with(context.getApplicationContext()).load(singleUnit.getImage()).placeholder(R.drawable.img_birthday).into(holder.imageView);
-
+        List<String> membersArray = List.of(singleUnit.getAddMember().split(","));
         holder.interested.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Call<LoginResponse> callPostUpdateInterested;
                 String interestedEmployees = singleUnit.getAdd_intruted_member();
-                interestedEmployees += ",,,,,,,,," + sharedPreferences.getString("name", "0");
-                Call<LoginResponse> callPostUpdateInterested = apiInterface.postUpdateInterested(singleUnit.getId(), interestedEmployees);
+                if (interestedEmployees == null) {
+                    interestedEmployees = sharedPreferences.getString("name", "0");
+                    callPostUpdateInterested = apiInterface.postUpdateInterested(singleUnit.getId(), interestedEmployees);
+
+                } else {
+                    interestedEmployees += ",,,,,,,,," + sharedPreferences.getString("name", "0");
+                    callPostUpdateInterested = apiInterface.postUpdateInterested(singleUnit.getId(), interestedEmployees);
+
+                }
                 progress.show();
                 callPostUpdateInterested.enqueue(new Callback<>() {
                     @Override
@@ -111,12 +119,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
 
             }
         });
+
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                membersArray = new String[singleUnit.getAddMember().split(",").length];
-                List<String> membersArray = List.of(singleUnit.getAddMember().split(","));
-
                 Intent intent = new Intent(context, InsideEvent.class);
                 image = singleUnit.getImage();
                 image1 = singleUnit.getImg1();
@@ -127,6 +133,29 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
                 date = singleUnit.getDate();
                 location = singleUnit.getLocation();
 
+                interestedMembers.clear();
+
+                if (singleUnit.getAdd_intruted_member() != null) {
+                    Log.d("fsdfsdfasd", singleUnit.getAdd_intruted_member());
+
+                    if (singleUnit.getAdd_intruted_member().contains(",,,,,,,,,")) {
+                        String[] names = new String[singleUnit.getAdd_intruted_member().split(",,,,,,,,,").length];
+                        names = singleUnit.getAdd_intruted_member().split(",,,,,,,,,");
+
+                        for (String name : names) {
+                            if (!Objects.equals(name, "0")) {
+                                interestedMembers.add(name);
+                            }
+                        }
+
+                        intent.putStringArrayListExtra("interested", interestedMembers);
+                    } else {
+                        interestedMembers.add(singleUnit.getAdd_intruted_member());
+                        intent.putStringArrayListExtra("interested", interestedMembers);
+                    }
+                }
+
+
                 intent.putExtra("image", image);
                 intent.putExtra("image1", image1);
                 intent.putExtra("image2", image2);
@@ -135,10 +164,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
                 intent.putExtra("desc", desc);
                 intent.putExtra("date", date);
                 intent.putExtra("location", location);
-                intent.putStringArrayListExtra("members", new ArrayList<>(membersArray));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
 
+
+                intent.putStringArrayListExtra("members", new ArrayList<>(membersArray));
+
+
+                context.startActivity(intent);
+//                context.startActivity(new Intent(context, InsideEvent.class));
             }
         });
 

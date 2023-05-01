@@ -1,7 +1,9 @@
 package com.example.staffinemployees.Adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +18,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.staffinemployees.InsideEvent;
+import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.EventsByYearResponse;
 import com.example.staffinemployees.Response.EventsMix;
+import com.example.staffinemployees.Response.LoginResponse;
+import com.example.staffinemployees.Retrofit.RetrofitServices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.HomeEventsViewHolder> {
     Context context;
     List<EventsMix> eventsMixList;
     List<EventsMix> currentMonthEventList;
     int month;
+    ApiInterface apiInterface;
+    ProgressDialog progress;
     String image, image1, image2, image3, title, desc, date, location;
     List<String> add_members;
+    ArrayList<String> interestedMembers;
     String[] membersArray;
-
+    SharedPreferences sharedPreferences;
 //    List<EventsByYearResponse.EventDetails.January> jan;
 //    List<EventsByYearResponse.EventDetails.February> feb;
 //    List<EventsByYearResponse.EventDetails.March> mar;
@@ -56,8 +69,12 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
                 currentMonthEventList.add(e);
             }
         }
+        interestedMembers = new ArrayList<>();
         add_members = new ArrayList<>();
-
+        apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        progress = new ProgressDialog(context);
+        progress.setCancelable(false);
+        sharedPreferences = context.getSharedPreferences("staffin", Context.MODE_PRIVATE);
     }
 
 //    public HomeEventsAdapter(Context context, List<EventsByYearResponse.EventDetails.January> jan, List<EventsByYearResponse.EventDetails.February> feb, List<EventsByYearResponse.EventDetails.March> mar, List<EventsByYearResponse.EventDetails.April> apr, List<EventsByYearResponse.EventDetails.May> may, List<EventsByYearResponse.EventDetails.June> june, List<EventsByYearResponse.EventDetails.July> july, List<EventsByYearResponse.EventDetails.August> aug, List<EventsByYearResponse.EventDetails.September> sept, List<EventsByYearResponse.EventDetails.October> oct, List<EventsByYearResponse.EventDetails.November> nov, List<EventsByYearResponse.EventDetails.December> dec) {
@@ -192,9 +209,45 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
         holder.textView5.setText(singleUnit.getLocation());
         membersArray = new String[singleUnit.getAddMember().split(",").length];
         List<String> membersArray = List.of(singleUnit.getAddMember().split(","));
-        holder.interested.setOnClickListener(v -> {
-            Log.d("You Are Interested...","Okay...");
+
+
+        holder.interested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String interestedEmployees = singleUnit.getAdd_intruted_member();
+                if (interestedEmployees == null) {
+                    interestedEmployees = sharedPreferences.getString("name", "0");
+                } else {
+                    interestedEmployees += ",,,,,,,,," + sharedPreferences.getString("name", "0");
+                }
+
+                Call<LoginResponse> callPostUpdateInterested = apiInterface.postUpdateInterested(singleUnit.getId(), interestedEmployees);
+                progress.show();
+                callPostUpdateInterested.enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        progress.dismiss();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(context, "You are interested in this event", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "some error occured", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Toast.makeText(context, "some failure occured", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+
+                        Log.d("ndf", t.getMessage());
+                    }
+                });
+
+            }
         });
+
+
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,6 +261,29 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
                 date = singleUnit.getDate();
                 location = singleUnit.getLocation();
 
+                interestedMembers.clear();
+
+                if (singleUnit.getAdd_intruted_member() != null) {
+                    Log.d("fsdfsdfasd", singleUnit.getAdd_intruted_member());
+
+                    if (singleUnit.getAdd_intruted_member().contains(",,,,,,,,,")) {
+                        String[] names = new String[singleUnit.getAdd_intruted_member().split(",,,,,,,,,").length];
+                        names = singleUnit.getAdd_intruted_member().split(",,,,,,,,,");
+
+                        for (String name : names) {
+                            if (!Objects.equals(name, "0")) {
+                                interestedMembers.add(name);
+                            }
+                        }
+
+                        intent.putStringArrayListExtra("interested", interestedMembers);
+                    } else {
+                        interestedMembers.add(singleUnit.getAdd_intruted_member());
+                        intent.putStringArrayListExtra("interested", interestedMembers);
+                    }
+                }
+
+
                 intent.putExtra("image", image);
                 intent.putExtra("image1", image1);
                 intent.putExtra("image2", image2);
@@ -216,7 +292,11 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
                 intent.putExtra("desc", desc);
                 intent.putExtra("date", date);
                 intent.putExtra("location", location);
+
+
                 intent.putStringArrayListExtra("members", new ArrayList<>(membersArray));
+
+
                 context.startActivity(intent);
 //                context.startActivity(new Intent(context, InsideEvent.class));
             }

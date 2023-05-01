@@ -160,6 +160,7 @@ public interface ApiInterface {
                                      @Part("price") RequestBody price);
 
 
+    @FormUrlEncoded
     @POST("update-event/{id}")
     Call<LoginResponse> postUpdateInterested(@Path("id") int id,
                                              @Field("name") String name);

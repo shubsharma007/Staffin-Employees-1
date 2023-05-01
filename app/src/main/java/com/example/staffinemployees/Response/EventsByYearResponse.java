@@ -213,10 +213,7 @@ public class EventsByYearResponse {
             @Expose
             private String updatedAt;
 
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
-
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -241,6 +238,8 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
+
 
             public Integer getId() {
                 return id;
@@ -376,10 +375,9 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -404,6 +402,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -538,10 +537,11 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -700,10 +700,10 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -862,10 +862,12 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
+
+            @SerializedName("add_instruted_member")
             private String add_intruted_member;
 
+
+            private String add_member_images, add_member_count;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -890,6 +892,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -1024,10 +1027,10 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -1052,6 +1055,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -1186,10 +1190,9 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -1214,6 +1217,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -1348,10 +1352,9 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -1376,6 +1379,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -1510,10 +1514,9 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -1538,6 +1541,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -1672,10 +1676,9 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -1700,6 +1703,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -1835,10 +1839,8 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -1863,6 +1865,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }
@@ -1997,10 +2000,10 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            private String add_member_images;
-            private String add_member_count;
-            private String add_intruted_member;
 
+
+
+            private String add_member_images, add_member_count, add_intruted_member;
 
             public String getAdd_member_images() {
                 return add_member_images;
@@ -2025,6 +2028,7 @@ public class EventsByYearResponse {
             public void setAdd_intruted_member(String add_intruted_member) {
                 this.add_intruted_member = add_intruted_member;
             }
+
             public Integer getId() {
                 return id;
             }

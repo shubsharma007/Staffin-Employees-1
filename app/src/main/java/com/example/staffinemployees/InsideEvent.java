@@ -50,6 +50,7 @@ public class InsideEvent extends AppCompatActivity {
         String date = getIntent().getStringExtra("date");
         String location = getIntent().getStringExtra("location");
         ArrayList<String> members = getIntent().getStringArrayListExtra("members");
+        ArrayList<String> interested = getIntent().getStringArrayListExtra("interested");
 
 
         Call<TotalEmployeeResponse> callGetTotalEmployee = apiInterface.getTotalEmployee();
@@ -100,10 +101,21 @@ public class InsideEvent extends AppCompatActivity {
                     binding.date.setText(date);
                     binding.location.setText(location);
 
-
+                    if (interested != null) {
+                        ArrayAdapter<String> interest;
+                        interest = new ArrayAdapter<>(InsideEvent.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, interested);
+                        binding.listViewInterested.setAdapter(interest);
+                        binding.listViewInterested.setVisibility(View.VISIBLE);
+                        binding.interestedTv.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.listViewInterested.setVisibility(View.GONE);
+                        binding.interestedTv.setVisibility(View.GONE);
+                    }
                     ArrayAdapter<String> arr;
                     arr = new ArrayAdapter<>(InsideEvent.this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, invitedMembers);
                     binding.listView.setAdapter(arr);
+
+
                     progress.dismiss();
                     binding.image1.setOnClickListener(new View.OnClickListener() {
                         @Override

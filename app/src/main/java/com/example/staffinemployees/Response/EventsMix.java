@@ -36,6 +36,7 @@ public class EventsMix {
     private String addMember;
     private int month;
 
+
     private String add_member_images;
     private String add_member_count;
     private String add_intruted_member;
@@ -144,9 +145,6 @@ public class EventsMix {
     public void setAddMember(String addMember) {
         this.addMember = addMember;
     }
-
-
-
 
 
 //    public EventsMix(Integer id, String titleName, String image, String img1, String img2, String img3, String location, String description, String date, String addMember, int month) {

@@ -378,7 +378,7 @@ public class MainFragment extends Fragment {
                 progressDialog.dismiss();
                 binding.noEventFound.setVisibility(View.VISIBLE);
 
-                Toast.makeText(getActivity(), "some failure occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "some failure occured", Toast.LENGTH_SHORT).show();
                 Log.d("ndf", t.getMessage());
             }
         });
