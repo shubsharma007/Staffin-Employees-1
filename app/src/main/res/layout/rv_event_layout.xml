@@ -76,17 +76,25 @@
                 app:layout_constraintStart_toStartOf="@+id/txtEventName"
                 app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/el1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ellipse_border"
                     android:src="@drawable/img_user"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/el1"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:background="@drawable/ellipse_border"-->
+                <!--                    android:src="@drawable/img_user"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/el2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,7 +105,17 @@
                     app:layout_constraintStart_toEndOf="@+id/el1"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/el2"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="-10dp"-->
+                <!--                    android:background="@drawable/ellipse_border"-->
+                <!--                    android:src="@drawable/img_user"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/el1"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/el3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,17 +125,29 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/el2"
                     app:layout_constraintTop_toTopOf="parent" />
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/el3"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="-10dp"-->
+                <!--                    android:background="@drawable/ellipse_border"-->
+                <!--                    android:src="@drawable/img_user"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/el2"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <TextView
                     android:id="@+id/el4"
                     android:layout_width="32dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="-10dp"
                     android:background="@drawable/bg_20"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="20+"
+                    android:paddingVertical="7.5dp"
+                    android:text="10+"
                     android:textAlignment="gravity"
                     android:textColor="@color/white"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/el3"
                     app:layout_constraintStart_toEndOf="@+id/el3"
                     app:layout_constraintTop_toTopOf="@+id/el3" />
