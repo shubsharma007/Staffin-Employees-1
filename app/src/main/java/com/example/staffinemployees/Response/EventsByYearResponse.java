@@ -2128,6 +2128,3 @@ public class EventsByYearResponse {
 
     }
 }
-
-
-
