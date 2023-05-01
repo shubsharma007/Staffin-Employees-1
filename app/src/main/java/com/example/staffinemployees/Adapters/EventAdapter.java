@@ -17,17 +17,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.staffinemployees.InsideEvent;
+import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.EventsByYearResponse;
 import com.example.staffinemployees.Response.EventsMix;
+import com.example.staffinemployees.Response.LoginResponse;
+import com.example.staffinemployees.Retrofit.RetrofitServices;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.Path;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
 
     Context context;
     int month;
+    ApiInterface apiInterface;
     List<EventsMix> eventsMixList;
     List<EventsMix> currentMonthEventsList;
     String image, image1, image2, image3, title, desc, date, location;
@@ -43,6 +51,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
                 currentMonthEventsList.add(e);
             }
         }
+        apiInterface= RetrofitServices.getRetrofit().create(ApiInterface.class);
     }
 
 
@@ -62,12 +71,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         holder.txtEventName.setText(singleUnit.getTitleName());
         Glide.with(context.getApplicationContext()).load(singleUnit.getImage()).placeholder(R.drawable.img_birthday).into(holder.imageView);
 
-//        holder.interested.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, "You are interested in this event", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        holder.interested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               int eventId= singleUnit.getId();
+               String interestedEmployees;
+//                Call<LoginResponse> postUpdateInterested(@Path("id") int id,
+//                @Field("name") String name);
+
+                Toast.makeText(context, "You are interested in this event", Toast.LENGTH_SHORT).show();
+            }
+        });
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +130,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
             super(itemView);
             card = itemView.findViewById(R.id.cardEvent);
             imageView = itemView.findViewById(R.id.imageView);
-//            interested = itemView.findViewById(R.id.interested);
+            interested = itemView.findViewById(R.id.interested);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtEventName = itemView.findViewById(R.id.txtEventName);
             el1 = itemView.findViewById(R.id.el1);
