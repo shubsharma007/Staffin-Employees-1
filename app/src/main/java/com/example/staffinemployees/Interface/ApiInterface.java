@@ -159,4 +159,8 @@ public interface ApiInterface {
                                      @Part("name") RequestBody name,
                                      @Part("price") RequestBody price);
 
+
+    @POST("update-event/{id}")
+    Call<LoginResponse> postUpdateInterested(@Path("id") int id,
+                                             @Field("name") String name);
 }
