@@ -213,6 +213,35 @@ public class EventsByYearResponse {
             @Expose
             private String updatedAt;
 
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
+
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
+
             public Integer getId() {
                 return id;
             }
@@ -347,7 +376,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -482,7 +538,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -617,7 +700,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -752,7 +862,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -887,7 +1024,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -1022,7 +1186,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -1157,7 +1348,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -1292,7 +1510,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -1427,7 +1672,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -1563,7 +1835,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }
@@ -1698,7 +1997,34 @@ public class EventsByYearResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            private String add_member_images;
+            private String add_member_count;
+            private String add_intruted_member;
 
+
+            public String getAdd_member_images() {
+                return add_member_images;
+            }
+
+            public void setAdd_member_images(String add_member_images) {
+                this.add_member_images = add_member_images;
+            }
+
+            public String getAdd_member_count() {
+                return add_member_count;
+            }
+
+            public void setAdd_member_count(String add_member_count) {
+                this.add_member_count = add_member_count;
+            }
+
+            public String getAdd_intruted_member() {
+                return add_intruted_member;
+            }
+
+            public void setAdd_intruted_member(String add_intruted_member) {
+                this.add_intruted_member = add_intruted_member;
+            }
             public Integer getId() {
                 return id;
             }

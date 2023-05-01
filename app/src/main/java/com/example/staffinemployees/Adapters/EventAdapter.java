@@ -1,7 +1,9 @@
 package com.example.staffinemployees.Adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.Path;
 
@@ -40,6 +44,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     List<EventsMix> currentMonthEventsList;
     String image, image1, image2, image3, title, desc, date, location;
     String[] membersArray;
+    ProgressDialog progress;
+    SharedPreferences sharedPreferences;
+
 
     public EventAdapter(Context context, int month, List<EventsMix> eventsMixList) {
         this.context = context;
@@ -51,7 +58,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
                 currentMonthEventsList.add(e);
             }
         }
-        apiInterface= RetrofitServices.getRetrofit().create(ApiInterface.class);
+        progress = new ProgressDialog(context);
+        progress.setCancelable(false);
+        sharedPreferences = context.getSharedPreferences("staffin", Context.MODE_PRIVATE);
+        apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
     }
 
 
@@ -74,12 +84,31 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         holder.interested.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               int eventId= singleUnit.getId();
-               String interestedEmployees;
-//                Call<LoginResponse> postUpdateInterested(@Path("id") int id,
-//                @Field("name") String name);
 
-                Toast.makeText(context, "You are interested in this event", Toast.LENGTH_SHORT).show();
+                String interestedEmployees = singleUnit.getAdd_intruted_member();
+                interestedEmployees += ",,,,,,,,," + sharedPreferences.getString("name", "0");
+                Call<LoginResponse> callPostUpdateInterested = apiInterface.postUpdateInterested(singleUnit.getId(), interestedEmployees);
+                progress.show();
+                callPostUpdateInterested.enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        progress.dismiss();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(context, "You are interested in this event", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "some error occured", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Toast.makeText(context, "some failure occured", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+
+                        Log.d("ndf", t.getMessage());
+                    }
+                });
+
             }
         });
         holder.card.setOnClickListener(new View.OnClickListener() {

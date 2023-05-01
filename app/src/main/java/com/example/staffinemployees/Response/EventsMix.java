@@ -34,7 +34,36 @@ public class EventsMix {
     @SerializedName("add_member")
     @Expose
     private String addMember;
+    private int month;
 
+    private String add_member_images;
+    private String add_member_count;
+    private String add_intruted_member;
+
+
+    public String getAdd_member_images() {
+        return add_member_images;
+    }
+
+    public void setAdd_member_images(String add_member_images) {
+        this.add_member_images = add_member_images;
+    }
+
+    public String getAdd_member_count() {
+        return add_member_count;
+    }
+
+    public void setAdd_member_count(String add_member_count) {
+        this.add_member_count = add_member_count;
+    }
+
+    public String getAdd_intruted_member() {
+        return add_intruted_member;
+    }
+
+    public void setAdd_intruted_member(String add_intruted_member) {
+        this.add_intruted_member = add_intruted_member;
+    }
 
     public Integer getId() {
         return id;
@@ -118,10 +147,24 @@ public class EventsMix {
 
 
 
-    private int month;
 
 
-    public EventsMix(Integer id, String titleName, String image, String img1, String img2, String img3, String location, String description, String date, String addMember,  int month) {
+//    public EventsMix(Integer id, String titleName, String image, String img1, String img2, String img3, String location, String description, String date, String addMember, int month) {
+//        this.id = id;
+//        this.titleName = titleName;
+//        this.image = image;
+//        this.img1 = img1;
+//        this.img2 = img2;
+//        this.img3 = img3;
+//        this.location = location;
+//        this.description = description;
+//        this.date = date;
+//        this.addMember = addMember;
+//        this.month = month;
+//    }
+
+
+    public EventsMix(Integer id, String titleName, String image, String img1, String img2, String img3, String location, String description, String date, String addMember, int month, String add_member_images, String add_member_count, String add_intruted_member) {
         this.id = id;
         this.titleName = titleName;
         this.image = image;
@@ -133,6 +176,9 @@ public class EventsMix {
         this.date = date;
         this.addMember = addMember;
         this.month = month;
+        this.add_member_images = add_member_images;
+        this.add_member_count = add_member_count;
+        this.add_intruted_member = add_intruted_member;
     }
 
     public int getMonth() {

@@ -141,62 +141,62 @@ public class MainFragment extends Fragment {
                 if (response.isSuccessful()) {
                     if (response.body().getEventDetails().getJanuary().size() > 0) {
                         for (EventsByYearResponse.EventDetails.January x : response.body().getEventDetails().getJanuary()) {
-                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 1));
+                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 1,x.getAdd_member_images(),x.getAdd_member_count(),x.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getFebruary().size() > 0) {
                         for (EventsByYearResponse.EventDetails.February x : response.body().getEventDetails().getFebruary()) {
-                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 2));
+                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 2,x.getAdd_member_images(),x.getAdd_member_count(),x.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getMarch().size() > 0) {
                         for (EventsByYearResponse.EventDetails.March x : response.body().getEventDetails().getMarch()) {
-                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 3));
+                            eventsMixList.add(new EventsMix(x.getId(), x.getTitleName(), x.getImage(), x.getImg1(), x.getImg2(), x.getImg3(), x.getLocation(), x.getDescription(), x.getDate(), x.getAddMember(), 3,x.getAdd_member_images(),x.getAdd_member_count(),x.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getApril().size() > 0) {
                         for (EventsByYearResponse.EventDetails.April f : response.body().getEventDetails().getApril()) {
-                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 4));
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 4,f.getAdd_member_images(),f.getAdd_member_count(),f.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getMay().size() > 0) {
                         for (EventsByYearResponse.EventDetails.May j : response.body().getEventDetails().getMay()) {
-                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 5));
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 5,j.getAdd_member_images(),j.getAdd_member_count(),j.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getJune().size() > 0) {
                         for (EventsByYearResponse.EventDetails.June f : response.body().getEventDetails().getJune()) {
-                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 6));
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 6,f.getAdd_member_images(),f.getAdd_member_count(),f.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getJuly().size() > 0) {
                         for (EventsByYearResponse.EventDetails.July j : response.body().getEventDetails().getJuly()) {
-                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 7));
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 7,j.getAdd_member_images(),j.getAdd_member_count(),j.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getAugust().size() > 0) {
                         for (EventsByYearResponse.EventDetails.August f : response.body().getEventDetails().getAugust()) {
-                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 8));
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 8,f.getAdd_member_images(),f.getAdd_member_count(),f.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getSeptember().size() > 0) {
                         for (EventsByYearResponse.EventDetails.September j : response.body().getEventDetails().getSeptember()) {
-                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 9));
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 9,j.getAdd_member_images(),j.getAdd_member_count(),j.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getOctober().size() > 0) {
                         for (EventsByYearResponse.EventDetails.October f : response.body().getEventDetails().getOctober()) {
-                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 10));
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 10,f.getAdd_member_images(),f.getAdd_member_count(),f.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getNovember().size() > 0) {
                         for (EventsByYearResponse.EventDetails.November j : response.body().getEventDetails().getNovember()) {
-                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 11));
+                            eventsMixList.add(new EventsMix(j.getId(), j.getTitleName(), j.getImage(), j.getImg1(), j.getImg2(), j.getImg3(), j.getLocation(), j.getDescription(), j.getDate(), j.getAddMember(), 11,j.getAdd_member_images(),j.getAdd_member_count(),j.getAdd_intruted_member()));
                         }
                     }
                     if (response.body().getEventDetails().getDecember().size() > 0) {
                         for (EventsByYearResponse.EventDetails.December f : response.body().getEventDetails().getDecember()) {
-                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 12));
+                            eventsMixList.add(new EventsMix(f.getId(), f.getTitleName(), f.getImage(), f.getImg1(), f.getImg2(), f.getImg3(), f.getLocation(), f.getDescription(), f.getDate(), f.getAddMember(), 12,f.getAdd_member_images(),f.getAdd_member_count(),f.getAdd_intruted_member()));
                         }
                     }
                     int eventCount = 0;
