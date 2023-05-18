@@ -27,7 +27,8 @@
         tools:targetApi="31">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBHdfJUk9pq_4V1fY337xHCc1dA9ebeueM" />
+            android:value="@string/my_map_api_key" />
+
         <activity
             android:name=".InsideEvent"
             android:screenOrientation="portrait"

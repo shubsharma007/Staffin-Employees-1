@@ -122,7 +122,9 @@ public interface ApiInterface {
             @Part("location") RequestBody location,
             @Part("description") RequestBody description,
             @Part("date") RequestBody date,
-            @Part("add_member") RequestBody add_member
+            @Part("add_member") RequestBody add_member,
+            @Part("add_member_images") RequestBody add_member_images,
+            @Part("add_member_count") RequestBody add_member_count
     );
 
     @FormUrlEncoded

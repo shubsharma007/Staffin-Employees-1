@@ -24,4 +24,6 @@
     <string name="OnBoardingTxt3">Lorem Ipsum is simply dummy text of /\nhe printing and .</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="my_map_api_key">AIzaSyDx5fNN72sH7H_jUO48nIQrzSx58VBsYI8</string>
 </resources>
