@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
                     progressDialog.setMessage("Loading...");
+                    progressDialog.setCancelable(false);
                     progressDialog.show();
 
                     apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
