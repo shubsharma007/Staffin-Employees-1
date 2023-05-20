@@ -115,8 +115,11 @@ public class ClaimExpences extends Fragment {
                 }
 
 
+
                 Call<LoginResponse> callPostExpenses = apiInterface.postExpenses(Integer.parseInt(Id), bill_image, name, price);
+
                 progress.show();
+                Log.d("SizeOfMultipart", String.valueOf(bill_image.length));
                 callPostExpenses.enqueue(new Callback<LoginResponse>() {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -125,6 +128,7 @@ public class ClaimExpences extends Fragment {
                             progress.dismiss();
                             startActivity(new Intent(getActivity(), MainActivity.class));
                             Toast.makeText(getContext(), "submitted", Toast.LENGTH_SHORT).show();
+                            Log.d("SizeOfMultipartPass", String.valueOf(bill_image.length));
                             Log.d("imagePathImagePath", String.valueOf(imagePath));
                             getActivity().finish();
                         } else {
