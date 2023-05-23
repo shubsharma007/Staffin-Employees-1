@@ -230,7 +230,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
 
                 intent.putStringArrayListExtra("members", new ArrayList<>(membersArray));
 
-
                 context.startActivity(intent);
 //                context.startActivity(new Intent(context, InsideEvent.class));
             }

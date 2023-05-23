@@ -68,7 +68,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
                 Log.d("dfnsdfsdf", punchOut);
                 holder.outTimeTv.setText(punchOut);
             } else {
-                Toast.makeText(context, "...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "...", Toast.LENGTH_SHORT).show();
             }
 
         } else if (singleUnit.getStatus().equalsIgnoreCase("absent")) {
