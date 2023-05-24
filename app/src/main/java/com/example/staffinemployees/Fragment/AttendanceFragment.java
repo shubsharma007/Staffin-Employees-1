@@ -39,7 +39,7 @@ public class AttendanceFragment extends Fragment {
     SharedPreferences sharedPreferences;
     int Id;
     ProgressDialog progress;
-    int totalDays, presentCount, absentCount;
+    int totalDays, presentCount, absentCount, doublePresent;
 
     List<PresentAbsentMix> presentAbsentMixList;
 
@@ -75,8 +75,11 @@ public class AttendanceFragment extends Fragment {
                         totalDays = response.body().getTotalWorkingDays();
                         presentCount = response.body().getPresentDay();
                         absentCount = response.body().getAbsent();
+                        doublePresent = response.body().getDouble_present_count();
                         binding.all.setText(String.valueOf(totalDays));
-                        binding.present.setText(String.valueOf(presentCount));
+                        String totPresent = String.valueOf(presentCount + doublePresent);
+                        Log.d("totPresent", totPresent);
+                        binding.present.setText(totPresent);
                         binding.absent.setText(String.valueOf(absentCount));
 
                         for (GetMonthlyAttendance.AbsentDate a : response.body().getAbsentDate()) {
@@ -87,7 +90,16 @@ public class AttendanceFragment extends Fragment {
                             String clockIn = p.getClock_in();
                             presentAbsentMixList.add(new PresentAbsentMix(p.getDate(), "present", clockIn, clockOut));
                         }
+                        for (GetMonthlyAttendance.DoublePresentDate d : response.body().getDouble_present_date()) {
+                            Log.d("fdfdsf", d.getDate());
+//                            String clockOut = d.getClock_out();
+//                            String clockIn = d.getClock_in();
+                            presentAbsentMixList.add(new PresentAbsentMix(d.getDate(), "doublePresent", "", ""));
+
+
+                        }
                         for (GetMonthlyAttendance.HalfDayDate h : response.body().getHalfdayDate()) {
+                            Log.d("fdfdsfsad", h.getDate());
                             presentAbsentMixList.add(new PresentAbsentMix(h.getDate(), "halfDay", h.getClock_in(), h.getClock_out()));
                         }
                         for (GetMonthlyAttendance.LateComingDate l : response.body().getLateComingDate()) {
@@ -141,9 +153,13 @@ public class AttendanceFragment extends Fragment {
                         progress.dismiss();
                         totalDays = response.body().getTotalWorkingDays();
                         presentCount = response.body().getPresentDay();
+                        doublePresent = response.body().getDouble_present_count();
+                        String totPresent = String.valueOf(presentCount + doublePresent);
+                        Log.d("totPresents", totPresent);
+
                         absentCount = response.body().getAbsent();
                         binding.all.setText(String.valueOf(totalDays));
-                        binding.present.setText(String.valueOf(presentCount));
+                        binding.present.setText(totPresent);
                         binding.absent.setText(String.valueOf(absentCount));
 
                         for (GetMonthlyAttendance.AbsentDate a : response.body().getAbsentDate()) {
@@ -151,6 +167,9 @@ public class AttendanceFragment extends Fragment {
                         }
                         for (GetMonthlyAttendance.PresentDate p : response.body().getPresentDate()) {
                             presentAbsentMixList.add(new PresentAbsentMix(p.getDate(), "present", p.getClock_in(), p.getClock_out()));
+                        }
+                        for (GetMonthlyAttendance.DoublePresentDate d : response.body().getDouble_present_date()) {
+                            presentAbsentMixList.add(new PresentAbsentMix(d.getDate(), "doublePresent", "", ""));
                         }
                         for (GetMonthlyAttendance.HalfDayDate h : response.body().getHalfdayDate()) {
                             presentAbsentMixList.add(new PresentAbsentMix(h.getDate(), "halfDay", h.getClock_in(), h.getClock_out()));

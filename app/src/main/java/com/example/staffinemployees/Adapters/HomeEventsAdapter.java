@@ -207,6 +207,8 @@ public class HomeEventsAdapter extends RecyclerView.Adapter<HomeEventsAdapter.Ho
         holder.txtDate.setText(singleUnit.getDate());
         holder.txtEventName.setText(singleUnit.getTitleName());
         Glide.with(context.getApplicationContext()).load(singleUnit.getImage()).placeholder(R.drawable.img_birthday).into(holder.imageView);
+
+
         FirstImage = (singleUnit.getAdd_member_images().split(",,,,,,,,,,"));
         Log.e("onBindViewHolder: ", "Images");
         if (Integer.parseInt(singleUnit.getAdd_member_count()) == 1) {

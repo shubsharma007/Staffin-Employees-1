@@ -41,6 +41,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
 
     @Override
     public void onBindViewHolder(@NonNull AttendanceAdapter.AttendanceViewHolder holder, int position) {
+
         PresentAbsentMix singleUnit = presentAbsentMixList.get(position);
         String punchIn = ".....";
         String punchOut = ".....";
@@ -77,7 +78,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
             holder.inTimeTv.setText("no data");
             holder.outTimeTv.setText("no data");
         } else if (singleUnit.getStatus().equalsIgnoreCase("halfDay")) {
-            holder.status.setText(singleUnit.getStatus());
+            holder.status.setText("half Day");
             holder.status.setBackgroundResource(R.drawable.bg_orange);
             punchIn = singleUnit.getTime_in();
             holder.inTimeTv.setText(punchIn);
@@ -91,8 +92,13 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
             punchOut = singleUnit.getTime_out();
             holder.outTimeTv.setText(punchOut);
         } else if (singleUnit.getStatus().equalsIgnoreCase("paidLeave")) {
-            holder.status.setText(singleUnit.getStatus());
+            holder.status.setText("paid Leave");
             holder.status.setBackgroundResource(R.drawable.bg_purple);
+            holder.inTimeTv.setText("no data");
+            holder.outTimeTv.setText("no data");
+        } else if (singleUnit.getStatus().equalsIgnoreCase("doublePresent")) {
+            holder.status.setText("double present");
+            holder.status.setBackgroundResource(R.drawable.bg_green);
             holder.inTimeTv.setText("no data");
             holder.outTimeTv.setText("no data");
         }
