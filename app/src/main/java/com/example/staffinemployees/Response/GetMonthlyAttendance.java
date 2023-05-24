@@ -165,6 +165,9 @@ public class GetMonthlyAttendance {
     @SerializedName("holidaycount")
     @Expose
     private Integer holidaycount;
+
+    private Integer double_present_count;
+
     @SerializedName("paid_leave_date")
     @Expose
     private List<PaidLeaveDate> paidLeaveDate;
@@ -177,6 +180,40 @@ public class GetMonthlyAttendance {
     @SerializedName("present_date")
     @Expose
     private List<PresentDate> presentDate;
+
+
+    private List<DoublePresentDate> double_present_date;
+
+    public Integer getDouble_present_count() {
+        return double_present_count;
+    }
+
+    public void setDouble_present_count(Integer double_present_count) {
+        this.double_present_count = double_present_count;
+    }
+
+    public List<DoublePresentDate> getDouble_present_date() {
+        return double_present_date;
+    }
+
+    public void setDouble_present_date(List<DoublePresentDate> double_present_date) {
+        this.double_present_date = double_present_date;
+    }
+
+    public class DoublePresentDate {
+        @SerializedName("date")
+        @Expose
+        private String date;
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+    }
+
     @SerializedName("late_coming_date")
     @Expose
     private List<LateComingDate> lateComingDate;
