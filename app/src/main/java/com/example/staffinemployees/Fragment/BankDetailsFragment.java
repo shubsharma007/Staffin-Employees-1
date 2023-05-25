@@ -64,17 +64,23 @@ public class BankDetailsFragment extends Fragment {
             public void onResponse(Call<EmployeeBankDetails> call, Response<EmployeeBankDetails> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
-                    List<BankDetail> user = response.body().getBankDetails();
-                    BankDetail singleUser = user.get(0);
+                    try {
+                        List<BankDetail> user = response.body().getBankDetails();
+                        BankDetail singleUser = user.get(0);
 
-                    binding.holderEt.setText(singleUser.getAccountName());
-                    Log.e("Account Name Aya", singleUser.getAccountName());
-                    binding.accNoEt.setText(singleUser.getAccountNumber());
-                    Log.e("Account Number Aya", singleUser.getAccountNumber());
-                    binding.ifscEt.setText(singleUser.getBranch());
-                    Log.e("branch Name Aya", singleUser.getBranch());
-                    binding.bankEt.setText(singleUser.getBank());
-                    Log.e("Bank Name Aya", singleUser.getBank());
+                        binding.holderEt.setText(singleUser.getAccountName());
+                        Log.e("Account Name Aya", singleUser.getAccountName());
+                        binding.accNoEt.setText(singleUser.getAccountNumber());
+                        Log.e("Account Number Aya", singleUser.getAccountNumber());
+                        binding.ifscEt.setText(singleUser.getBranch());
+                        Log.e("branch Name Aya", singleUser.getBranch());
+                        binding.bankEt.setText(singleUser.getBank());
+                        Log.e("Bank Name Aya", singleUser.getBank());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
+
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();

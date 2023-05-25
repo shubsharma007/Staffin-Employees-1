@@ -1,6 +1,11 @@
 package com.example.staffinemployees.Interface;
 
+import android.icu.number.FormattedNumber;
+
 import com.example.staffinemployees.Fragment.ClaimExpences;
+import com.example.staffinemployees.Fragment.Payslip;
+import com.example.staffinemployees.Response.AllPayroll;
+import com.example.staffinemployees.Response.AllPayslips;
 import com.example.staffinemployees.Response.CompanyResponseById;
 import com.example.staffinemployees.Response.CreatedHolidayResp;
 import com.example.staffinemployees.Response.EmployeeBankDetails;
@@ -12,6 +17,7 @@ import com.example.staffinemployees.Response.LoginResponse;
 import com.example.staffinemployees.Response.NationalHolidayResp;
 import com.example.staffinemployees.Response.OverTimeResponse;
 import com.example.staffinemployees.Response.PaySlipResponse;
+import com.example.staffinemployees.Response.PayslipDetail;
 import com.example.staffinemployees.Response.Punch;
 import com.example.staffinemployees.Response.TotalEmployeeResponse;
 
@@ -126,6 +132,11 @@ public interface ApiInterface {
             @Part("add_member_images") RequestBody add_member_images,
             @Part("add_member_count") RequestBody add_member_count
     );
+
+    @FormUrlEncoded
+    @POST("search-payslip")
+    Call<AllPayslips> getAllPayroll(@Field("employee_id") int employee_id, @Field("year") int year);
+
 
     @FormUrlEncoded
     @POST("get-attendance")

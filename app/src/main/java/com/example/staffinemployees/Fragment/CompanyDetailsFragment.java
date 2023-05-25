@@ -187,30 +187,35 @@ public class CompanyDetailsFragment extends Fragment {
             public void onResponse(Call<CompanyResponseById> call, Response<CompanyResponseById> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
-                    CompanyDetails singleUser = response.body().getCompanyDetails();
-                    binding.employeeIdEt.setText(singleUser.getEmployeeID());
-                    binding.departmentEt.setText(singleUser.getDepartment().get(0).getName());
-                    binding.designationEt.setText(singleUser.getDesignation().get(0).getDesignation());
-                    binding.annualLeaveEt.setText(singleUser.getAnnualLeave().toString());
-                    binding.medicalLeaveEt.setText(singleUser.getMedicalLeave());
 
-                    String JDATE = singleUser.getJoiningDate();
-                    JDATE = JDATE.split("T")[0];
-                    binding.jDateEt.setText(JDATE);
-                    if (singleUser.getExitDate() == null) {
-                        binding.rDateEt.setText("");
-                    } else {
-                        String RDATE = singleUser.getExitDate();
-                        RDATE = RDATE.split("T")[0];
-                        binding.rDateEt.setText(RDATE);
+                    try {
+                        CompanyDetails singleUser = response.body().getCompanyDetails();
+                        binding.employeeIdEt.setText(singleUser.getEmployeeID());
+                        binding.departmentEt.setText(singleUser.getDepartment().get(0).getName());
+                        binding.designationEt.setText(singleUser.getDesignation().get(0).getDesignation());
+                        binding.annualLeaveEt.setText(singleUser.getAnnualLeave().toString());
+                        binding.medicalLeaveEt.setText(singleUser.getMedicalLeave());
+
+                        String JDATE = singleUser.getJoiningDate();
+                        JDATE = JDATE.split("T")[0];
+                        binding.jDateEt.setText(JDATE);
+                        if (singleUser.getExitDate() == null) {
+                            binding.rDateEt.setText("");
+                        } else {
+                            String RDATE = singleUser.getExitDate();
+                            RDATE = RDATE.split("T")[0];
+                            binding.rDateEt.setText(RDATE);
+                        }
+                        if (singleUser.getStatus().equalsIgnoreCase("active")) {
+                            binding.rbActive.setChecked(true);
+                        } else {
+                            binding.rbInactive.setChecked(true);
+                        }
+                        binding.basicEt.setText(String.valueOf(singleUser.getBasic().get(0).getSalary()));
+                        binding.hourlyEt.setText(String.valueOf(singleUser.getHourlyRate().get(0).getSalary()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    if (singleUser.getStatus().equalsIgnoreCase("active")) {
-                        binding.rbActive.setChecked(true);
-                    } else {
-                        binding.rbInactive.setChecked(true);
-                    }
-                    binding.basicEt.setText(String.valueOf(singleUser.getBasic().get(0).getSalary()));
-                    binding.hourlyEt.setText(String.valueOf(singleUser.getHourlyRate().get(0).getSalary()));
 
 
                 } else {
