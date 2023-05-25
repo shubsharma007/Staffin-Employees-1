@@ -67,10 +67,10 @@ public class Payslip extends Fragment {
         editor = sharedPreferences.edit();
         Id = sharedPreferences.getAll().get("Id").toString();
         Log.i("Id AArahi AHI", Id);
-//        binding.notFoundLayout.setVisibility(View.VISIBLE);
-//        binding.nestedScrollFirst.setVisibility(View.GONE);
+        binding.notFoundLayout.setVisibility(View.VISIBLE);
+        binding.nestedScrollFirst.setVisibility(View.GONE);
         apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
-//        getApi();
+        getApi();
         clickListener();
         return binding.getRoot();
 
