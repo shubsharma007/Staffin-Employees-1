@@ -83,7 +83,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         holder.txtDate.setText(singleUnit.getDate());
         holder.txtEventName.setText(singleUnit.getTitleName());
         Glide.with(context.getApplicationContext()).load(singleUnit.getImage()).placeholder(R.drawable.img_birthday).into(holder.imageView);
-
+        holder.textView5.setText(singleUnit.getLocation());
         FirstImage = (singleUnit.getAdd_member_images().split(",,,,,,,,,,"));
         Log.e("onBindViewHolder: ", "Images");
         if (Integer.parseInt(singleUnit.getAdd_member_count()) == 1) {
@@ -243,7 +243,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txtDate, txtEventName, interested,el4;
+        TextView txtDate, txtEventName, interested,el4, textView5;
         ConstraintLayout card;
         ImageView imageView, el1, el2, el3;
 
@@ -251,6 +251,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             el4 = itemView.findViewById(R.id.el4);
+            textView5 = itemView.findViewById(R.id.textView5);
             card = itemView.findViewById(R.id.cardEvent);
             imageView = itemView.findViewById(R.id.imageView);
             interested = itemView.findViewById(R.id.interested);
