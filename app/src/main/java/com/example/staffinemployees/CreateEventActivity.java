@@ -333,15 +333,15 @@ public class CreateEventActivity extends AppCompatActivity  implements BottomShe
                     } else {
                         progress.dismiss();
                         Toast.makeText(CreateEventActivity.this, "some error occured", Toast.LENGTH_SHORT).show();
-                        Log.d("jkdfsdf", response.message());
+                        Log.d("OnResponseElse", response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TotalEmployeeResponse> call, Throwable t) {
-                    Log.d("nfkjsf", t.getMessage());
+                    Log.d("onFailure", t.getMessage());
                     progress.dismiss();
-                    Toast.makeText(CreateEventActivity.this, "Unable to Load", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateEventActivity.this, "Try to add another event", Toast.LENGTH_SHORT).show();
                 }
             });
 
