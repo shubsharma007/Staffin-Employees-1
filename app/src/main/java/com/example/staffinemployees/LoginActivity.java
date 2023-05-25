@@ -1,11 +1,15 @@
 package com.example.staffinemployees;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     Toast toast;
     View vieww;
     TextView textView;
+    Dialog adDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("staffin", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         toast = new Toast(LoginActivity.this);
-
+        adDialog = new Dialog(LoginActivity.this);
         // for custom toast
         vieww = getLayoutInflater().inflate(R.layout.custom_toast_layout, (ViewGroup) findViewById(R.id.toastRoot));
         ll = (LinearLayout) vieww.findViewById(R.id.toastBg);
@@ -50,7 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         binding.forgotPasswordTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LoginActivity.this, "Your Password Has Been Sent To Your Email Successfully , Please Check Your Emails", Toast.LENGTH_SHORT).show();
+
+                if (binding.phoneEt.getText().toString().trim().isEmpty()) {
+                    binding.phoneEt.setError("Enter Mobile Number");
+                    binding.phoneEt.requestFocus();
+                } else {
+                    showPopup();
+//                    Toast.makeText(LoginActivity.this, "Your Password Has Been Sent To Your Email Successfully , Please Check Your Emails", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -144,4 +156,21 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+    public void showPopup() {
+        adDialog.setContentView(R.layout.forgot_pop_up);
+        adDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        adDialog.setCancelable(false);
+        adDialog.show();
+
+        AppCompatButton yesBtn = adDialog.findViewById(R.id.appCompatButton);
+
+        yesBtn.setOnClickListener(v -> {
+
+            adDialog.dismiss();
+        });
+
+    }
+
+
 }
