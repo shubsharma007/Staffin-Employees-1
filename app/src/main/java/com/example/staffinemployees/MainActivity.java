@@ -26,6 +26,7 @@ import com.example.staffinemployees.Fragment.CompanyDetailsFragment;
 import com.example.staffinemployees.Fragment.EventsFragment;
 import com.example.staffinemployees.Fragment.LeaveRequest;
 import com.example.staffinemployees.Fragment.MainFragment;
+import com.example.staffinemployees.Fragment.PayrollFragment;
 import com.example.staffinemployees.Fragment.Payslip;
 import com.example.staffinemployees.Fragment.UpcomingHolidaysFragment;
 import com.example.staffinemployees.Interface.ApiInterface;
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 //                        binding.textView.setText("Payroll");
 //                        break;
                     case R.id.nav_payslip:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new Payslip()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new PayrollFragment()).commit();
                         binding.textView.setText("PaySlip");
                         break;
                     case R.id.nav_claim_expences:
