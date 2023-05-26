@@ -338,7 +338,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/descriptionEt" />
 
-                <EditText
+                <TextView
                     android:id="@+id/dateEt"
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
@@ -352,7 +352,10 @@
                     android:inputType="textPersonName"
                     android:paddingStart="20dp"
                     android:paddingEnd="10dp"
+                    android:textAlignment="gravity"
+                    android:gravity="center_vertical"
                     android:textColor="@color/black"
+                    android:clickable="true"
                     android:textColorHint="#80282729"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
