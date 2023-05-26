@@ -55,6 +55,9 @@ public class ClaimExpences extends Fragment {
     ProgressDialog progress;
     SharedPreferences sharedPreferences;
     ApiInterface apiInterface;
+    MultipartBody.Part part1, part2, part3, part4, part5, part6, part7, part8, part9, part10;
+    String image1, image2, image3, image4, image5, image6, image7, image8, image9, image10;
+    File ximg1, ximg2, ximg3, ximg4, ximg5, ximg6, ximg7, ximg8, ximg9, ximg10;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,50 +106,106 @@ public class ClaimExpences extends Fragment {
             } else {
                 naame = binding.titleEt.getText().toString();
                 priice = binding.amountEt.getText().toString();
-                RequestBody name = RequestBody.create(MediaType.parse("text/plain"), naame);
-                RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priice);
 
-                MultipartBody.Part[] bill_image = new MultipartBody.Part[imagePath.size()];
-                for (int i = 0; i < imagePath.size(); i++) {
-                    Log.d("TAG", i + "   " + imagePath.get(i));
-                    File file = new File(imagePath.get(i));
-                    RequestBody rb = RequestBody.create(MediaType.parse("image/*"), file);
-                    bill_image[i] = MultipartBody.Part.createFormData("bill_image", file.getName(), rb);
+
+                updateDetails(Integer.parseInt(Id), image1, image2, image3, image4, image5, image6,
+                        image7, image8, image9, image10, naame, priice);
+
+
+            }
+        });
+
+    }
+
+    private void updateDetails(int id, String uimage1, String uimage2, String uimage3, String uimage4, String uimage5, String uimage6, String uimage7,
+                               String uimage8, String uimage9, String uimage10, String naame, String priice) {
+
+
+        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), naame);
+        RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priice);
+
+//        ximg1 = new File(uimage1);
+        RequestBody rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+        part1 = MultipartBody.Part.createFormData("profile_image", ximg1.getName(), rimg1);
+
+        RequestBody rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+        part2 = MultipartBody.Part.createFormData("profile_image", ximg2.getName(), rimg1);
+
+        RequestBody rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+        part3 = MultipartBody.Part.createFormData("profile_image", ximg3.getName(), rimg1);
+
+        RequestBody rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+        part4 = MultipartBody.Part.createFormData("profile_image", ximg4.getName(), rimg1);
+
+        RequestBody rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
+        part5 = MultipartBody.Part.createFormData("profile_image", ximg5.getName(), rimg1);
+
+        RequestBody rimg6 = RequestBody.create(MediaType.parse("image/*"), ximg6);
+        part6 = MultipartBody.Part.createFormData("profile_image", ximg6.getName(), rimg1);
+
+        RequestBody rimg7 = RequestBody.create(MediaType.parse("image/*"), ximg7);
+        part7 = MultipartBody.Part.createFormData("profile_image", ximg7.getName(), rimg1);
+
+        RequestBody rimg8 = RequestBody.create(MediaType.parse("image/*"), ximg8);
+        part8 = MultipartBody.Part.createFormData("profile_image", ximg8.getName(), rimg1);
+
+        RequestBody rimg9 = RequestBody.create(MediaType.parse("image/*"), ximg9);
+        part9 = MultipartBody.Part.createFormData("profile_image", ximg9.getName(), rimg1);
+
+        RequestBody rimg10 = RequestBody.create(MediaType.parse("image/*"), ximg10);
+        part10 = MultipartBody.Part.createFormData("profile_image", ximg10.getName(), rimg1);
+
+
+//                MultipartBody.Part[] bill_image = new MultipartBody.Part[imagePath.size()];
+
+
+//                for (int i = 0; i < imagePath.size(); i++) {
+//                    Log.d("TAG", i + "   " + imagePath.get(i));
+//                    File file = new File(imagePath.get(i));
+//                    RequestBody rb = RequestBody.create(MediaType.parse("image/*"), file);
+//                    bill_image[i] = MultipartBody.Part.createFormData("bill_image", file.getName(), rb);
+
+//                    image1 = bill_image[0];
+//                    image2 = bill_image[1];
+//                    image3 = bill_image[2];
+//                    image4 = bill_image[3];
+//                    image5 = bill_image[4];
+//                    image6 = bill_image[5];
+//                    image7 = bill_image[6];
+//                    image8 = bill_image[7];
+//                    image9 = bill_image[8];
+//                    image10 = bill_image[9];
+
+//                }
+
+        Call<LoginResponse> callPostExpenses = apiInterface.postExpenses(Integer.parseInt(Id), part1, part2, part3, part4, part5, part6,
+                part7, part8, part9, part10, name, price);
+
+        progress.show();
+//        Log.d("SizeOfMultipart", String.valueOf(bill_image.length));
+        callPostExpenses.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
+                if (response.isSuccessful()) {
+                    progress.dismiss();
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    Toast.makeText(getContext(), "submitted", Toast.LENGTH_SHORT).show();
+//                    Log.d("SizeOfMultipartPass", String.valueOf(bill_image.length));
+                    Log.d("imagePathImagePath", String.valueOf(imagePath));
+                    getActivity().finish();
+                } else {
+                    Log.d("dfsdfsdf", response.message());
+                    Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 }
+            }
 
-
-
-                Call<LoginResponse> callPostExpenses = apiInterface.postExpenses(Integer.parseInt(Id), bill_image, name, price);
-
-                progress.show();
-                Log.d("SizeOfMultipart", String.valueOf(bill_image.length));
-                callPostExpenses.enqueue(new Callback<LoginResponse>() {
-                    @Override
-                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
-                        if (response.isSuccessful()) {
-                            progress.dismiss();
-                            startActivity(new Intent(getActivity(), MainActivity.class));
-                            Toast.makeText(getContext(), "submitted", Toast.LENGTH_SHORT).show();
-                            Log.d("SizeOfMultipartPass", String.valueOf(bill_image.length));
-                            Log.d("imagePathImagePath", String.valueOf(imagePath));
-                            getActivity().finish();
-                        } else {
-                            Log.d("dfsdfsdf", response.message());
-                            Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
-                            progress.dismiss();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<LoginResponse> call, Throwable t) {
-                        Log.d("dfsdf", t.getMessage());
-                        progress.dismiss();
-                        Toast.makeText(getContext(), "failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.d("dfsdf", t.getMessage());
+                progress.dismiss();
+                Toast.makeText(getContext(), "failure", Toast.LENGTH_SHORT).show();
             }
         });
 
