@@ -44,6 +44,9 @@ import retrofit2.http.Path;
 
 
 public class ClaimExpences extends Fragment {
+    public static final int CAMERA = 1234;
+    public static final int GALLERY = 5342;
+
     List<String> imagePath;
     FragmentClaimExpencesBinding binding;
     TextView addText;
@@ -79,8 +82,14 @@ public class ClaimExpences extends Fragment {
             @Override
             public void onClick(View v) {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, 101);
+
+                    if (imagePath.size() <= 10) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA);
+                    } else {
+                        Toast.makeText(getContext(), "you can't add more than 10 images", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     Toast.makeText(getActivity(), "Your Device Does not Support This Functionality\n Please Click On (Click To Upload Images)", Toast.LENGTH_SHORT).show();
                 }
@@ -89,9 +98,13 @@ public class ClaimExpences extends Fragment {
         });
 
         binding.clickToAddTv.setOnClickListener(v -> {
-            Intent imgIntent = new Intent(Intent.ACTION_PICK);
-            imgIntent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(imgIntent, 100);
+            if (imagePath.size() <= 10) {
+                Intent imgIntent = new Intent(Intent.ACTION_PICK);
+                imgIntent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(imgIntent, GALLERY);
+            } else {
+                Toast.makeText(getContext(), "you can't add more than 10 images", Toast.LENGTH_SHORT).show();
+            }
         });
 
         binding.SubmitBtn.setOnClickListener(v -> {
@@ -108,8 +121,7 @@ public class ClaimExpences extends Fragment {
                 priice = binding.amountEt.getText().toString();
 
 
-                updateDetails(Integer.parseInt(Id), image1, image2, image3, image4, image5, image6,
-                        image7, image8, image9, image10, naame, priice);
+                updateDetails(imagePath, naame, priice);
 
 
             }
@@ -117,97 +129,333 @@ public class ClaimExpences extends Fragment {
 
     }
 
-    private void updateDetails(int id, String uimage1, String uimage2, String uimage3, String uimage4, String uimage5, String uimage6, String uimage7,
-                               String uimage8, String uimage9, String uimage10, String naame, String priice) {
+    private void updateDetails(List<String> imagePath, String naame, String priice) {
 
 
-        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), naame);
-        RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priice);
+        if (atleastOne) {
 
-//        ximg1 = new File(uimage1);
-        RequestBody rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
-        part1 = MultipartBody.Part.createFormData("profile_image", ximg1.getName(), rimg1);
-
-        RequestBody rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
-        part2 = MultipartBody.Part.createFormData("profile_image", ximg2.getName(), rimg1);
-
-        RequestBody rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
-        part3 = MultipartBody.Part.createFormData("profile_image", ximg3.getName(), rimg1);
-
-        RequestBody rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
-        part4 = MultipartBody.Part.createFormData("profile_image", ximg4.getName(), rimg1);
-
-        RequestBody rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
-        part5 = MultipartBody.Part.createFormData("profile_image", ximg5.getName(), rimg1);
-
-        RequestBody rimg6 = RequestBody.create(MediaType.parse("image/*"), ximg6);
-        part6 = MultipartBody.Part.createFormData("profile_image", ximg6.getName(), rimg1);
-
-        RequestBody rimg7 = RequestBody.create(MediaType.parse("image/*"), ximg7);
-        part7 = MultipartBody.Part.createFormData("profile_image", ximg7.getName(), rimg1);
-
-        RequestBody rimg8 = RequestBody.create(MediaType.parse("image/*"), ximg8);
-        part8 = MultipartBody.Part.createFormData("profile_image", ximg8.getName(), rimg1);
-
-        RequestBody rimg9 = RequestBody.create(MediaType.parse("image/*"), ximg9);
-        part9 = MultipartBody.Part.createFormData("profile_image", ximg9.getName(), rimg1);
-
-        RequestBody rimg10 = RequestBody.create(MediaType.parse("image/*"), ximg10);
-        part10 = MultipartBody.Part.createFormData("profile_image", ximg10.getName(), rimg1);
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), naame);
+            RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priice);
+            RequestBody rimg1, rimg2, rimg3, rimg4, rimg5, rimg6, rimg7, rimg8, rimg9, rimg10;
 
 
-//                MultipartBody.Part[] bill_image = new MultipartBody.Part[imagePath.size()];
+            if (imagePath.size() == 1) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+                part2 = null;
+                part3 = null;
+                part4 = null;
+                part5 = null;
+                part6 = null;
+                part7 = null;
+                part8 = null;
+                part9 = null;
+                part10 = null;
+
+            } else if (imagePath.size() == 2) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                part3 = null;
+                part4 = null;
+                part5 = null;
+                part6 = null;
+                part7 = null;
+                part8 = null;
+                part9 = null;
+                part10 = null;
+            } else if (imagePath.size() == 3) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
+
+                part4 = null;
+                part5 = null;
+                part6 = null;
+                part7 = null;
+                part8 = null;
+                part9 = null;
+                part10 = null;
+            } else if (imagePath.size() == 4) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
+
+                ximg4 = new File(imagePath.get(3));
+                rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+                part4 = MultipartBody.Part.createFormData("image4", ximg4.getName(), rimg4);
 
 
-//                for (int i = 0; i < imagePath.size(); i++) {
-//                    Log.d("TAG", i + "   " + imagePath.get(i));
-//                    File file = new File(imagePath.get(i));
-//                    RequestBody rb = RequestBody.create(MediaType.parse("image/*"), file);
-//                    bill_image[i] = MultipartBody.Part.createFormData("bill_image", file.getName(), rb);
+                part5 = null;
+                part6 = null;
+                part7 = null;
+                part8 = null;
+                part9 = null;
+                part10 = null;
+            } else if (imagePath.size() == 5) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
 
-//                    image1 = bill_image[0];
-//                    image2 = bill_image[1];
-//                    image3 = bill_image[2];
-//                    image4 = bill_image[3];
-//                    image5 = bill_image[4];
-//                    image6 = bill_image[5];
-//                    image7 = bill_image[6];
-//                    image8 = bill_image[7];
-//                    image9 = bill_image[8];
-//                    image10 = bill_image[9];
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
 
-//                }
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
 
-        Call<LoginResponse> callPostExpenses = apiInterface.postExpenses(Integer.parseInt(Id), part1, part2, part3, part4, part5, part6,
-                part7, part8, part9, part10, name, price);
+                ximg4 = new File(imagePath.get(3));
+                rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+                part4 = MultipartBody.Part.createFormData("image4", ximg4.getName(), rimg4);
 
-        progress.show();
+                ximg5 = new File(imagePath.get(4));
+                rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
+                part5 = MultipartBody.Part.createFormData("image5", ximg5.getName(), rimg5);
+
+
+                part6 = null;
+                part7 = null;
+                part8 = null;
+                part9 = null;
+                part10 = null;
+            } else if (imagePath.size() == 6) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
+
+                ximg4 = new File(imagePath.get(3));
+                rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+                part4 = MultipartBody.Part.createFormData("image4", ximg4.getName(), rimg4);
+
+                ximg5 = new File(imagePath.get(4));
+                rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
+                part5 = MultipartBody.Part.createFormData("image5", ximg5.getName(), rimg5);
+
+                ximg6 = new File(imagePath.get(5));
+                rimg6 = RequestBody.create(MediaType.parse("image/*"), ximg6);
+                part6 = MultipartBody.Part.createFormData("image6", ximg6.getName(), rimg6);
+
+
+                part7 = null;
+                part8 = null;
+                part9 = null;
+                part10 = null;
+            } else if (imagePath.size() == 7) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
+
+                ximg4 = new File(imagePath.get(3));
+                rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+                part4 = MultipartBody.Part.createFormData("image4", ximg4.getName(), rimg4);
+
+                ximg5 = new File(imagePath.get(4));
+                rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
+                part5 = MultipartBody.Part.createFormData("image5", ximg5.getName(), rimg5);
+
+                ximg6 = new File(imagePath.get(5));
+                rimg6 = RequestBody.create(MediaType.parse("image/*"), ximg6);
+                part6 = MultipartBody.Part.createFormData("image6", ximg6.getName(), rimg6);
+
+                ximg7 = new File(imagePath.get(6));
+                rimg7 = RequestBody.create(MediaType.parse("image/*"), ximg7);
+                part7 = MultipartBody.Part.createFormData("image7", ximg7.getName(), rimg7);
+
+
+                part8 = null;
+                part9 = null;
+                part10 = null;
+            } else if (imagePath.size() == 8) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
+
+                ximg4 = new File(imagePath.get(3));
+                rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+                part4 = MultipartBody.Part.createFormData("image4", ximg4.getName(), rimg4);
+
+                ximg5 = new File(imagePath.get(4));
+                rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
+                part5 = MultipartBody.Part.createFormData("image5", ximg5.getName(), rimg5);
+
+                ximg6 = new File(imagePath.get(5));
+                rimg6 = RequestBody.create(MediaType.parse("image/*"), ximg6);
+                part6 = MultipartBody.Part.createFormData("image6", ximg6.getName(), rimg6);
+
+                ximg7 = new File(imagePath.get(6));
+                rimg7 = RequestBody.create(MediaType.parse("image/*"), ximg7);
+                part7 = MultipartBody.Part.createFormData("image7", ximg7.getName(), rimg7);
+
+                ximg8 = new File(imagePath.get(7));
+                rimg8 = RequestBody.create(MediaType.parse("image/*"), ximg8);
+                part8 = MultipartBody.Part.createFormData("image8", ximg8.getName(), rimg8);
+
+
+                part9 = null;
+                part10 = null;
+            } else if (imagePath.size() == 9) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
+
+                ximg4 = new File(imagePath.get(3));
+                rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+                part4 = MultipartBody.Part.createFormData("image4", ximg4.getName(), rimg4);
+
+                ximg5 = new File(imagePath.get(4));
+                rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
+                part5 = MultipartBody.Part.createFormData("image5", ximg5.getName(), rimg5);
+
+                ximg6 = new File(imagePath.get(5));
+                rimg6 = RequestBody.create(MediaType.parse("image/*"), ximg6);
+                part6 = MultipartBody.Part.createFormData("image6", ximg6.getName(), rimg6);
+
+                ximg7 = new File(imagePath.get(6));
+                rimg7 = RequestBody.create(MediaType.parse("image/*"), ximg7);
+                part7 = MultipartBody.Part.createFormData("image7", ximg7.getName(), rimg7);
+
+                ximg8 = new File(imagePath.get(7));
+                rimg8 = RequestBody.create(MediaType.parse("image/*"), ximg8);
+                part8 = MultipartBody.Part.createFormData("image8", ximg8.getName(), rimg8);
+
+                ximg9 = new File(imagePath.get(8));
+                rimg9 = RequestBody.create(MediaType.parse("image/*"), ximg9);
+                part9 = MultipartBody.Part.createFormData("image9", ximg9.getName(), rimg9);
+
+                part10 = null;
+            } else if (imagePath.size() == 10) {
+                ximg1 = new File(imagePath.get(0));
+                rimg1 = RequestBody.create(MediaType.parse("image/*"), ximg1);
+                part1 = MultipartBody.Part.createFormData("image1", ximg1.getName(), rimg1);
+
+                ximg2 = new File(imagePath.get(1));
+                rimg2 = RequestBody.create(MediaType.parse("image/*"), ximg2);
+                part2 = MultipartBody.Part.createFormData("image2", ximg2.getName(), rimg2);
+
+                ximg3 = new File(imagePath.get(2));
+                rimg3 = RequestBody.create(MediaType.parse("image/*"), ximg3);
+                part3 = MultipartBody.Part.createFormData("image3", ximg3.getName(), rimg3);
+
+                ximg4 = new File(imagePath.get(3));
+                rimg4 = RequestBody.create(MediaType.parse("image/*"), ximg4);
+                part4 = MultipartBody.Part.createFormData("image4", ximg4.getName(), rimg4);
+
+                ximg5 = new File(imagePath.get(4));
+                rimg5 = RequestBody.create(MediaType.parse("image/*"), ximg5);
+                part5 = MultipartBody.Part.createFormData("image5", ximg5.getName(), rimg5);
+
+                ximg6 = new File(imagePath.get(5));
+                rimg6 = RequestBody.create(MediaType.parse("image/*"), ximg6);
+                part6 = MultipartBody.Part.createFormData("image6", ximg6.getName(), rimg6);
+
+                ximg7 = new File(imagePath.get(6));
+                rimg7 = RequestBody.create(MediaType.parse("image/*"), ximg7);
+                part7 = MultipartBody.Part.createFormData("image7", ximg7.getName(), rimg7);
+
+                ximg8 = new File(imagePath.get(7));
+                rimg8 = RequestBody.create(MediaType.parse("image/*"), ximg8);
+                part8 = MultipartBody.Part.createFormData("image8", ximg8.getName(), rimg8);
+
+                ximg9 = new File(imagePath.get(8));
+                rimg9 = RequestBody.create(MediaType.parse("image/*"), ximg9);
+                part9 = MultipartBody.Part.createFormData("image9", ximg9.getName(), rimg9);
+
+                ximg10 = new File(imagePath.get(9));
+                rimg10 = RequestBody.create(MediaType.parse("image/*"), ximg10);
+                part10 = MultipartBody.Part.createFormData("image10", ximg10.getName(), rimg10);
+
+            }
+
+            Call<LoginResponse> callPostExpenses = apiInterface.postExpenses(Integer.parseInt(Id), part1, part2, part3, part4, part5, part6,
+                    part7, part8, part9, part10, name, price);
+
+            progress.show();
 //        Log.d("SizeOfMultipart", String.valueOf(bill_image.length));
-        callPostExpenses.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            callPostExpenses.enqueue(new Callback<>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
-                if (response.isSuccessful()) {
-                    progress.dismiss();
-                    startActivity(new Intent(getActivity(), MainActivity.class));
-                    Toast.makeText(getContext(), "submitted", Toast.LENGTH_SHORT).show();
+                    if (response.isSuccessful()) {
+                        progress.dismiss();
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        Toast.makeText(getContext(), "submitted", Toast.LENGTH_SHORT).show();
 //                    Log.d("SizeOfMultipartPass", String.valueOf(bill_image.length));
-                    Log.d("imagePathImagePath", String.valueOf(imagePath));
-                    getActivity().finish();
-                } else {
-                    Log.d("dfsdfsdf", response.message());
-                    Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
-                    progress.dismiss();
-                }
-            }
+                        Log.d("imagePathImagePath", String.valueOf(imagePath));
+                        getActivity().finish();
+                    } else {
+                        Log.d("dfsdfsdf", response.message()+response.code());
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.d("dfsdf", t.getMessage());
-                progress.dismiss();
-                Toast.makeText(getContext(), "failure", Toast.LENGTH_SHORT).show();
-            }
-        });
+                        Toast.makeText(getContext(), "some error occured", Toast.LENGTH_SHORT).show();
+                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    Log.d("dfsdf", t.getMessage());
+                    progress.dismiss();
+                    Toast.makeText(getContext(), "failure", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "please upload atleast 1 image", Toast.LENGTH_SHORT).show();
+        }
+//
 
     }
 
@@ -216,7 +464,7 @@ public class ClaimExpences extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         String imgString;
 
-        if (resultCode == RESULT_OK && requestCode == 100) {
+        if (resultCode == RESULT_OK && requestCode == GALLERY) {
             imgString = getRealPathFromURI(data.getData());
             Log.d("ndfsdnf", imgString);
             imagePath.add(imgString);
@@ -237,7 +485,7 @@ public class ClaimExpences extends Fragment {
             atleastOne = true;
         }
 
-        if (requestCode == 101 && resultCode == RESULT_OK) {
+        if (requestCode == CAMERA && resultCode == RESULT_OK) {
 
 
             if (data.getExtras().get("data") == null) {
