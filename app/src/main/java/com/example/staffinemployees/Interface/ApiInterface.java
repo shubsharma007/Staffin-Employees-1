@@ -178,7 +178,6 @@ public interface ApiInterface {
                                      @Part MultipartBody.Part image8,
                                      @Part MultipartBody.Part image9,
                                      @Part MultipartBody.Part image10,
-//                                     @Part MultipartBody.Part[] bill_image,
                                      @Part("name") RequestBody name,
                                      @Part("price") RequestBody price);
 
