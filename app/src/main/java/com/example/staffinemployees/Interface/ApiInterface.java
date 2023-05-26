@@ -168,7 +168,17 @@ public interface ApiInterface {
     @Multipart
     @POST("add-expense/{id}")
     Call<LoginResponse> postExpenses(@Path("id") int id,
-                                     @Part MultipartBody.Part[] bill_image,
+                                     @Part MultipartBody.Part image1,
+                                     @Part MultipartBody.Part image2,
+                                     @Part MultipartBody.Part image3,
+                                     @Part MultipartBody.Part image4,
+                                     @Part MultipartBody.Part image5,
+                                     @Part MultipartBody.Part image6,
+                                     @Part MultipartBody.Part image7,
+                                     @Part MultipartBody.Part image8,
+                                     @Part MultipartBody.Part image9,
+                                     @Part MultipartBody.Part image10,
+//                                     @Part MultipartBody.Part[] bill_image,
                                      @Part("name") RequestBody name,
                                      @Part("price") RequestBody price);
 
