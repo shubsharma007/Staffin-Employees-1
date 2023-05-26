@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     binding.phoneEt.requestFocus();
                 } else {
                     showPopup();
+
 //                    Toast.makeText(LoginActivity.this, "Your Password Has Been Sent To Your Email Successfully , Please Check Your Emails", Toast.LENGTH_SHORT).show();
                 }
             }
