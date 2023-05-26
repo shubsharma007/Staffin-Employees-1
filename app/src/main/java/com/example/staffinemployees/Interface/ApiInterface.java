@@ -11,6 +11,7 @@ import com.example.staffinemployees.Response.CreatedHolidayResp;
 import com.example.staffinemployees.Response.EmployeeBankDetails;
 import com.example.staffinemployees.Response.EmployeeProfileResponse;
 import com.example.staffinemployees.Response.EventsByYearResponse;
+import com.example.staffinemployees.Response.Example;
 import com.example.staffinemployees.Response.GetMonthlyAttendance;
 import com.example.staffinemployees.Response.HolidayResponse;
 import com.example.staffinemployees.Response.LoginResponse;
@@ -186,4 +187,9 @@ public interface ApiInterface {
     @POST("update-event/{id}")
     Call<LoginResponse> postUpdateInterested(@Path("id") int id,
                                              @Field("name") String name);
+
+    @FormUrlEncoded
+    @POST("employee-forget-password")
+    Call<Example> ForgotPassword(
+            @Field("mobile") String mobile);
 }

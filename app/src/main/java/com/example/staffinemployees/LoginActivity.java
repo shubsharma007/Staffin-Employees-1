@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.staffinemployees.Interface.ApiInterface;
+import com.example.staffinemployees.Response.Example;
 import com.example.staffinemployees.Response.LoginResponse;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.ActivityLoginBinding;
@@ -60,7 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                     binding.phoneEt.setError("Enter Mobile Number");
                     binding.phoneEt.requestFocus();
                 } else {
-                    showPopup();
+//                    showPopup();
+                    String mobile = binding.phoneEt.getText().toString();
+                    forgotPassword(mobile);
 
 //                    Toast.makeText(LoginActivity.this, "Your Password Has Been Sent To Your Email Successfully , Please Check Your Emails", Toast.LENGTH_SHORT).show();
                 }
@@ -156,6 +159,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void forgotPassword(String mobile) {
+        apiInterface = RetrofitServices.getRetrofit().create(ApiInterface.class);
+        Call<Example> call = apiInterface.ForgotPassword(mobile);
+        call.enqueue(new Callback<Example>() {
+            @Override
+            public void onResponse(Call<Example> call, Response<Example> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getMessage().equalsIgnoreCase("Employee Password Send Successfull.")) {
+                        showPopup();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "some error occured", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Example> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "failure", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void showPopup() {
