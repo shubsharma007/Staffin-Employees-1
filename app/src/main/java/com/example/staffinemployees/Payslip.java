@@ -66,7 +66,7 @@ public class Payslip extends AppCompatActivity {
         binding.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         requestRuntimePermissionFunc("manageStorage");
                     } else {
                         requestRuntimePermissionFunc("storage");
