@@ -9,29 +9,40 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.staffinemployees.Interface.ApiInterface;
 import com.example.staffinemployees.MainActivity;
+import com.example.staffinemployees.R;
 import com.example.staffinemployees.Response.LoginResponse;
 import com.example.staffinemployees.Retrofit.RetrofitServices;
 import com.example.staffinemployees.databinding.FragmentClaimExpencesBinding;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -46,7 +57,10 @@ import retrofit2.http.Path;
 public class ClaimExpences extends Fragment {
     public static final int CAMERA = 1234;
     public static final int GALLERY = 5342;
-
+    private static final int REQUEST_IMAGE_CAPTURE = 10;
+    private Uri imageUri;
+    Bitmap bitmap;
+    BitmapDrawable bitmapDrawable;
     List<String> imagePath;
     FragmentClaimExpencesBinding binding;
     TextView addText;
@@ -84,8 +98,10 @@ public class ClaimExpences extends Fragment {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 
                     if (imagePath.size() <= 10) {
-                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, CAMERA);
+//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                        startActivityForResult(cameraIntent, CAMERA);
+                        openCamera();
+
                     } else {
                         Toast.makeText(getContext(), "you can't add more than 10 images", Toast.LENGTH_SHORT).show();
                     }
@@ -102,6 +118,7 @@ public class ClaimExpences extends Fragment {
                 Intent imgIntent = new Intent(Intent.ACTION_PICK);
                 imgIntent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(imgIntent, GALLERY);
+
             } else {
                 Toast.makeText(getContext(), "you can't add more than 10 images", Toast.LENGTH_SHORT).show();
             }
@@ -463,8 +480,63 @@ public class ClaimExpences extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String imgString;
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // The image was captured successfully
+            // You can use the imageUri to access the captured image
+            // For example, you can display the image in an ImageView
+            ImageView imageView = getActivity().findViewById(R.id.hideImage);
+            imageView.setImageURI(imageUri);
 
+            bitmapDrawable = (BitmapDrawable) binding.hideImage.getDrawable();
+            bitmap = bitmapDrawable.getBitmap();
+
+            FileOutputStream fileOutputStream;
+            File sdCard = Environment.getExternalStorageDirectory();
+            File Directory = new File(sdCard.getAbsolutePath() + "/Download/Shubham");
+            Directory.mkdir();
+            String fileName = String.format("%d.jpg", System.currentTimeMillis());
+            File outFile = new File(Directory, fileName);
+
+//            Toast.makeText(getActivity(), "Image Saved...", Toast.LENGTH_SHORT).show();
+            try {
+                fileOutputStream = new FileOutputStream(outFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fileOutputStream);
+                fileOutputStream.flush();
+                fileOutputStream.close();
+
+                imgString = outFile.toString();
+                imagePath.add(outFile.toString());
+                addText = new TextView(getContext());
+
+                if (count == 0) {
+                    count = 1;
+                    addText.setText(count + ".  " + imgString);
+                } else {
+                    count += 1;
+                    addText.setText(count + ".  " + imgString);
+                }
+
+                addText.setTextSize(12);
+                addText.setMaxLines(1);
+                addText.setTextColor(Color.parseColor("#808080"));
+                binding.llVertical.addView(addText);
+                atleastOne = true;
+
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                intent.setData(Uri.fromFile(outFile));
+                getActivity().sendBroadcast(intent);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         if (resultCode == RESULT_OK && requestCode == GALLERY) {
+
+
+
+
             imgString = getRealPathFromURI(data.getData());
             Log.d("ndfsdnf", imgString);
             imagePath.add(imgString);
@@ -527,6 +599,50 @@ public class ClaimExpences extends Fragment {
         super.onDestroyView();
         count = 0;
     }
+    // Method to open the camera
+    private void openCamera() {
+        // Create an intent to capture an image
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Ensure that there's a camera activity to handle the intent
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            // Create a file to store the captured image
+            File imageFile = createImageFile();
+
+            // If the file was created successfully
+            if (imageFile != null) {
+                // Get the URI of the image file
+                imageUri = FileProvider.getUriForFile(getActivity(), "com.your.package.name.file-provider", imageFile);
+
+                // Pass the URI to the camera intent
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+                // Start the camera activity
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    // Create a file to store the captured image
+    private File createImageFile() {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp;
+
+        // Get the directory to store the image file
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        try {
+            // Create the image file
+            File imageFile = File.createTempFile(imageFileName, ".jpg", storageDir);
+            return imageFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public String getRealPathFromURI(Uri contentURI) {
         String result;
@@ -544,7 +660,7 @@ public class ClaimExpences extends Fragment {
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 105, bytes);
+        inImage.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage,
                 "Title", null);
         return Uri.parse(path);
